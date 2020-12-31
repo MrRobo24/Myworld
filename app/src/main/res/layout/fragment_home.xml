@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#262626">
+
+    <VideoView
+        android:id="@+id/videoView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+    <ProgressBar
+        android:id="@+id/video_progressBar"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:indeterminateTint="#ff6347"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/user_feed_tham_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_marginBottom="120dp"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tool:layout_editor_absoluteX="0dp">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/user_profile_tham"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="center"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="0dp"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/user_feed_tham_container">
+
+            <ImageView
+                android:id="@+id/usertham"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@color/cpBackground"
+                android:scaleType="centerCrop"
+                app:srcCompat="@drawable/mypage" />
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/user_feed_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="rajat kumar"
+            android:layout_marginLeft="8dp"
+            android:textAlignment="center"
+            android:textAllCaps="false"
+            android:letterSpacing="0.05"
+            android:textColor="@color/cpWhite"
+            android:textStyle="bold"
+            android:textSize="12dp"
+            android:paddingTop="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/user_profile_tham"
+            app:layout_constraintEnd_toStartOf="@+id/imageView7"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/user_profile_tham"
+            app:layout_constraintTop_toTopOf="@+id/user_profile_tham"
+            app:layout_constraintVertical_bias="1.0" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_feed_discription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="12dp"
+        android:paddingBottom="3dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="60dp"
+        android:lineHeight="15dp"
+        android:text="Prime Time With hghjgfgfgjh Ravish Kumar - सियासी दलों को प्रदर्शन ियासी दलों को प्रदर्शन"
+        android:textAllCaps="false"
+        android:textColor="@color/cpWhite"
+        android:textFontWeight="700"
+        android:textSize="10.5dp"
+        app:layout_constraintEnd_toEndOf="@+id/user_feed_tham_container"
+        app:layout_constraintHorizontal_bias="0.494"
+        app:layout_constraintStart_toStartOf="@+id/user_feed_tham_container"
+        app:layout_constraintTop_toBottomOf="@+id/user_feed_tham_container" />
+
+    <TextView
+        android:id="@+id/user_add_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:paddingLeft="15dp"
+        android:text="music namevdfvfdv"
+        android:textAllCaps="false"
+        android:textColor="@color/cpWhite"
+        android:textFontWeight="700"
+        android:textSize="11dp"
+        app:layout_constraintBottom_toBottomOf="@+id/videoView"
+        app:layout_constraintStart_toStartOf="@+id/user_feed_discription"
+        app:layout_constraintTop_toBottomOf="@+id/user_feed_discription"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <ImageView
+        android:id="@+id/user_like"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:gravity="right"
+        android:layout_marginRight="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_feed_tham_container"
+        app:layout_constraintEnd_toStartOf="@+id/user_comment"
+        app:layout_constraintTop_toTopOf="@+id/user_feed_tham_container"
+        app:srcCompat="@drawable/ic_myworldlikebutton" />
+
+    <ImageView
+        android:id="@+id/user_comment"
+        android:layout_width="33dp"
+        android:layout_height="33dp"
+        android:layout_gravity="center_vertical"
+        android:paddingTop="8dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_feed_tham_container"
+        app:layout_constraintEnd_toEndOf="@+id/user_feed_tham_container"
+        app:layout_constraintTop_toTopOf="@+id/user_feed_tham_container"
+        app:srcCompat="@drawable/ic_myworldcommentbutton" />
+
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewpager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
