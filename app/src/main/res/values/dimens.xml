@@ -23,6 +23,9 @@
 
     <dimen name="add_Music">30dp</dimen>
 
+<!--    Gallery Bottom sheet Fragment -->
+    <dimen name="Outer_padding">2dp</dimen>
+
 <!--    Bottom Sheet Fragment-->
     <dimen name="font_size_16">16sp</dimen>
 

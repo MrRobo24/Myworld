@@ -5,4 +5,5 @@
 
 <!--    Home Fragment -->
     <string name="drop_down">"Drop Down Menu"</string>
+    <string name="gallery_image">Gallery Image</string>
 </resources>

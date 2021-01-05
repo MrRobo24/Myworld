@@ -1,4 +1,4 @@
-package com.example.myworld
+package com.example.myworld.model
 
 import java.io.FileDescriptor
 

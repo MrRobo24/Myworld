@@ -133,6 +133,7 @@
             android:elevation="2dp"
             android:scaleType="fitCenter"
             android:visibility="visible"
+            android:enabled="false"
             app:layout_constraintBottom_toBottomOf="@+id/camera_capture"
             app:layout_constraintEnd_toEndOf="@+id/camera_capture"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -168,7 +169,7 @@
             app:layout_constraintTop_toTopOf="@+id/camera_capture" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/gallery_selector"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
@@ -188,6 +189,7 @@
             android:textAlignment="center"
             android:textColor="@color/cpWhite"
             android:textSize="25sp"
+            android:visibility="visible"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -220,6 +222,7 @@
             android:gravity="center"
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
+            android:visibility="visible"
             android:text="Create and edit video, and explore new ways to express yourself"
             android:textColor="@color/cpIndicator"
             android:textSize="14sp"
@@ -232,6 +235,7 @@
             android:id="@+id/camera_buttan_takepermission"
             android:layout_width="130dp"
             android:layout_height="40dp"
+            android:visibility="visible"
             android:layout_marginTop="28dp"
             android:background="@drawable/roundradiusforbutton"
             android:text="Allow Access"

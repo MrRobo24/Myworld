@@ -1,26 +1,21 @@
 package com.example.myworld.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
-import com.example.myworld.SongInfo
-import com.example.myworld.service.AudioService
-import com.google.android.material.snackbar.Snackbar
-import kotlinx.android.synthetic.main.recycler_row.view.*
-import kotlin.coroutines.coroutineContext
+import com.example.myworld.model.SongInfo
+import kotlinx.android.synthetic.main.music_recycler_row.view.*
 
-class SongAdapter(var myListSong: ArrayList<SongInfo> , val context : Context) : RecyclerView.Adapter<SongAdapter.ViewHolder>()
+class SongAdapter(var myListSong: ArrayList<SongInfo>, val context : Context, var musicListener: MusicListener) : RecyclerView.Adapter<SongAdapter.ViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder
     {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.recycler_row, parent, false)
+        val view = layoutInflater.inflate(R.layout.music_recycler_row, parent, false)
         return ViewHolder(view)
     }
 
@@ -31,25 +26,37 @@ class SongAdapter(var myListSong: ArrayList<SongInfo> , val context : Context) :
         val song = myListSong[position]
         holder.bind(song , context)
         holder.itemView.music_play.setOnClickListener {
-            context.startService(Intent(context,AudioService(context,song)::class.java))
+            musicListener.onClick(song)
         }
         holder.itemView.imageView3.setOnClickListener {
-            context.startService(Intent(context,AudioService(context,song)::class.java))
+            musicListener.onClick(song)
+            //context.startService(Intent(context,AudioService(context,song)::class.java))
+        }
+        holder.itemView.user_name_search.setOnClickListener {
+            musicListener.onSelect(song)
         }
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         init {
-//            itemView.setOnClickListener {
-//                val snack: String = "Item Postion clciked: $adapterPosition"
-//                Snackbar.make(itemView, snack, Snackbar.LENGTH_SHORT).show()
-//            }
         }
 
-        fun bind(song : SongInfo , context: Context)
+        fun bind(song : SongInfo, context: Context)
         {
             itemView.user_name_search.text = song.title
+        }
+    }
+
+    interface MusicListener
+    {
+        fun onClick(song : SongInfo) : String
+        {
+            return song.songURL.toString()
+        }
+        fun onSelect(song: SongInfo) : String
+        {
+            return song.songURL.toString()
         }
     }
 }

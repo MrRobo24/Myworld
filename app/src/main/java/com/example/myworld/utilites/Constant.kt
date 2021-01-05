@@ -26,5 +26,7 @@ class Constant
         var songURL : String? = null
 
         var isFlash : Boolean = false
+
+        var isPlaying : Boolean = false
     }
 }

@@ -2,6 +2,7 @@ package com.example.myworld.fragment
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.MediaPlayer
 import android.media.MediaRecorder
@@ -24,9 +25,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.myworld.utilites.Constant
 import com.example.myworld.R
+import com.example.myworld.service.AudioService
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_camera.*
 import java.io.File
+import java.security.Provider
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -76,32 +79,37 @@ class CameraFragment : Fragment()
 
     override fun onStart()
     {
-        /** Permission checks */
-        if (!Constant.isPermission)
+        /** Permissions checks */
+        if ((context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.CAMERA) } != PackageManager.PERMISSION_GRANTED)
+                && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED)
+                && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.READ_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED)
+                && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.RECORD_AUDIO) } != PackageManager.PERMISSION_GRANTED))
         {
+            camera_capture.isEnabled = false
+            camera_capture_button_start.isEnabled = false
+            camera_music.isEnabled = false
+            camera_capture_button_stop.isEnabled = false
+            gallery_selector.isEnabled = false
             camera_welcometext.visibility = View.VISIBLE
             camera_expresstext.visibility = View.VISIBLE
             camera_buttan_takepermission.visibility = View.VISIBLE
-            Log.i("Visibility" , "Visible")
             camera_buttan_takepermission.setOnClickListener {
-
-                if ((context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.CAMERA) } != PackageManager.PERMISSION_GRANTED)
-                        && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.WRITE_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED)
-                        && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.READ_EXTERNAL_STORAGE) } != PackageManager.PERMISSION_GRANTED)
-                        && (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.RECORD_AUDIO) } != PackageManager.PERMISSION_GRANTED))
-                {
-                    askPermission()
-                }
+                askPermission()
             }
         }
         else
         {
-            camera_welcometext.visibility = View.INVISIBLE
-            camera_expresstext.visibility = View.INVISIBLE
-            camera_buttan_takepermission.visibility = View.INVISIBLE
-            Log.i("Visibility" , "Gone")
+            camera_capture_button_start.isEnabled = true
+            camera_music.isEnabled = true
+            gallery_selector.isEnabled = true
+            camera_front_back.isEnabled = true
+            camera_capture_button_start.isEnabled = true
+            camera_welcometext.visibility = View.GONE
+            camera_expresstext.visibility = View.GONE
+            camera_buttan_takepermission.visibility = View.GONE
             startCamera()
         }
+
 
         /**Start Recording*/
         camera_capture_button_start.setOnClickListener {
@@ -141,8 +149,14 @@ class CameraFragment : Fragment()
 
         /** Music Fetching and Selection */
         camera_music.setOnClickListener {
-            val musicFragment = BottomSheetFragment()
+            val musicFragment = MusicBottomSheetFragment()
             musicFragment.show(childFragmentManager,"BottomSheetDialog")
+        }
+
+        /** Gallery setup and Fetching the Files from the storage. */
+        gallery_selector.setOnClickListener {
+            val galleryFragment = GalleryBottomSheetFragment()
+            galleryFragment.show(childFragmentManager,"BottomSheetDialog")
         }
 
         super.onStart()
@@ -206,6 +220,7 @@ class CameraFragment : Fragment()
     private fun startRecording()
     {
         camera_front_back.isEnabled = false
+
         //playMusic(url)
         Log.i("URL" , url)
         //setupMediaRecorder()
@@ -321,21 +336,37 @@ class CameraFragment : Fragment()
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Constant.PERMISSION_REQUEST_CODE &&
-            (grantResults[0] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[1] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[2] == PackageManager.PERMISSION_GRANTED &&
-                    grantResults[3] == PackageManager.PERMISSION_GRANTED))
+        if (requestCode == Constant.PERMISSION_REQUEST_CODE)
         {
-            camera_welcometext.visibility = View.INVISIBLE
-            camera_expresstext.visibility = View.INVISIBLE
-            camera_buttan_takepermission.visibility = View.INVISIBLE
-            Constant.isPermission = true
-            startCamera()
+            Log.i("Reach" , "Reached + {${Constant.isPermission}}")
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
+            {
+                Log.i("Reach" , "Reached + {${Constant.isPermission}}")
+                if (grantResults[1] == PackageManager.PERMISSION_GRANTED)
+                {
+                    Log.i("Reach" , "Reached + {${Constant.isPermission}}")
+                    if (grantResults[2] == PackageManager.PERMISSION_GRANTED)
+                    {
+                        Log.i("Reach" , "Reached + {${Constant.isPermission}}")
+                        if (grantResults[3] == PackageManager.PERMISSION_GRANTED)
+                        {
+                            Log.i("Reach" , "Reached + {${Constant.isPermission}}")
+                            Constant.isPermission = true
+                            camera_capture_button_stop.isEnabled = true
+                            camera_front_back.isEnabled = true
+                            camera_welcometext.visibility = View.INVISIBLE
+                            camera_expresstext.visibility = View.INVISIBLE
+                            camera_buttan_takepermission.visibility = View.INVISIBLE
+                            camera_capture_button_start.isEnabled = true
+                            camera_music.isEnabled = true
+                            gallery_selector.isEnabled = true
+                        }
+                    }
+                }
+            }
         }
         else
         {
-            Constant.isPermission = false
             Toast.makeText(context,"Permissions are required to run the application!\nKindly allow.",
                 Toast.LENGTH_SHORT).show()
             askPermission()
@@ -346,28 +377,48 @@ class CameraFragment : Fragment()
     {
         restProgress = 0
         restTimerDuration = 5
+        camera_capture_button_start.isEnabled = true
+        if(Constant.isPermission)
+        {
+            camera_capture_button_stop.isEnabled = true
+            camera_welcometext.visibility = View.INVISIBLE
+            camera_expresstext.visibility = View.INVISIBLE
+            camera_front_back.isEnabled = true
+            camera_buttan_takepermission.visibility = View.INVISIBLE
+            camera_capture_button_start.isEnabled = true
+            camera_music.isEnabled = true
+            gallery_selector.isEnabled = true
+        }
         startCamera()
-        Constant.isRecording = false
-        var songUrl = activity?.intent?.getStringExtra(Constant.songURL)
-        url=songUrl.toString()
-        Log.i("SONG URL RECEIVED" , url)
-        var songName = activity?.intent?.getStringExtra(Constant.SONG_NAME)
-        if (songName != null)
+        if (Constant.isRecording)
         {
-            this.songName = songName
+            Constant.isRecording = false
+            stopRecording()
         }
-        if (url != null)
-        {
-//            playMusic(url)
-            Log.i("SONG" , url)
-            Log.i("SONG" , songName.toString())
-        }
-        else
-        {
-            Log.i("SONG_URL" ,"NULL RETURNED")
-        }
+        Constant.songURL = arguments?.getString(Constant.songURL)
+        Log.i("SongURL" , Constant.songURL.toString())
+        var songUrl = Constant.songURL.toString()
+        val intent = Intent(context , AudioService(context!! , songUrl)::class.java)
+        //activity?.startService(intent)
+//        var songUrl = activity?.intent?.getStringExtra(Constant.songURL)
+//        url=songUrl.toString()
+//        Log.i("SONG URL RECEIVED" , url)
+//        var songName = activity?.intent?.getStringExtra(Constant.SONG_NAME)
+//        if (songName != null)
+//        {
+//            this.songName = songName
+//        }
+//        if (url != null)
+//        {
+////            playMusic(url)
+//            Log.i("SONG" , url)
+//            Log.i("SONG" , songName.toString())
+//        }
+//        else
+//        {
+//            Log.i("SONG_URL" ,"NULL RETURNED")
+//        }
         super.onResume()
-
     }
 
     override fun onDestroy()
