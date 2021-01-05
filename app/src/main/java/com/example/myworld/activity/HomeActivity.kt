@@ -1,6 +1,7 @@
 package com.example.myworld.activity
 
 import android.os.Bundle
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -31,14 +32,42 @@ class HomeActivity : AppCompatActivity()
         bottom_navigation.setOnNavigationItemSelectedListener {
             when(it.itemId)
             {
-                R.id.user_home -> makeCurrentFragment(homeFragment)
-                R.id.user_explore -> makeCurrentFragment(exploreFragment)
-                R.id.user_profile -> makeCurrentFragment(profileFragment)
-                R.id.user_camera -> makeCurrentFragment(cameraFragment)
+                R.id.user_home ->
+                {
+                    bottom_navigation.visibility = View.VISIBLE
+                    makeCurrentFragment(homeFragment)
+                }
+                R.id.user_explore ->
+                {
+                    bottom_navigation.visibility = View.VISIBLE
+                    makeCurrentFragment(exploreFragment)
+                }
+                R.id.user_profile ->
+                {
+                    bottom_navigation.visibility = View.VISIBLE
+                    makeCurrentFragment(profileFragment)
+                }
+                R.id.user_camera ->
+                {
+                    bottom_navigation.visibility = View.GONE
+                    makeCurrentFragment(cameraFragment)
+                }
             }
             true
         }
 
+    }
+
+    override fun onResume()
+    {
+        bottom_navigation.visibility = View.VISIBLE
+        super.onResume()
+    }
+
+    override fun onRestart()
+    {
+        bottom_navigation.visibility = View.VISIBLE
+        super.onRestart()
     }
 
     private fun makeCurrentFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().apply {

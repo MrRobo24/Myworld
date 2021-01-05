@@ -11,25 +11,28 @@ import com.example.myworld.R
 import com.example.myworld.model.AllCategory
 import com.example.myworld.model.CategoryItem
 
-class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>)
-    : RecyclerView.Adapter<MainRecycleViewAdapter.MainViewHolder>()
+class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>) : RecyclerView.Adapter<MainRecycleViewAdapter.MainViewHolder>()
 {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder
+    {
         val view = LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
         return MainViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MainViewHolder, position: Int)
+    {
         holder.categoryTitle.text = allCategory[position].categoryTitle
         setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem)
     }
 
-    override fun getItemCount(): Int {
+    override fun getItemCount(): Int
+    {
         return allCategory.size
     }
 
-    class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    {
         var categoryTitle: TextView = itemView.findViewById(R.id.cat_table)
         var itemRecycler: RecyclerView = itemView.findViewById(R.id.cat_item_recycler)
 
@@ -38,9 +41,13 @@ class MainRecycleViewAdapter(private val context: Context, private val allCatego
 
     private fun setCatItemRecycler(recyclerView: RecyclerView, categoryItem: List<CategoryItem>)
     {
-        val itemRecyclerAdapter = CategoryItemAdapter(context, categoryItem)
-        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-        recyclerView.adapter = itemRecyclerAdapter
+//        val itemRecyclerAdapter = CategoryItemAdapter(context, categoryItem)
+//        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+//        recyclerView.adapter = itemRecyclerAdapter
+        recyclerView.apply {
+            layoutManager = LinearLayoutManager(context , RecyclerView.HORIZONTAL , false)
+            adapter = CategoryItemAdapter(context , categoryItem)
+        }
     }
 
 

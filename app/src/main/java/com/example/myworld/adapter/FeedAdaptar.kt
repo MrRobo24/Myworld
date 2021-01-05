@@ -9,6 +9,11 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
 import com.example.myworld.model.VideoModel
+import com.google.android.exoplayer2.DefaultLoadControl
+import com.google.android.exoplayer2.DefaultRenderersFactory
+import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.ExoPlayerFactory
+import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import kotlinx.android.synthetic.main.fragment_home.view.*
 
 class FeedAdaptar(var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<FeedAdaptar.MyViewHolder>()
@@ -36,6 +41,10 @@ class FeedAdaptar(var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<F
         holder.bind(video)
         holder.itemView.user_feed_name.text = video.videoTitle
         holder.itemView.user_feed_discription.text = video.videoDesc
+
+        holder.itemView.video_view_ExoPlayer_home_fragment
+
+        /** Setting Up the Video View For the Home Fragment */
         holder.itemView.videoView.setVideoPath(video.videoUrl)
         holder.itemView.videoView.setVideoURI(video.videoUrl.toUri())
         holder.itemView.videoView.setOnPreparedListener {
@@ -58,6 +67,19 @@ class FeedAdaptar(var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<F
             it.start()
         }
 
+    }
+
+    /** Initialize ExoPlayer */
+    private fun initializePlayer(context: Context , video : VideoModel)
+    {
+        var player : ExoPlayer? = null
+        if (player == null)
+        {
+            player = ExoPlayerFactory.newSimpleInstance(DefaultRenderersFactory(context),
+            DefaultTrackSelector(),
+            DefaultLoadControl())
+            player
+        }
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

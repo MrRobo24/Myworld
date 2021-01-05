@@ -7,6 +7,15 @@
     android:layout_height="match_parent"
     android:background="#262626">
 
+    <com.google.android.exoplayer2.ui.SimpleExoPlayerView
+        android:id="@+id/video_view_ExoPlayer_home_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="0dp"
@@ -71,7 +80,7 @@
             android:letterSpacing="0.05"
             android:textColor="@color/cpWhite"
             android:textStyle="bold"
-            android:textSize="12dp"
+            android:textSize="12sp"
             android:paddingTop="8dp"
             app:layout_constraintBottom_toBottomOf="@+id/user_profile_tham"
             app:layout_constraintEnd_toStartOf="@+id/imageView7"
@@ -95,7 +104,7 @@
         android:textAllCaps="false"
         android:textColor="@color/cpWhite"
         android:textFontWeight="700"
-        android:textSize="10.5dp"
+        android:textSize="10.5sp"
         app:layout_constraintEnd_toEndOf="@+id/user_feed_tham_container"
         app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="@+id/user_feed_tham_container"
@@ -111,7 +120,7 @@
         android:textAllCaps="false"
         android:textColor="@color/cpWhite"
         android:textFontWeight="700"
-        android:textSize="11dp"
+        android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/videoView"
         app:layout_constraintStart_toStartOf="@+id/user_feed_discription"
         app:layout_constraintTop_toBottomOf="@+id/user_feed_discription"

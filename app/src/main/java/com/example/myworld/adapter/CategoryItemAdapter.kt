@@ -12,15 +12,18 @@ import com.example.myworld.model.CategoryItem
 class CategoryItemAdapter(private val context: Context, private val categoryItem:List<CategoryItem>) : RecyclerView.Adapter<CategoryItemAdapter.CategoryItemViewHolder>()
 {
 
-    class CategoryItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+    class CategoryItemViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
+    {
         var textView: TextView = itemView.findViewById(R.id.text_View)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CategoryItemViewHolder
+    {
         return CategoryItemViewHolder(LayoutInflater.from(context).inflate(R.layout.category_row_item, parent, false))
     }
 
-    override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: CategoryItemViewHolder, position: Int)
+    {
         holder.textView.text = categoryItem[position].categoryTitle
     }
 

@@ -57,6 +57,13 @@ class HomeFragment : Fragment() , LifecycleObserver {
         super.onStart()
     }
 
+    override fun onResume()
+    {
+        val model = ViewModelProvider(this).get(HomeFeedClass()::class.java)
+        viewpager.adapter = FeedAdaptar(model.addDetails())
+        super.onResume()
+    }
+
     companion object
     {
         /**

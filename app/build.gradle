@@ -59,15 +59,20 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.viewpager2:viewpager2:1.0.0"
+
     // CameraX core library using the camera2 implementation
     def camerax_version = "1.0.0-rc01"
+
     // The following line is optional, as the core library is included indirectly by camera-camera2
     implementation "androidx.camera:camera-core:${camerax_version}"
     implementation "androidx.camera:camera-camera2:${camerax_version}"
+
     // If you want to additionally use the CameraX Lifecycle library
     implementation "androidx.camera:camera-lifecycle:${camerax_version}"
+
     // If you want to additionally use the CameraX View class
     implementation "androidx.camera:camera-view:1.0.0-alpha20"
+
     // If you want to additionally use the CameraX Extensions library
     implementation "androidx.camera:camera-extensions:1.0.0-alpha20"
 
@@ -75,4 +80,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
     kapt 'com.android.databinding:compiler:2.3.1'
+
+    //ExoPlayer Implementation
+    implementation 'com.google.android.exoplayer:exoplayer:2.7.2'
 }
