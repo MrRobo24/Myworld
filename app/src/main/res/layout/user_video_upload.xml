@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="center"
+    android:background="@color/cpWhite">
+
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/user_video_upload_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/user_upload_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ImageView
+        android:id="@+id/back_upload_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:padding="10dp"
+        app:layout_constraintStart_toStartOf="@+id/search_appBar_Layout"
+        app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout"
+        app:srcCompat="@drawable/ic_back_arow"
+        tools:ignore="UnknownId" />
+
+    <Button
+        android:id="@+id/button6"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="15dp"
+        android:background="@drawable/roundradiusforaltbutton"
+        android:text="Upload"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/user_video_upload_toolbar" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/user_upload"
+        android:layout_width="80dp"
+        android:layout_height="130dp"
+        android:layout_gravity="center"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="20dp"
+        app:cardCornerRadius="11dp"
+        app:cardElevation="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_video_upload_toolbar">
+
+        <ImageView
+            android:id="@+id/uservideotham"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/cpBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/mypage" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <EditText
+        android:id="@+id/use_video_upload_title"
+        android:layout_width="290dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginBottom="40dp"
+        android:backgroundTint="#00000000"
+        android:hint="Video Title"
+        android:textSize="16dp"
+        app:layout_constraintBottom_toBottomOf="@+id/user_upload"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/user_upload" />
+
+    <View
+        android:id="@+id/use_Vp_title_Uline"
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:background="@color/cphelptext"
+        app:layout_constraintStart_toStartOf="@+id/use_video_upload_title"
+        app:layout_constraintTop_toBottomOf="@+id/use_video_upload_title" />
+
+    <EditText
+        android:id="@+id/use_video_upload_discription"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+        android:backgroundTint="#00000000"
+        android:hint="Video Discription"
+        android:paddingLeft="20dp"
+        android:textSize="16dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.06"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_upload" />
+
+    <View
+        android:id="@+id/use_Vp_Discription_Uline"
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/cphelptext"
+        app:layout_constraintStart_toStartOf="@+id/use_video_upload_discription"
+        app:layout_constraintTop_toBottomOf="@+id/use_video_upload_discription" />
+
+
+    <androidx.appcompat.widget.AppCompatSpinner
+        android:id="@+id/user_video_selector"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="15dp"
+        android:background="@drawable/custom_dropdown_style"
+        android:entries="@array/category"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:spinnerMode="dropdown"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/use_video_upload_discription" />
+
+    <Switch
+        android:id="@+id/user_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:textOff="off"
+        android:textOn="on"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/textView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.956"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView2"
+        app:layout_constraintVertical_bias="0.0"
+        app:showText="true"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="35dp"
+        android:text="Make Visible on Discovery"
+        android:textColor="@color/cpDark"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_video_selector" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

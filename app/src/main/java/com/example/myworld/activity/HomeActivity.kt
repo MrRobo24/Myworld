@@ -15,7 +15,6 @@ import java.util.ArrayList
 
 class HomeActivity : AppCompatActivity()
 {
-
     override fun onCreate(savedInstanceState: Bundle?)
     {
         super.onCreate(savedInstanceState)

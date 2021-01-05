@@ -1,15 +1,268 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
+    android:layout_gravity="center"
+    android:background="@color/cpWhite"
     tools:context=".fragment.ProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/search_appBar_Layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        app:elevation="0dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="MissingConstraints">
 
-</FrameLayout>
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/search_toolbar"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <TextView
+        android:id="@+id/userchanelname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:text="myworld"
+        android:textColor="@color/cpDark"
+        android:textSize="17dp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/search_appBar_Layout"
+        app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintBottom_toBottomOf="@+id/search_appBar_Layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout"
+        app:srcCompat="@drawable/ic_menu" />
+
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/user_profile_cv"
+        android:layout_width="110dp"
+        android:layout_height="110dp"
+        android:layout_gravity="center"
+        app:cardCornerRadius="55dp"
+        app:cardElevation="0dp"
+        android:layout_marginTop="10dp"
+        app:layout_constraintTop_toBottomOf="@+id/search_appBar_Layout"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        >
+
+        <ImageView
+            android:id="@+id/usertham"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/cpBackground"
+            android:scaleType="centerCrop"
+            app:srcCompat="@drawable/ic_user_defolt_avator" />
+
+    </androidx.cardview.widget.CardView>
+
+
+    <TextView
+        android:id="@+id/username"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="7dp"
+        android:gravity="center"
+        android:text="Sree Kantoo"
+        android:textColor="@color/cpDark"
+        android:textSize="22dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.504"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/user_profile_cv" />
+
+    <LinearLayout
+        android:id="@+id/ufollow"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toTopOf="@+id/userintro"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/username">
+
+        <TextView
+            android:id="@+id/fcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:text="273"
+            android:textColor="@color/cpDark"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/fname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Following"
+            android:textColor="@color/cpDark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ufollow"
+            app:layout_constraintTop_toTopOf="@+id/ufollow" />
+
+        <View
+            android:id="@+id/viewdot"
+            android:layout_width="3dp"
+            android:layout_height="3dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:background="@color/cpDark"
+            android:elevation="0dp" />
+
+        <TextView
+            android:id="@+id/fingcount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="5dp"
+            android:text="23M"
+            android:textColor="@color/cpDark"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ufollow"
+            app:layout_constraintTop_toTopOf="@+id/ufollow" />
+
+        <TextView
+            android:id="@+id/fingname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10px"
+            android:text="Following"
+            android:textColor="@color/cpDark"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toBottomOf="@+id/ufollow"
+            app:layout_constraintTop_toTopOf="@+id/ufollow" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/userintro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="10"
+        android:gravity="center_horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:text="XML acts as a major role in creating a circular Image View creating a circular Image View"
+        android:textColor="@color/cpDark"
+        android:textSize="13dp"
+        app:layout_constraintBottom_toTopOf="@+id/add_edit_button_view"
+        app:layout_constraintTop_toBottomOf="@+id/ufollow"
+        app:layout_constraintVertical_bias="1.0"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <RadioGroup
+        android:id="@+id/add_edit_button_view"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/roundradiusforview"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal"
+        android:padding="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userintro">
+
+        <RadioButton
+            android:id="@+id/radio0"
+            android:layout_width="195dp"
+            android:layout_height="36dp"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:checked="true"
+            android:gravity="center"
+            android:letterSpacing="0.05"
+            android:text="Add Story"
+            android:textColor="@color/radio_flat_text_selector"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radio1"
+            android:layout_width="195dp"
+            android:layout_height="36dp"
+            android:background="@drawable/radio_flat_selector"
+            android:button="@android:color/transparent"
+            android:gravity="center"
+            android:letterSpacing="0.05"
+            android:text="Edit Profile"
+            android:textColor="@color/radio_flat_text_selector"
+            android:textSize="14dp"
+            android:textStyle="bold" />
+
+    </RadioGroup>
+
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/profileTab"
+        android:layout_width="210dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginLeft="13dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/add_edit_button_view"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/cpDark"
+        app:tabRippleColor="@null"
+        app:tabSelectedTextColor="@color/cpDark"
+        app:tabTextColor="@color/cpIndicator">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/user_story"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Story" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/user_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Video" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/user_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="More" />
+    </com.google.android.material.tabs.TabLayout>
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profileTab" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
