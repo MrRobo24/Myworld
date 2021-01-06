@@ -126,14 +126,12 @@ class SearchFragment : Fragment()
         allCategory.add(AllCategory("Category2", categoryItemList2))
         allCategory.add(AllCategory("Category3", categoryItemList3))
         allCategory.add(AllCategory("Category4", categoryItemList4))
-        allCategory.add(AllCategory("Category4", categoryItemList5))
-        allCategory.add(AllCategory("Category4", categoryItemList6))
-        allCategory.add(AllCategory("Category4", categoryItemList7))
-        allCategory.add(AllCategory("Category4", categoryItemList8))
-        allCategory.add(AllCategory("Category4", categoryItemList9))
-        allCategory.add(AllCategory("Category4", categoryItemList10))
-//        allCategory.add(AllCategory("Category5", categoryItemList5))
-//        allCategory.add(AllCategory("Category6", categoryItemList6))
+        allCategory.add(AllCategory("Category5", categoryItemList5))
+        allCategory.add(AllCategory("Category6", categoryItemList6))
+        allCategory.add(AllCategory("Category7", categoryItemList7))
+        allCategory.add(AllCategory("Category8", categoryItemList8))
+        allCategory.add(AllCategory("Category9", categoryItemList9))
+        allCategory.add(AllCategory("Category10", categoryItemList10))
 
         setMainCategoryRecycler(allCategory)
         super.onStart()
@@ -141,13 +139,6 @@ class SearchFragment : Fragment()
 
     private fun setMainCategoryRecycler(allCategory: List<AllCategory>)
     {
-//        mainCategoryRecycler = main_recycler
-//        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(activity)
-//        mainCategoryRecycler!!.layoutManager = layoutManager
-//
-//        mainRecyclerAdaptor = activity?.let { MainRecycleViewAdapter(it, allCategory) }
-//        mainCategoryRecycler!!.adapter = mainRecyclerAdaptor
-
         main_recycler.apply {
             layoutManager = LinearLayoutManager(context)
             adapter = MainRecycleViewAdapter(context,allCategory)

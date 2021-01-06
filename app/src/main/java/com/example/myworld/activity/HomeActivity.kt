@@ -61,12 +61,20 @@ class HomeActivity : AppCompatActivity()
     override fun onResume()
     {
         bottom_navigation.visibility = View.VISIBLE
+        bottom_navigation.isEnabled = true
         super.onResume()
+    }
+
+    override fun onBackPressed()
+    {
+        finish()
+        super.onBackPressed()
     }
 
     override fun onRestart()
     {
         bottom_navigation.visibility = View.VISIBLE
+        bottom_navigation.isEnabled = true
         super.onRestart()
     }
 

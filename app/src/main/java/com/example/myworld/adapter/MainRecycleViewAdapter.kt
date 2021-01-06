@@ -41,9 +41,6 @@ class MainRecycleViewAdapter(private val context: Context, private val allCatego
 
     private fun setCatItemRecycler(recyclerView: RecyclerView, categoryItem: List<CategoryItem>)
     {
-//        val itemRecyclerAdapter = CategoryItemAdapter(context, categoryItem)
-//        recyclerView.layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
-//        recyclerView.adapter = itemRecyclerAdapter
         recyclerView.apply {
             layoutManager = LinearLayoutManager(context , RecyclerView.HORIZONTAL , false)
             adapter = CategoryItemAdapter(context , categoryItem)

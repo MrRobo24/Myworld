@@ -174,8 +174,12 @@ class CameraFragment : Fragment()
 
         /** Getting back to Home Fragment */
         camera_view_back.setOnClickListener {
-            val i = Intent(activity, HomeActivity::class.java)
-            startActivity(i)
+            Intent(activity, HomeActivity::class.java).apply {
+                this.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK
+                this.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+                startActivity(this)
+                activity?.finish()
+            }
         }
 
         super.onStart()
@@ -269,6 +273,8 @@ class CameraFragment : Fragment()
             object : VideoCapture.OnVideoSavedCallback {
                 override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
                     Log.i("SAVED", "Video File : $file")
+                    //TODO SENT FILE TO UPLOAD FRAGMENT
+
                 }
 
                 override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
