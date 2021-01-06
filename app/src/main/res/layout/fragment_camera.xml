@@ -192,7 +192,7 @@
             app:layout_constraintStart_toEndOf="@+id/camera_capture"
             app:layout_constraintTop_toTopOf="@+id/camera_capture"
             app:layout_constraintVertical_bias="0.537"
-            app:srcCompat="@drawable/ic_image_selector" />
+            app:srcCompat="@drawable/ic_video_selector" />
 
         <TextView
             android:id="@+id/camera_welcometext"
