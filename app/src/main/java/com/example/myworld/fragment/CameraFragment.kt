@@ -259,22 +259,26 @@ class CameraFragment : Fragment()
     private fun startRecording()
     {
         camera_front_back.isEnabled = false
-
+        gallery_selector.visibility = View.GONE
         //playMusic(url)
         Log.i("URL", url)
-        //setupMediaRecorder()
         var file = File(
             this.context?.externalMediaDirs?.first(),
             "${System.currentTimeMillis()}.mp4"
         )
-        //setupMediaRecorder(file)
         Constant.recordVideo?.startRecording(VideoCapture.OutputFileOptions.Builder(file).build(),
             ContextCompat.getMainExecutor(context),
             object : VideoCapture.OnVideoSavedCallback {
                 override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
                     Log.i("SAVED", "Video File : $file")
-                    //TODO SENT FILE TO UPLOAD FRAGMENT
 
+                    // Sending the recorded video URI to the VideoUploadFragment .
+                    // Fetching the recorded video from the storage using the URI and then uploading the Video to the server .
+                        VideoUploadFragment().apply {
+                        this.arguments = Bundle().apply {
+                            putString(Constant.savedVideoURI , file.toString())
+                        }
+                    }
                 }
 
                 override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
@@ -289,19 +293,29 @@ class CameraFragment : Fragment()
     private fun stopRecording()
     {
         //stopMusic()
+
+        //Chronometer Reset after stopping.
         recording_timer.stop()
         recording_timer.visibility = View.GONE
         recording_timer_dot.visibility = View.GONE
+
+        //Recording of the video has been stopped.
         Constant.recordVideo?.stopRecording()
+
         camera_capture_button_start.visibility = View.VISIBLE
+        gallery_selector.visibility = View.VISIBLE
         camera_capture_button_stop.visibility = View.GONE
         camera_music.visibility = View.VISIBLE
         camera_front_back.visibility = View.VISIBLE
-        Log.i("Visibility", "Reached")
         camera_front_back.isEnabled = true
         Log.i("STOP", "Video File stopped")
+
+        //Resetting the timer
         restProgress = 0
         restTimerDuration = 5
+
+        //Sending User to the VideoUploadFragment So that they can upload their recorded video.
+        fragmentManager?.beginTransaction()?.replace(R.id.container , VideoUploadFragment())?.commit()
     }
 
     /**Set CountDown Timer For the Recording.

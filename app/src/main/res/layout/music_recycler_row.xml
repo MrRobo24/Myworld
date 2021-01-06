@@ -24,7 +24,7 @@
             android:layout_height="match_parent"
             android:background="@color/cpBackground"
             android:scaleType="centerCrop"
-            app:srcCompat="@drawable/ic_baseline_music_note_24" />
+            app:srcCompat="@drawable/ic_music" />
 
     </androidx.cardview.widget.CardView>
 
@@ -37,7 +37,7 @@
         android:ellipsize="end"
         android:maxLines="1"
         android:paddingRight="180dp"
-        android:textColor="@color/white"
+        android:textColor="@color/cpDark"
         android:textSize="@dimen/dimen_14"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@+id/user_small_tham"

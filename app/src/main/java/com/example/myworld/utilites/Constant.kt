@@ -28,5 +28,7 @@ class Constant
         var isFlash : Boolean = false
 
         var isPlaying : Boolean = false
+
+        var savedVideoURI : String? = null
     }
 }

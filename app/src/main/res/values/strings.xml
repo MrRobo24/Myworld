@@ -1,9 +1,29 @@
 <resources>
     <string name="app_name">Myworld</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="large_text">"Avoiding elevation interference.\n\n" </string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <!--    Home Fragment -->
     <string name="drop_down">"Drop Down Menu"</string>
     <string name="gallery_image">Gallery Image</string>
+=======
+    <string-array name="category">
+        <item>Select Video Category</item>
+        <item>Film and animation</item>
+        <item>Cars and vehicles</item>
+        <item>Music</item>
+        <item>Pets and animals</item>
+        <item>Sport</item>
+        <item>Travel and events</item>
+        <item>Gaming</item>
+        <item>People and blogs </item>
+        <item>Comedy</item>
+        <item>Entertainment</item>
+        <item>News and politics</item>
+        <item>How-to and style</item>
+        <item>Education</item>
+        <item>Science and technology</item>
+        <item>Non-profits and activism</item>
+    </string-array>
+>>>>>>> a00a30c3f128adf7b742f0bf64c0fae1bac1fde9
 </resources>
