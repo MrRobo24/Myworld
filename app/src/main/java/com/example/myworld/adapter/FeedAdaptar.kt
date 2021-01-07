@@ -84,7 +84,6 @@ class FeedAdaptar(var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<F
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-
         fun bind(arrVideoModel: VideoModel)
         {
             itemView.user_feed_name.text = arrVideoModel.videoTitle
