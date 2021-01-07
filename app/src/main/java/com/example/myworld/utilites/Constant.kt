@@ -30,5 +30,7 @@ class Constant
         var isPlaying : Boolean = false
 
         var savedVideoURI : String? = null
+
+        var exoPlayerIsPlaying : Boolean = true
     }
 }
