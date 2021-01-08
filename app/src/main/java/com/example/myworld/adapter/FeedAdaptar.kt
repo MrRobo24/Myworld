@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
+import com.example.myworld.fragment.HomeFragment
 import com.example.myworld.model.VideoModel
 import com.example.myworld.utilites.Constant
 import com.google.android.exoplayer2.*
@@ -27,23 +28,12 @@ import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
 import kotlinx.android.synthetic.main.custom_controller_exo_player_home_fragment.view.*
 import kotlinx.android.synthetic.main.fragment_home.view.*
+import java.util.logging.Handler
 
 class FeedAdaptar(var context: Context , var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<FeedAdaptar.MyViewHolder>()
 {
 
     var arrVideoModel: ArrayList<VideoModel> = arrVideo
-
-    //lateinit var player : PlayerView
-    lateinit var simpleExoPlayer : SimpleExoPlayer
-
-    //Initialise load control
-    var loadControl : LoadControl = DefaultLoadControl()
-
-    //Initialise band width meter
-    var bandWidthMeter : BandwidthMeter = DefaultBandwidthMeter()
-
-    //Initialize track selector
-    var trackSelector : TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandWidthMeter))
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyViewHolder
@@ -72,6 +62,17 @@ class FeedAdaptar(var context: Context , var arrVideo : ArrayList<VideoModel>) :
     /** Initialize ExoPlayer */
     private fun initializePlayer(context: Context , video : VideoModel , holder : MyViewHolder)
     {
+        var simpleExoPlayer : SimpleExoPlayer
+
+        //Initialise load control
+        var loadControl : LoadControl = DefaultLoadControl()
+
+        //Initialise band width meter
+        var bandWidthMeter : BandwidthMeter = DefaultBandwidthMeter()
+
+        //Initialize track selector
+        var trackSelector : TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandWidthMeter))
+
         //Initial Simple ExoPlayer
         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(context , trackSelector , loadControl)
 
@@ -95,6 +96,8 @@ class FeedAdaptar(var context: Context , var arrVideo : ArrayList<VideoModel>) :
 
         //Play media when Player is ready
         simpleExoPlayer.playWhenReady = true
+
+        simpleExoPlayer.repeatMode = Player.REPEAT_MODE_ONE
 
         simpleExoPlayer.addListener(object : Player.EventListener {
             override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int)
@@ -162,11 +165,22 @@ class FeedAdaptar(var context: Context , var arrVideo : ArrayList<VideoModel>) :
         })
 
         //TODO PLAY AND PAUSE THE VIDEO IN HOME FEED
-//        holder.itemView.exoPlay_custom_controller_layout.setOnClickListener {
-//            simpleExoPlayer.playWhenReady = !Constant.exoPlayerIsPlaying
-//        }
-
+        holder.itemView.exoPlay_custom_controller_layout.setOnClickListener {
+            if (Constant.exoPlayerIsPlaying)
+            {
+                holder.itemView.exoplayer_pause_button_home_fragment.visibility = View.VISIBLE
+                holder.itemView.exoplayer_play_button_home_fragment.visibility = View.GONE
+                simpleExoPlayer.playWhenReady = false
+            }
+            else
+            {
+                holder.itemView.exoplayer_pause_button_home_fragment.visibility = View.GONE
+                holder.itemView.exoplayer_play_button_home_fragment.visibility = View.VISIBLE
+                simpleExoPlayer.playWhenReady = true
+            }
+        }
     }
+
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {

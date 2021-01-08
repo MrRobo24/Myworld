@@ -11,6 +11,23 @@ class HomeFeedClass : ViewModel()
     fun addDetails() : ArrayList<VideoModel>
     {
         arrVideoModel.add(
+                VideoModel(
+                        "Califer" ,
+                        "Video For Testing" ,
+                "https://cdn.you.ki/transcoded/he7ZZwvqX7f89Z96gAhSQCEfSJi2/merged_d0cd5ef6-a3d7-466e-9c33-d0726f1ab014-720x1280.mp4"
+                )
+        )
+
+
+        arrVideoModel.add(
+                VideoModel(
+                        "Califer" ,
+                        "Video For Testing" ,
+                        "https://cdn.you.ki/transcoded/ZbeBESIEBZT6ZO0ip8GBlTCqgYG2/9474065c-4b32-4a98-981c-a3c01748d17d-720x1280.mp4"
+                )
+        )
+
+        arrVideoModel.add(
             VideoModel(
                 "Tree with flowers",
                 "The branches of a tree wave in the breeze, with pointy leaves ",
