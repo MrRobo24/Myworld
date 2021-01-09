@@ -1,16 +1,18 @@
 package com.example.myworld.fragment.profile
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myworld.R
 import com.example.myworld.adapter.profileAdapters.ProfileTabViewAdapter
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_profile.*
+
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -42,8 +44,8 @@ class ProfileFragment : Fragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
         val root =  inflater.inflate(R.layout.fragment_profile, container, false)
@@ -60,18 +62,18 @@ class ProfileFragment : Fragment()
     {
 
         //Setting up the ViewPager Adapter and The TabLayout
-        viewPagerGroup.adapter= ProfileTabViewAdapter(this.childFragmentManager,lifecycle)
-        TabLayoutMediator(tabLayout,viewPagerGroup){ tab, position->
+        viewPagerGroup.adapter= ProfileTabViewAdapter(this.childFragmentManager, lifecycle)
+        TabLayoutMediator(tabLayout, viewPagerGroup){ tab, position->
 
             when(position){
-                0->{
-                    tab.text="Story"
+                0 -> {
+                    tab.text = "Story"
                 }
-                1->{
-                    tab.text="Video"
+                1 -> {
+                    tab.text = "Video"
                 }
-                2->{
-                    tab.text="More"
+                2 -> {
+                    tab.text = "More"
                 }
 
             }
@@ -81,7 +83,21 @@ class ProfileFragment : Fragment()
         //Sending user to Profile Setting Fragment
         profile_setting_button.setOnClickListener {
            val profileSettingFragment = ProfileSettingFragment()
-            profileSettingFragment.show(childFragmentManager,"Bottom Sheet Dialog")
+            profileSettingFragment.show(childFragmentManager, "Bottom Sheet Dialog")
+        }
+
+        //Sending User to Edit Setting Fragment
+        edit_profile.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, EditUserProfileFragment(), "EditProfileFragment")
+            ft.commit()
+        }
+
+        //Sending User to Add Stories Fragment
+        add_story_profile_fragment.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, AddStoryFragment(), "EditProfileFragment")
+            ft.commit()
         }
 
         super.onStart()
