@@ -1,0 +1,397 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginBottom="10dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/cpWhite">
+
+    <ImageView
+        android:id="@+id/dropdown_icon"
+        android:layout_width="38dp"
+        android:layout_height="33dp"
+        android:paddingTop="5dp"
+        android:paddingBottom="23dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/button_onoff_indicator_off" />
+
+    <TextView
+        android:id="@+id/profile_Settings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:foregroundGravity="center"
+        android:gravity="center"
+        android:text="Settings"
+        android:textColor="@color/cpDark"
+        android:textSize="18dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/dropdown_icon" />
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/search_appBar_Layout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:elevation="2dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        tools:ignore="MissingConstraints">-->
+
+<!--        <androidx.appcompat.widget.Toolbar-->
+<!--            android:id="@+id/search_toolbar"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="50dp"-->
+<!--            android:background="?attr/colorPrimary"-->
+<!--            android:minHeight="?attr/actionBarSize"-->
+<!--            android:theme="?attr/actionBarTheme"-->
+<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+
+    <LinearLayout
+        android:id="@+id/user_daily_active"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:orientation="horizontal"
+        android:paddingLeft="25dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile_Settings">
+
+        <LinearLayout
+            android:id="@+id/user_daily_view"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Views"
+                android:textColor="@color/cpHelpText"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="888"
+                android:textColor="@color/cpDark"
+                android:textFontWeight="900"
+                android:textSize="24dp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_daily_search"
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:paddingLeft="30dp">
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Active"
+                android:textColor="@color/cpHelpText"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/textViewaaa"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="688"
+                android:textColor="@color/cpDark"
+                android:textFontWeight="900"
+                android:textSize="24dp" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/user_daily_revenue"
+            android:layout_width="120dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:gravity="right"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Revenue"
+                android:textColor="@color/cpHelpText"
+                android:textSize="14dp" />
+
+            <TextView
+                android:id="@+id/textViewxxx"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="$8.8k"
+                android:textColor="@color/cpDark"
+                android:textFontWeight="900"
+                android:textSize="24dp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/user_edit_sitting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Manage Channels"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_daily_active"
+        app:layout_constraintTop_toBottomOf="@+id/user_daily_active" />
+
+    <TextView
+        android:id="@+id/user_setting_iscovery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Discovery"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_edit_sitting"
+        app:layout_constraintTop_toBottomOf="@+id/user_edit_sitting" />
+
+    <TextView
+        android:id="@+id/user_revenue_sitting"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="Erning"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_iscovery"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_iscovery" />
+
+    <TextView
+        android:id="@+id/user_setting_autoplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Autoplay"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_revenue_sitting"
+        app:layout_constraintTop_toBottomOf="@+id/user_revenue_sitting" />
+
+    <TextView
+        android:id="@+id/user_setting_datasaver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Video Quality"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_autoplay"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_helptaxt" />
+
+    <TextView
+        android:id="@+id/user_setting_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Camera Advancement"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_datasaver"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_helptaxt_VQ" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Notification"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_lang"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_dataserver" />
+
+    <TextView
+        android:id="@+id/user_sitting_logout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Log Out"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+
+    <Switch
+        android:id="@+id/user_setting_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="15dp"
+        android:elevation="1dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/user_setting_helptaxt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/user_setting_autoplay" />
+
+    <Switch
+        android:id="@+id/user_setting_switch_data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/user_setting_helptaxt_VQ"
+        app:layout_constraintEnd_toEndOf="@+id/user_setting_switch"
+        app:layout_constraintTop_toTopOf="@+id/user_setting_datasaver"
+        app:layout_constraintVertical_bias="0.529" />
+
+    <Switch
+        android:id="@+id/user_setting_switch_lang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/user_setting_helptaxt_DS"
+        app:layout_constraintEnd_toEndOf="@+id/user_setting_switch_data"
+        app:layout_constraintTop_toTopOf="@+id/user_setting_lang" />
+
+    <Switch
+        android:id="@+id/user_setting_switch_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/user_setting_switch"
+        app:layout_constraintTop_toTopOf="@+id/textView11" />
+
+    <Switch
+        android:id="@+id/user_setting_switch_camera"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="1dp"
+        android:thumb="@drawable/custom_switch_thumb"
+        android:track="@drawable/custom_switch_track"
+        app:layout_constraintBottom_toBottomOf="@+id/user_setting_dataserver"
+        app:layout_constraintEnd_toEndOf="@+id/user_setting_switch_lang"
+        app:layout_constraintTop_toTopOf="@+id/user_setting_DS" />
+
+    <TextView
+        android:id="@+id/user_setting_helptaxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="110dp"
+        android:paddingBottom="15dp"
+        android:text="Keep on viewing to similar video tracts whe your video ends "
+        android:textColor="@color/cpHelpText"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_autoplay"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_autoplay" />
+
+    <TextView
+        android:id="@+id/user_setting_helptaxt_VQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="100dp"
+        android:paddingBottom="15dp"
+        android:text="Smart adoptive(reduces data usage when network is metered or slow)"
+        android:textColor="@color/cpHelpText"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_datasaver"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_datasaver" />
+
+    <TextView
+        android:id="@+id/user_setting_helptaxt_DS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="100dp"
+        android:paddingBottom="15dp"
+        android:text="Recommended mode base on device (Tab &amp; hold recording)"
+        android:textColor="@color/cpHelpText"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_lang"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_lang" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="100dp"
+        android:paddingBottom="15dp"
+        android:text="Set your new video trand notification on"
+        android:textColor="@color/cpHelpText"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+
+    <TextView
+        android:id="@+id/textView13"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Recent Activity"
+        android:textColor="@color/cpIndicator"
+        app:layout_constraintBottom_toTopOf="@+id/user_daily_active"
+        app:layout_constraintStart_toStartOf="@+id/user_daily_active"
+        app:layout_constraintTop_toBottomOf="@+id/search_appBar_Layout"
+        app:layout_constraintVertical_bias="0.619" />
+
+    <TextView
+        android:id="@+id/user_setting_DS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="10dp"
+        android:paddingBottom="5dp"
+        android:text="Data Saver"
+        android:textColor="@color/cpDark"
+        android:textFontWeight="900"
+        android:textSize="16dp"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_helptaxt_DS"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_helptaxt_DS" />
+
+    <TextView
+        android:id="@+id/user_setting_dataserver"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingRight="100dp"
+        android:paddingBottom="15dp"
+        android:text="Sets Your video quality to low ( equivalent to 40 kbit/s) and disables creator canvases"
+        android:textColor="@color/cpHelpText"
+        app:layout_constraintStart_toStartOf="@+id/user_setting_DS"
+        app:layout_constraintTop_toBottomOf="@+id/user_setting_DS" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,12 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/cpWhite"
-    tools:context=".fragment.ProfileFragment">
+    android:background="@color/cpWhite">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/search_appBar_Layout"
         android:layout_width="match_parent"
+        android:background="@color/cpWhite"
         android:layout_height="wrap_content"
         app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -35,20 +35,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
-        android:text="myworld"
+        android:text="_ajjtak"
         android:textColor="@color/cpDark"
-        android:textSize="17dp"
+        android:textSize="@dimen/font_size_16"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/search_appBar_Layout"
         app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout"
         tools:ignore="MissingConstraints" />
 
     <ImageView
-        android:id="@+id/imageView2"
+        android:id="@+id/profile_setting_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="15dp"
-        android:layout_marginTop="15dp"
         app:layout_constraintBottom_toBottomOf="@+id/search_appBar_Layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout"
@@ -72,7 +71,7 @@
             android:id="@+id/usertham"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/cpBackground"
+            android:background="#dbdbdb"
             android:scaleType="centerCrop"
             app:srcCompat="@drawable/ic_user_defolt_avator" />
 
@@ -83,11 +82,11 @@
         android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="5dp"
         android:gravity="center"
         android:text="Sree Kantoo"
         android:textColor="@color/cpDark"
-        android:textSize="22dp"
+        android:textSize="@dimen/font_size_24"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.504"
@@ -97,7 +96,7 @@
     <LinearLayout
         android:id="@+id/ufollow"
         android:layout_width="match_parent"
-        android:layout_height="35dp"
+        android:layout_height="25dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintBottom_toTopOf="@+id/userintro"
@@ -115,7 +114,7 @@
             android:layout_marginRight="5dp"
             android:text="273"
             android:textColor="@color/cpDark"
-            android:textSize="16dp"
+            android:textSize="@dimen/font_size_16"
             android:textStyle="bold" />
 
         <TextView
@@ -124,7 +123,7 @@
             android:layout_height="wrap_content"
             android:text="Following"
             android:textColor="@color/cpDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_16"
             app:layout_constraintBottom_toBottomOf="@+id/ufollow"
             app:layout_constraintTop_toTopOf="@+id/ufollow" />
 
@@ -146,7 +145,7 @@
             android:layout_marginRight="5dp"
             android:text="23M"
             android:textColor="@color/cpDark"
-            android:textSize="16dp"
+            android:textSize="@dimen/font_size_16"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/ufollow"
             app:layout_constraintTop_toTopOf="@+id/ufollow" />
@@ -158,7 +157,7 @@
             android:layout_marginRight="10px"
             android:text="Following"
             android:textColor="@color/cpDark"
-            android:textSize="16sp"
+            android:textSize="@dimen/font_size_16"
             app:layout_constraintBottom_toBottomOf="@+id/ufollow"
             app:layout_constraintTop_toTopOf="@+id/ufollow" />
 
@@ -174,69 +173,90 @@
         android:paddingRight="30dp"
         android:text="XML acts as a major role in creating a circular Image View creating a circular Image View"
         android:textColor="@color/cpDark"
-        android:textSize="13dp"
-        app:layout_constraintBottom_toTopOf="@+id/add_edit_button_view"
+        android:textSize="@dimen/font_size_14"
+        app:layout_constraintBottom_toTopOf="@+id/bconview"
         app:layout_constraintTop_toBottomOf="@+id/ufollow"
         app:layout_constraintVertical_bias="1.0"
         tools:layout_editor_absoluteX="0dp" />
 
-    <RadioGroup
-        android:id="@+id/add_edit_button_view"
+    <View
+        android:id="@+id/bconview"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="392dp"
         android:background="@drawable/roundradiusforview"
-        android:gravity="center_horizontal"
-        android:orientation="horizontal"
-        android:padding="2dp"
+        android:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/userintro">
+        app:layout_constraintTop_toBottomOf="@id/userintro" />
 
-        <RadioButton
-            android:id="@+id/radio0"
-            android:layout_width="195dp"
-            android:layout_height="36dp"
-            android:background="@drawable/radio_flat_selector"
-            android:button="@android:color/transparent"
-            android:checked="true"
-            android:gravity="center"
-            android:letterSpacing="0.05"
-            android:text="Add Story"
-            android:textColor="@color/radio_flat_text_selector"
-            android:textSize="14dp"
-            android:textStyle="bold" />
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:background="@drawable/roundradiusforbutton"
+        android:elevation="0dp"
+        android:gravity="center"
+        android:letterSpacing="0.05"
+        android:paddingHorizontal="59dp"
+        android:stateListAnimator="@null"
+        android:text="Add Story"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/cpDark"
+        android:textSize="14dp"
+        android:textFontWeight="700"
+        app:layout_constraintBottom_toBottomOf="@id/bconview"
+        app:layout_constraintStart_toStartOf="@+id/bconview"
+        app:layout_constraintTop_toTopOf="@id/bconview"
+        />
 
-        <RadioButton
-            android:id="@+id/radio1"
-            android:layout_width="195dp"
-            android:layout_height="36dp"
-            android:background="@drawable/radio_flat_selector"
-            android:button="@android:color/transparent"
-            android:gravity="center"
-            android:letterSpacing="0.05"
-            android:text="Edit Profile"
-            android:textColor="@color/radio_flat_text_selector"
-            android:textSize="14dp"
-            android:textStyle="bold" />
-
-    </RadioGroup>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginRight="2dp"
+        android:layout_weight="3"
+        android:background="@drawable/roundradiusforaltbutton"
+        android:elevation="0dp"
+        android:gravity="center"
+        android:letterSpacing="0.05"
+        android:paddingHorizontal="59dp"
+        android:stateListAnimator="@null"
+        android:text="Edit Profile"
+        android:textAlignment="center"
+        android:textAllCaps="false"
+        android:textColor="@color/cpDark"
+        android:textSize="@dimen/font_size_14"
+        android:textFontWeight="700"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/bconview"
+        app:layout_constraintHorizontal_bias="0.923"
+        app:layout_constraintStart_toEndOf="@+id/button"
+        app:layout_constraintTop_toTopOf="@+id/button" />
 
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/profileTab"
         android:layout_width="210dp"
         android:layout_height="40dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginLeft="13dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/add_edit_button_view"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="@+id/bconview"
+        app:layout_constraintTop_toBottomOf="@+id/bconview"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/cpDark"
+        app:tabTextAppearance="@style/TabTextAppearance"
+        app:tabBackground="@drawable/tab_color_selector"
+        app:tabIndicatorColor="@null"
         app:tabRippleColor="@null"
-        app:tabSelectedTextColor="@color/cpDark"
+        app:tabSelectedTextColor="@color/cpWhite"
         app:tabTextColor="@color/cpIndicator">
 
         <com.google.android.material.tabs.TabItem

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -9,13 +8,18 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exoPlayer_home_fragment"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:resize_mode="fill"
-        app:hide_on_touch="true"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:background="@color/cpDark"
+        app:controller_layout_id="@layout/custom_controller_exo_player_home_fragment"
+        app:hide_on_touch="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:player_layout_id="@layout/exo_simple_player_view"
-        app:controller_layout_id="@layout/custom_controller_exo_player_home_fragment"/>
+        app:resize_mode="fill"
+        app:use_controller="true" />
 
     <ProgressBar
         android:id="@+id/video_progressBar"
@@ -29,14 +33,15 @@
 
     <LinearLayout
         android:id="@+id/user_feed_tham_container"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
         android:layout_marginBottom="120dp"
         android:orientation="horizontal"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        tool:layout_editor_absoluteX="0dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
 
         <androidx.cardview.widget.CardView
             android:id="@+id/user_profile_tham"
@@ -65,15 +70,15 @@
             android:id="@+id/user_feed_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="rajat kumar"
             android:layout_marginLeft="8dp"
+            android:letterSpacing="0.05"
+            android:paddingTop="8dp"
+            android:text="rajat kumar"
             android:textAlignment="center"
             android:textAllCaps="false"
-            android:letterSpacing="0.05"
             android:textColor="@color/cpWhite"
-            android:textStyle="bold"
             android:textSize="20sp"
-            android:paddingTop="8dp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/user_profile_tham"
             app:layout_constraintEnd_toStartOf="@+id/imageView7"
             app:layout_constraintHorizontal_bias="0.0"
@@ -87,11 +92,11 @@
         android:id="@+id/user_feed_discription"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="12dp"
-        android:paddingBottom="3dp"
-        android:paddingLeft="15dp"
-        android:paddingRight="60dp"
         android:lineHeight="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="12dp"
+        android:paddingRight="60dp"
+        android:paddingBottom="3dp"
         android:text="Prime Time With hghjgfgfgjh Ravish Kumar - सियासी दलों को प्रदर्शन ियासी दलों को प्रदर्शन"
         android:textAllCaps="false"
         android:textColor="@color/cpWhite"
@@ -122,8 +127,8 @@
         android:id="@+id/user_like"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:gravity="right"
         android:layout_marginRight="15dp"
+        android:gravity="right"
         app:layout_constraintBottom_toBottomOf="@+id/user_feed_tham_container"
         app:layout_constraintEnd_toStartOf="@+id/user_comment"
         app:layout_constraintTop_toTopOf="@+id/user_feed_tham_container"
@@ -134,8 +139,8 @@
         android:layout_width="33dp"
         android:layout_height="33dp"
         android:layout_gravity="center_vertical"
-        android:paddingTop="8dp"
         android:layout_marginRight="10dp"
+        android:paddingTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/user_feed_tham_container"
         app:layout_constraintEnd_toEndOf="@+id/user_feed_tham_container"
         app:layout_constraintTop_toTopOf="@+id/user_feed_tham_container"
