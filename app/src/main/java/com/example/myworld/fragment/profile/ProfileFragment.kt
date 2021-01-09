@@ -77,16 +77,14 @@ class ProfileFragment : Fragment()
             }
         }.attach()
 
+
         //Sending user to Profile Setting Fragment
         profile_setting_button.setOnClickListener {
            val profileSettingFragment = ProfileSettingFragment()
             profileSettingFragment.show(childFragmentManager,"Bottom Sheet Dialog")
         }
-        super.onStart()
-    }
 
-    private fun makeCurrentFragment(fragment: Fragment) = childFragmentManager.beginTransaction().apply {
-        replace(R.id.container , fragment).commit()
+        super.onStart()
     }
 
     companion object {

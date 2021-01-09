@@ -57,15 +57,18 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
     /** lOAD SONGS FROM THE External and Internal STORAGE */
     private fun loadSong()
     {
+
+        /** Fecting the Uri's of the Storage. */
         val externalUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
         val internalUri = MediaStore.Audio.Media.INTERNAL_CONTENT_URI
 
         val selectFile = MediaStore.Audio.Media.IS_MUSIC + "!=0"
 
-        //Reading the data from storage
-        val externalContentResolver = context!!.contentResolver!!.query(externalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
-        val internalContentResolver = context!!.contentResolver!!.query(internalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
+        /**Reading the data from storage. */
+        val externalContentResolver = requireContext().contentResolver!!.query(externalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
+        val internalContentResolver = requireContext().contentResolver!!.query(internalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
 
+        /** Adding all the music from the external storage. */
         if (externalContentResolver!=null)
         {
             while (externalContentResolver.moveToNext())
@@ -83,6 +86,7 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
             }
         }
 
+        /** Adding all the music from the internal storage. */
         if (internalContentResolver!=null)
         {
             while (internalContentResolver.moveToNext())
@@ -100,8 +104,12 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
             }
         }
 
+        /** Setting up the Music Recycler View for displaying the music list */
         recycler_view.apply {
+            //  Setting the layout manager
             layoutManager = LinearLayoutManager(context)
+
+            /** Setting up the adapter of the recycler view. */
             adapter = SongAdapter(listSongs , context , object : SongAdapter.MusicListener{
                 override fun onClick(song: SongInfo): String
                 {
@@ -143,6 +151,7 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
 
     override fun onResume()
     {
+        /** Resetting the MediaPlayer */
         mediaPlayer.reset()
         super.onResume()
     }

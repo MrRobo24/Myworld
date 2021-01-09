@@ -47,10 +47,13 @@ class GalleryBottomSheetFragment : BottomSheetDialogFragment() , LifecycleObserv
     {
         val model = ViewModelProvider(this).get(Gallery::class.java)
         var image = context?.let { model.listOfImages(it) }
+
+        /** Setting up the Gallery Recycler View For Gallery Fetching */
         recycler_view.apply {
             this.layoutManager = GridLayoutManager(context , 3)
             if(image !=null)
             {
+                /** Setting up the adapter for the recycler view */
                 this.adapter = GalleryImageAdapter(context , image , object : GalleryImageAdapter.PhotoListener{
                     override fun onPhotoClick(path: String) {
                         Toast.makeText(context,"",Toast.LENGTH_SHORT).show()

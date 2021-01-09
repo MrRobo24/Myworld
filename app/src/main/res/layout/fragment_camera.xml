@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -16,6 +17,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+<!--        Camera Surface View For Displaying the Camera View-->
         <androidx.camera.view.PreviewView
             android:id="@+id/cameraView"
             android:layout_width="0dp"
@@ -27,6 +29,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="1.0" />
 
+<!--        Back Navigation Button -->
         <ImageView
             android:id="@+id/camera_view_back"
             android:layout_height="wrap_content"
@@ -41,6 +44,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginStart="20dp"/>
 
+<!--        Camera Lens Switching Button ( Front & Rear )-->
         <ImageView
             android:id="@+id/camera_front_back"
             android:layout_width="wrap_content"
@@ -51,6 +55,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_camera_frontback" />
 
+<!--       Camera Music Fetching Button -->
         <ImageView
             android:id="@+id/camera_music"
             android:layout_width="wrap_content"
@@ -61,6 +66,7 @@
             app:layout_constraintTop_toBottomOf="@+id/camera_flash"
             app:srcCompat="@drawable/ic_music" />
 
+<!--        Camera Flash Button ( On & Off )-->
         <ImageView
             android:id="@+id/camera_flash"
             android:layout_width="wrap_content"
@@ -71,6 +77,7 @@
             app:layout_constraintTop_toBottomOf="@+id/camera_front_back"
             app:srcCompat="@drawable/ic_flash" />
 
+<!--        Camera Flash Button-->
 <!--        <ImageView-->
 <!--            android:id="@+id/camera_flash_off"-->
 <!--            android:layout_width="wrap_content"-->
@@ -82,8 +89,7 @@
 <!--            app:layout_constraintTop_toBottomOf="@+id/camera_front_back"-->
 <!--            app:srcCompat="@drawable/flash_icon" />-->
 
-
-
+<!--        Progress Bar For the Video Recording.-->
         <ProgressBar
             android:id="@+id/progressBar"
             style="?android:attr/progressBarStyleHorizontal"
@@ -92,6 +98,7 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:layout_editor_absoluteX="163dp" />
 
+<!--        Linear Layout for the Chronometer-->
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="wrap_content"
@@ -105,6 +112,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
+<!--            Red Dot For the Chronometer-->
             <ImageView
                 android:id="@+id/recording_timer_dot"
                 android:layout_width="wrap_content"
@@ -129,6 +137,7 @@
 
         </LinearLayout>
 
+<!--        Camera Capture View-->
         <View
             android:id="@+id/camera_capture"
             android:layout_width="80dp"
@@ -141,6 +150,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
+<!--        Camera Capture Button To Start Recording-->
         <Button
             android:id="@+id/camera_capture_button_start"
             android:layout_width="60dp"
@@ -156,6 +166,7 @@
             app:layout_constraintStart_toStartOf="@+id/camera_capture"
             app:layout_constraintTop_toTopOf="@+id/camera_capture" />
 
+<!--        Camera Capture View-->
         <View
             android:id="@+id/camera_capture_stop"
             android:layout_width="80dp"
@@ -168,6 +179,7 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent" />
 
+<!--        Camera Capture Button To Stop Recording-->
         <Button
             android:id="@+id/camera_capture_button_stop"
             android:layout_width="60dp"
@@ -183,6 +195,7 @@
             app:layout_constraintStart_toStartOf="@+id/camera_capture"
             app:layout_constraintTop_toTopOf="@+id/camera_capture" />
 
+<!--        Gallery Selector Button-->
         <ImageView
             android:id="@+id/gallery_selector"
             android:layout_width="wrap_content"
@@ -194,6 +207,7 @@
             app:layout_constraintVertical_bias="0.537"
             app:srcCompat="@drawable/ic_video_selector" />
 
+<!--        Welcome Intro Details-->
         <TextView
             android:id="@+id/camera_welcometext"
             android:layout_width="wrap_content"
@@ -229,6 +243,7 @@
             app:layout_constraintTop_toBottomOf="@+id/progressBar"
             app:layout_constraintVertical_bias="0.087" />
 
+<!--        Camera Into Text-->
         <TextView
             android:id="@+id/camera_expresstext"
             android:layout_width="wrap_content"
@@ -238,7 +253,7 @@
             android:paddingLeft="70dp"
             android:paddingRight="70dp"
             android:visibility="visible"
-            android:text="Create and edit video, and explore new ways to express yourself"
+            android:text="@string/camera_intro_text"
             android:textColor="@color/cpIndicator"
             android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="@+id/camera_welcometext"
@@ -246,6 +261,7 @@
             app:layout_constraintStart_toStartOf="@+id/camera_welcometext"
             app:layout_constraintTop_toBottomOf="@+id/camera_welcometext" />
 
+<!--        Camera Permission Button For the Allowance -->
         <Button
             android:id="@+id/camera_buttan_takepermission"
             android:layout_width="130dp"
@@ -253,7 +269,7 @@
             android:visibility="visible"
             android:layout_marginTop="28dp"
             android:background="@drawable/roundradiusforbutton"
-            android:text="Allow Access"
+            android:text="@string/permisison_allow_button"
             android:textAllCaps="false"
             android:textColor="@color/cpDark"
             app:layout_constraintEnd_toEndOf="@+id/camera_welcometext"
