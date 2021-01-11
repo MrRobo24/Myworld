@@ -5,7 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.myworld.R
+import com.example.myworld.`class`.HomeFeedClass
+import com.example.myworld.adapter.profileAdapters.StoryAdapter
+import kotlinx.android.synthetic.main.fragment_user_profile_story.*
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -37,6 +42,24 @@ class UserProfileStory : Fragment()
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_user_profile_story, container, false)
+    }
+
+    override fun onStart()
+    {
+        story_profile_fragment_recycler_view.apply {
+            layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+            adapter = StoryAdapter(HomeFeedClass().addDetails())
+        }
+        super.onStart()
+    }
+
+    override fun onResume()
+    {
+        story_profile_fragment_recycler_view.apply {
+            layoutManager = StaggeredGridLayoutManager(2 , StaggeredGridLayoutManager.VERTICAL)
+            adapter = StoryAdapter(HomeFeedClass().addDetails())
+        }
+        super.onResume()
     }
 
     companion object {

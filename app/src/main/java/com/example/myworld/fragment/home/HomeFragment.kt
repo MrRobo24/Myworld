@@ -1,7 +1,9 @@
 package com.example.myworld.fragment.home
 
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModelProvider
@@ -19,6 +21,7 @@ import com.google.android.exoplayer2.source.TrackGroupArray
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.ui.PlayerView
 import kotlinx.android.synthetic.main.fragment_home.*
+import kotlin.math.abs
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,8 +33,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [HomeFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
+class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener , GestureDetector.OnGestureListener
 {
+
+    private var x1 : Float = 0.0f
+    private var x2 : Float = 0.0f
+    private var y1 : Float = 0.0f
+    private var y2 : Float = 0.0f
 
     private lateinit var playerView: PlayerView
     private lateinit var mediaPlayer: MediaPlayerImplementation
@@ -39,6 +47,7 @@ class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
 
     companion object {
         private const val TAG = "HomeFragment"
+        private const val MIN_DISTANCE = 100
     }
 
     // TODO: Rename and change types of parameters
@@ -56,28 +65,30 @@ class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View?
     {
         // Inflate the layout for this fragment
-        val root =  inflater.inflate(R.layout.fragment_home, container, false)
-
-        playerView = root.findViewById(R.id.exoPlayer_home_fragment)
-
-        return root
+        val view =  inflater.inflate(R.layout.fragment_home, container, false)
+        return view
     }
 
     override fun onStart()
     {
+        gestureDetector =GestureDetector(context , this)
         //initPlayer()
         //val model = ViewModelProvider(this).get(HomeFeedClass()::class.java)
         viewpager.apply {
             adapter?.itemCount?.minus(1)?.let { currentItem = it }
             adapter = FeedAdapter(context , HomeFeedClass().addDetails())
         }
+        viewpager.setOnClickListener {
+            Toast.makeText(it.context , "Clicked", Toast.LENGTH_LONG).show()
+        }
         super.onStart()
     }
+
 
     override fun onStop()
     {
@@ -102,8 +113,8 @@ class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
             }
 
             override fun onTracksChanged(
-                trackGroups: TrackGroupArray?,
-                trackSelections: TrackSelectionArray?
+                    trackGroups: TrackGroupArray?,
+                    trackSelections: TrackSelectionArray?
             ) {
                 TODO("Not yet implemented")
             }
@@ -154,14 +165,52 @@ class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
 
     override fun onResume()
     {
+        gestureDetector = object : GestureDetector(context , this)
+        {
+            override fun onTouchEvent(event: MotionEvent?): Boolean
+            {
+                gestureDetector.onTouchEvent(event)
+                if (event != null)
+                {
+                    when (event.action)
+                    {
+                        //When we start to swipe
+                        0 -> {
+                            x1 = event.x
+                            y1 = event.y
+                        }
+                        //When we end to swipe
+                        1 -> {
+                            x2 = event.x
+                            y2 = event.y
+
+                            //Getting Value for the Horizontal Swipe
+                            val valueX: Float = x2 - x1
+
+                            if (abs(valueX) > HomeFragment.MIN_DISTANCE)
+                            {
+                                //Detect Left to Right Swipe
+                                if (x2 > x1) {
+                                } else {
+                                    //Detect Right to Left Swipe
+                                    Log.i("Swipe", "Right to left Swipe")
+                                    Toast.makeText(context,
+                                        "Right To Left Swipe ",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            }
+
+                        }
+                    }
+                }
+
+                return super.onTouchEvent(event)
+            }
+        }
         //val model = ViewModelProvider(this).get(HomeFeedClass()::class.java)
         viewpager.adapter = context?.let { FeedAdapter(it, HomeFeedClass().addDetails()) }
         super.onResume()
-    }
-
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean
-    {
-        return gestureDetector.onTouchEvent(event)
     }
 
     private fun setViews(isEnabled : Boolean)
@@ -198,5 +247,66 @@ class HomeFragment : Fragment() , LifecycleObserver , View.OnTouchListener
         } else {
             playerView.visibility = View.GONE
         }
+    }
+
+    override fun onDown(e: MotionEvent?): Boolean {return false }
+
+    override fun onShowPress(e: MotionEvent?) {}
+
+    override fun onSingleTapUp(e: MotionEvent?): Boolean {return false}
+
+    override fun onScroll(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {return false}
+
+    override fun onLongPress(e: MotionEvent?) {}
+
+    override fun onFling(
+        e1: MotionEvent?,
+        e2: MotionEvent?,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {return false}
+
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        gestureDetector.onTouchEvent(event)
+        if (event != null)
+        {
+            when (event.action)
+            {
+                //When we start to swipe
+                0 -> {
+                    x1 = event.x
+                    y1 = event.y
+                }
+                //When we end to swipe
+                1 -> {
+                    x2 = event.x
+                    y2 = event.y
+
+                    //Getting Value for the Horizontal Swipe
+                    val valueX: Float = x2 - x1
+
+                    if (abs(valueX) > HomeFragment.MIN_DISTANCE)
+                    {
+                        //Detect Left to Right Swipe
+                        if (x2 > x1) {
+                        } else {
+                            //Detect Right to Left Swipe
+                            Log.i("Swipe", "Right to left Swipe")
+                            Toast.makeText(context,
+                                "Right To Left Swipe ",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                }
+            }
+        }
+        return true
     }
 }
