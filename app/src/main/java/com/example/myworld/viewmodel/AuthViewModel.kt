@@ -3,8 +3,6 @@ package com.example.myworld.viewmodel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.myworld.model.authresponse.LoginResponse
-import com.example.myworld.model.authresponse.SignUpResponse
 import com.example.myworld.repository.AuthRepository
 import com.example.myworld.webservices.Resource
 import kotlinx.coroutines.launch

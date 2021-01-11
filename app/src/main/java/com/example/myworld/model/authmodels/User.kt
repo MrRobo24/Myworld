@@ -1,4 +1,4 @@
-package com.example.myworld.model.authresponse
+package com.example.myworld.model.authmodels
 
 data class User(
     val email: String,

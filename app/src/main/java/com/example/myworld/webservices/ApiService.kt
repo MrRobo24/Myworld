@@ -1,7 +1,5 @@
 package com.example.myworld.webservices
 
-import com.example.myworld.model.authresponse.LoginResponse
-import com.example.myworld.model.authresponse.SignUpResponse
 import retrofit2.http.Field
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
