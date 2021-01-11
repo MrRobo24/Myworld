@@ -6,6 +6,9 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.myworld.R
+import com.example.myworld.databinding.ActivitySignInBinding
+import com.example.myworld.viewmodel.authviewmodels.SignInViewModel
 
 class SignInActivity : AppCompatActivity() {
 
@@ -19,7 +22,7 @@ class SignInActivity : AppCompatActivity() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_in)
         signInViewModel = ViewModelProvider(this).get(SignInViewModel::class.java)
         binding.scontext = this
-        binding.viewmodel = signInViewModel
+        binding.sigin = signInViewModel
         binding.lifecycleOwner = this
 
         signInViewModel.imgUrl.value = defaultUrl

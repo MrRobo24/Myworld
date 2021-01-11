@@ -5,8 +5,8 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.arpit.cessini_task_two.viewmodel.SignUpViewModel" />
+            name="signup"
+            type="com.example.myworld.viewmodel.authviewmodels.SignUpViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -22,8 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:onClick="@{viewmodel::goToSignIn}"
-            android:text="@string/already_have_an_account_sign_in"
+            android:onClick="@{signup::goToSignIn}"
+            android:text="@string/already_have_an_account_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
             app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +31,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilEmailReg"
-            tilError="@{viewmodel.regEmailError}"
+            tilError="@{signup.regEmailError}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -43,8 +43,8 @@
                 android:id="@+id/etRegEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/email"
-                android:text="@={viewmodel.regEmailText}" />
+                android:hint="@string/enter_email"
+                android:text="@={signup.regEmailText}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -55,15 +55,15 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilEmailReg"
             app:layout_constraintVertical_bias="0.08"
-            app:tilError="@{viewmodel.regUsernameError}"
+            app:tilError="@{signup.regUsernameError}"
             tools:layout_editor_absoluteX="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegUsername"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
-                android:text="@={viewmodel.regUsernameText}" />
+                android:hint="@string/enter_username"
+                android:text="@={signup.regUsernameText}" />
 
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -76,16 +76,16 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tilUsernameReg"
             app:layout_constraintVertical_bias="0.102"
-            app:tilError="@{viewmodel.regPassError}"
+            app:tilError="@{signup.regPassError}"
             tools:layout_editor_absoluteX="0dp">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etRegPass"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/password"
+                android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:text="@={viewmodel.regPassText}" />
+                android:text="@={signup.regPassText}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -94,8 +94,8 @@
             android:id="@+id/btnSignUp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{viewmodel::signUp}"
-            android:text="@{viewmodel.txtSignUpButton, default=`Button Text`}"
+            android:onClick="@{signup::signUp}"
+            android:text="@{signup.txtSignUpButton, default=`Button Text`}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -6,6 +6,9 @@ import android.util.Log
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.example.myworld.R
+import com.example.myworld.databinding.ActivitySignUpBinding
+import com.example.myworld.viewmodel.authviewmodels.SignUpViewModel
 
 class SignUpActivity : AppCompatActivity() {
 
@@ -16,7 +19,7 @@ class SignUpActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_sign_up)
         viewModel = ViewModelProvider(this).get(SignUpViewModel::class.java)
-        binding.viewmodel = viewModel
+        binding.signup = viewModel
         binding.lifecycleOwner = this
         viewModel.txtSignUpButton.value = "Sign Up"
 

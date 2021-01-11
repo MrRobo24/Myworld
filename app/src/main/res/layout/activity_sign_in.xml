@@ -6,12 +6,12 @@
     <data>
 
         <variable
-            name="viewmodel"
-            type="com.arpit.cessini_task_two.viewmodel.SignInViewModel" />
+            name="sigin"
+            type="com.example.myworld.viewmodel.authviewmodels.SignInViewModel" />
 
         <variable
             name="scontext"
-            type="com.arpit.cessini_task_two.activity.SignInActivity" />
+            type="com.example.myworld.activity.authactivities.SignInActivity" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:onClick="@{viewmodel::goToSignUp}"
+            android:onClick="@{sigin::goToSignUp}"
             android:text="@string/don_t_have_an_account_sign_up"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.497"
@@ -35,11 +35,10 @@
         <ImageView
             android:id="@+id/ivImage"
             context="@{scontext}"
-            imageUrl="@{viewmodel.imgUrl}"
+            imageUrl="@{sigin.imgUrl}"
             android:layout_width="200dp"
             android:layout_height="200dp"
             android:layout_marginTop="72dp"
-            android:contentDescription="@string/cool_droid_image"
             android:scaleType="fitCenter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -49,7 +48,7 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilUsername"
-            tilError="@{viewmodel.usernameError}"
+            tilError="@{sigin.usernameError}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
@@ -59,15 +58,15 @@
                 android:id="@+id/etUsrname"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/username"
-                android:text="@={viewmodel.usernameText}" />
+                android:hint="@string/enter_username"
+                android:text="@={sigin.usernameText}" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilPassword"
-            tilError="@{viewmodel.passError}"
+            tilError="@{sigin.passError}"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
@@ -79,9 +78,9 @@
                 android:id="@+id/etPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/passsword"
+                android:hint="@string/enter_password"
                 android:inputType="textPassword"
-                android:text="@={viewmodel.passwordText}"
+                android:text="@={sigin.passwordText}"
                 tools:layout_editor_absoluteX="0dp"
                 tools:layout_editor_absoluteY="575dp" />
 
@@ -92,8 +91,8 @@
             android:id="@+id/btnLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:onClick="@{viewmodel::signIn}"
-            android:text="@{viewmodel.txtLoginButton, default=`Button Text`}"
+            android:onClick="@{sigin::signIn}"
+            android:text="@{sigin.txtLoginButton, default=`Button Text`}"
             app:cornerRadius="4dp"
             app:layout_constraintBottom_toBottomOf="parent" />
 
