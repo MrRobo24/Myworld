@@ -1,13 +1,14 @@
 package com.example.myworld.fragment.explore
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
+import com.example.myworld.adapter.exploreAdapters.Adapter
 import com.example.myworld.adapter.exploreAdapters.MainRecycleViewAdapter
 import com.example.myworld.model.AllCategory
 import com.example.myworld.model.CategoryItem
@@ -49,6 +50,15 @@ class SearchFragment : Fragment()
 
     override fun onStart()
     {
+        val post: ArrayList<String> = ArrayList()
+        for (i in 1..10){
+            post.add("post $i")
+        }
+        list_recycler.apply {
+            layoutManager = LinearLayoutManager(context, RecyclerView.HORIZONTAL, false)
+            adapter = Adapter(post)
+        }
+
         val categoryItemList: MutableList<CategoryItem> = ArrayList()
         categoryItemList.add(CategoryItem(1, "category1"))
         categoryItemList.add(CategoryItem(1, "category2"))
