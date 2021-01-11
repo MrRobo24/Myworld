@@ -32,59 +32,63 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/ivImage"
-            context="@{scontext}"
-            imageUrl="@{sigin.imgUrl}"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
-            android:layout_marginTop="72dp"
-            android:scaleType="fitCenter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
 
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilUsername"
-            tilError="@{sigin.usernameError}"
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:elevation="2dp"
             app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="@+id/btnSignUpGo"
+            tools:layout_editor_absoluteX="10dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etUsrname"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_username"
-                android:text="@={sigin.usernameText}" />
+                android:layout_height="match_parent"
+                android:padding="10dp">
 
-        </com.google.android.material.textfield.TextInputLayout>
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilUsername"
+                    tilError="@{sigin.usernameError}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etUsrname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_username"
+                        android:text="@={sigin.usernameText}" />
+
+                </com.google.android.material.textfield.TextInputLayout>
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/tilPassword"
-            tilError="@{sigin.passError}"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/btnLogin"
-            app:layout_constraintTop_toBottomOf="@id/tilUsername"
-            app:layout_constraintVertical_bias="0.08"
-            tools:layout_editor_absoluteX="0dp">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilPassword"
+                    tilError="@{sigin.passError}"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    app:layout_constraintTop_toBottomOf="@id/tilUsername"
+                    app:layout_constraintVertical_bias="0.08"
+                    tools:layout_editor_absoluteX="0dp">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_password"
-                android:inputType="textPassword"
-                android:text="@={sigin.passwordText}"
-                tools:layout_editor_absoluteX="0dp"
-                tools:layout_editor_absoluteY="575dp" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etPassword"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/enter_password"
+                        android:inputType="textPassword"
+                        android:text="@={sigin.passwordText}"
+                        tools:layout_editor_absoluteX="0dp"
+                        tools:layout_editor_absoluteY="575dp" />
 
-        </com.google.android.material.textfield.TextInputLayout>
+                </com.google.android.material.textfield.TextInputLayout>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
         <com.google.android.material.button.MaterialButton

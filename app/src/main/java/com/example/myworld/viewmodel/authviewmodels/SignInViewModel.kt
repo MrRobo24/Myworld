@@ -27,7 +27,6 @@ class SignInViewModel : ViewModel() {
 
     var usernameText = MutableLiveData<String>()
     var passwordText = MutableLiveData<String>()
-    var imgUrl = MutableLiveData<String>()
 
     fun signIn(view: View) {
 
@@ -63,8 +62,6 @@ class SignInViewModel : ViewModel() {
                         if (response.code() == 200) {
 
                             txtLoginButton.value = "Log In Successful"
-                            imgUrl.value =
-                                "https://www.kindpng.com/picc/m/3-30961_deal-with-it-android-cool-android-logo-png.png"
 
                             Toast.makeText(
                                 view.context,

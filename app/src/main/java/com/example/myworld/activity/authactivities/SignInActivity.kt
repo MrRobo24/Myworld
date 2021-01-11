@@ -14,7 +14,6 @@ class SignInActivity : AppCompatActivity() {
 
     lateinit var binding: ActivitySignInBinding
     lateinit var signInViewModel: SignInViewModel
-    val defaultUrl = "https://i.ytimg.com/vi/Zpvv9TdQU2k/maxresdefault.jpg"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +24,6 @@ class SignInActivity : AppCompatActivity() {
         binding.sigin = signInViewModel
         binding.lifecycleOwner = this
 
-        signInViewModel.imgUrl.value = defaultUrl
         signInViewModel.txtLoginButton.value = "Log In"
 
 
@@ -34,9 +32,6 @@ class SignInActivity : AppCompatActivity() {
                 Log.d("Username", it.toString())
                 signInViewModel.usernameError.value = null
             } else {
-                if (signInViewModel.imgUrl.value != defaultUrl) {
-                    signInViewModel.imgUrl.value = defaultUrl
-                }
                 signInViewModel.usernameError.value = "This username is not valid"
             }
         })
@@ -46,9 +41,6 @@ class SignInActivity : AppCompatActivity() {
                 Log.d("PasswordText", "Password Valid")
                 signInViewModel.passError.value = null
             } else {
-                if (signInViewModel.imgUrl.value != defaultUrl) {
-                    signInViewModel.imgUrl.value = defaultUrl
-                }
                 signInViewModel.passError.value = "This password is not valid"
             }
         })
