@@ -10,28 +10,37 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
 import com.example.myworld.model.AllCategory
 import com.example.myworld.model.CategoryItem
-import com.example.myworld.viewmodel.MainViewHolder
 
-class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>) : RecyclerView.Adapter<MainViewHolder>()
-{
+class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>) : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder
-    {
-        val view = LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
-        return MainViewHolder(view)
+    override fun getItemViewType(position: Int): Int {
+        return if (position==0) {
+            0
+        } else {
+            1
+        }
     }
 
-    override fun onBindViewHolder(holder: MainViewHolder, position: Int)
-    {
-        holder.categoryTitle.text = allCategory[position].categoryTitle
-        setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem, position)
-
-        if(position==0)
-            holder.categoryTitle.visibility=View.GONE
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return if (viewType == 0) {
+            val view= LayoutInflater.from(context).inflate(R.layout.header_view_item, parent, false)
+            ViewHolder1(view)
+        } else {
+            val view= LayoutInflater.from(context).inflate(R.layout.view_item, parent, false)
+            ViewHolder2(view)
+        }
     }
 
-    override fun getItemCount(): Int
-    {
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        if(holder is ViewHolder1){
+            setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem, position)
+        }else if(holder is ViewHolder2){
+            holder.categoryTitle.text = allCategory[position].categoryTitle
+            setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem, position)
+        }
+    }
+
+    override fun getItemCount(): Int {
         return allCategory.size
     }
 
@@ -44,5 +53,14 @@ class MainRecycleViewAdapter(private val context: Context, private val allCatego
     }
 
 
+
+    class ViewHolder1(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var itemRecycler: RecyclerView = itemView.findViewById(R.id.recyclerViewChild)
+    }
+
+    class ViewHolder2(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        var categoryTitle: TextView = itemView.findViewById(R.id.textViewTitle)
+        var itemRecycler: RecyclerView = itemView.findViewById(R.id.recyclerViewChild)
+    }
 
 }

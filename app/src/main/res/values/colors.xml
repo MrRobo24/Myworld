@@ -8,4 +8,5 @@
     <color name="cpRed">#ff0000</color>
     <color name="cpIndicator">#999999</color>
     <color name="cphelptext">#c0c0c0</color>
+    <color name="cpDarkGrey">#696969</color>
 </resources>
