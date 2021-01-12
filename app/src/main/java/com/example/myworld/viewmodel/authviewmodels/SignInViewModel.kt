@@ -1,27 +1,28 @@
 package com.example.myworld.viewmodel.authviewmodels
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
+import androidx.lifecycle.AndroidViewModel
 
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myworld.activity.authactivities.SignUpActivity
-import com.example.myworld.database.AuthEntity
-import com.example.myworld.database.DatabaseBuilder
 import com.example.myworld.database.DatabaseHelperImpl
+import com.example.myworld.model.authmodels.SignInResponseBody
 
 import com.example.myworld.repository.AuthRepository
 
 import kotlinx.coroutines.launch
 
 
-class SignInViewModel : ViewModel() {
+class SignInViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var authRepository: AuthRepository = AuthRepository(application)
 
     var txtLoginButton = MutableLiveData<String>()
-
 
     var usernameError = MutableLiveData<String>()
     var passError = MutableLiveData<String>()
@@ -32,13 +33,11 @@ class SignInViewModel : ViewModel() {
 
     fun signIn(view: View) {
 
-        val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(view.context))
-
         if (isUsernameValid(usernameText.value.toString()) && isPasswordValid(passwordText.value.toString())) {
 
             viewModelScope.launch {
                 val result = kotlin.runCatching {
-                    AuthRepository().callSignIn(
+                    authRepository.callSignIn(
                         usernameText.value.toString(),
                         passwordText.value.toString()
                     )
@@ -47,6 +46,8 @@ class SignInViewModel : ViewModel() {
                 result.onSuccess {
                     Log.d("SignIn", "SUCCESS ${it.toString()}")
                     txtLoginButton.value = "Log In Successful"
+
+                    insertDataInDB(it)
 
                     //saving to ROOM
 //                    val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
@@ -83,6 +84,23 @@ class SignInViewModel : ViewModel() {
         }
     }
 
+    private fun insertDataInDB(signInResponseBody: SignInResponseBody?) {
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                authRepository.insertAuth(signInResponseBody!!)
+            }
+
+            result.onSuccess {
+                Log.d("DB", "Auth Inserted in DB ${it.toString()}")
+
+            }
+
+            result.onFailure {
+                Log.d("DB", "Auth Inserted failed ${it.message}")
+            }
+        }
+    }
+
     fun isUsernameValid(username: String?): Boolean {
         if (username == null ||
             username.length < 6
@@ -103,6 +121,13 @@ class SignInViewModel : ViewModel() {
 
     fun goToSignUp(view: View) {
         val context: Context = view.context
+        val intent = Intent(context, SignUpActivity::class.java)
+        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        context.startActivity(intent)
+    }
+
+    fun goToHome() {
+        val context: Context = getApplication()
         val intent = Intent(context, SignUpActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)

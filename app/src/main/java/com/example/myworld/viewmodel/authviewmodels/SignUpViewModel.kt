@@ -1,10 +1,12 @@
 package com.example.myworld.viewmodel.authviewmodels
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
 import androidx.core.text.isDigitsOnly
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -22,7 +24,9 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 import kotlin.math.sign
 
-class SignUpViewModel : ViewModel() {
+class SignUpViewModel(application: Application) : AndroidViewModel(application) {
+
+    private var authRepository: AuthRepository = AuthRepository(application)
     var txtSignUpButton = MutableLiveData<String>()
 
     var regEmailError = MutableLiveData<String>()
@@ -34,7 +38,7 @@ class SignUpViewModel : ViewModel() {
     var regPassText = MutableLiveData<String>()
     var regUsernameText = MutableLiveData<String>()
 
-    fun signUp(view: View) {
+    fun signUp(view: View) { //view will be used later
         if (isRegEmailValid(regEmailText.value.toString()) &&
             isRegUsernameValid(regUsernameText.value.toString()) &&
             isRegPasswordValid(regPassText.value.toString())
@@ -42,7 +46,7 @@ class SignUpViewModel : ViewModel() {
 
             viewModelScope.launch {
                 val result = kotlin.runCatching {
-                    AuthRepository().callSignUp(
+                    authRepository.callSignUp(
                         regUsernameText.value.toString(),
                         regEmailText.value.toString(),
                         regPassText.value.toString()
@@ -51,7 +55,7 @@ class SignUpViewModel : ViewModel() {
 
                 result.onSuccess {
                     Log.d("SignUp", "SUCCESS ${it.toString()}")
-                    insertDataInDB(view, it)
+                    insertDataInDB(it)
                 }
 
                 result.onFailure {
@@ -62,15 +66,12 @@ class SignUpViewModel : ViewModel() {
         }
     }
 
-    private fun insertDataInDB(view: View, signUpResponseBody: SignUpResponseBody?) {
-        val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(view.context))
+    private fun insertDataInDB(signUpResponseBody: SignUpResponseBody?) {
 
         viewModelScope.launch {
             val result = kotlin.runCatching {
 
-                AuthRepository().insertAuth(
-                    dbHelper, signUpResponseBody!!
-                )
+                authRepository.insertAuth(signUpResponseBody!!)
             }
 
             result.onSuccess {

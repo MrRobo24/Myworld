@@ -11,10 +11,13 @@ interface AuthDao {
     suspend fun insertDao(authEntity: AuthEntity)
 
     @Delete
-    suspend fun deleteDao(authEntity: AuthEntity?)
+    suspend fun deleteAuth(authEntity: AuthEntity?)
 
-    @Query("SELECT * FROM auth_table WHERE userId = :userId")
-    suspend fun getAuthById(userId: Int): AuthEntity?
+    @Query("DELETE FROM auth_table")
+    suspend fun nukeTable()
+
+    @Query("SELECT * FROM auth_table WHERE user_id = :user_id")
+    suspend fun getAuthById(user_id: Int): AuthEntity?
 
     @Query("SELECT * FROM auth_table")
     suspend fun getAllAuth(): List<AuthEntity>
