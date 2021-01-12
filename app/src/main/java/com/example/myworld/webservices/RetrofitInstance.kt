@@ -21,10 +21,10 @@ interface ApiInterface {
 
 
     @Headers("Content-Type:application/json")
-    @POST("register")
+    @POST("api/register")
     suspend fun signUp(
         @Body info: SignUpBody
-    ): Call<SignUpResponseBody>
+    ): SignUpResponseBody
 }
 
 class RetrofitInstance {

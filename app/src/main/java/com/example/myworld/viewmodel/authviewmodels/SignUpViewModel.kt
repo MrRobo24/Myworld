@@ -8,11 +8,14 @@ import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myworld.activity.authactivities.SignInActivity
 import com.example.myworld.model.authmodels.SignUpBody
 import com.example.myworld.model.authmodels.SignUpResponseBody
+import com.example.myworld.repository.AuthRepository
 import com.example.myworld.webservices.ApiInterface
 import com.example.myworld.webservices.RetrofitInstance
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,51 +40,25 @@ class SignUpViewModel : ViewModel() {
             isRegPasswordValid(regPassText.value.toString())
         ) {
 
-            val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-            val registerInfo = SignUpBody(
-                regUsernameText.value.toString(),
-                regEmailText.value.toString(),
-                regPassText.value.toString()
-            )
+            viewModelScope.launch {
+                val result = kotlin.runCatching {
+                    AuthRepository().callSignUp(
+                        regUsernameText.value.toString(),
+                        regEmailText.value.toString(),
+                        regPassText.value.toString()
+                    )
+                }
 
-//            val call: Call<SignUpResponseBody> = retIn.signUp(registerInfo)
-//            call.enqueue(object : Callback<SignUpResponseBody> {
-//                override fun onFailure(call: Call<SignUpResponseBody>, t: Throwable) {
-//                    Toast.makeText(
-//                        view.context,
-//                        t.message,
-//                        Toast.LENGTH_SHORT
-//                    ).show()
-//
-//                    Log.d("SignUp", t.message.toString())
-//                }
-//
-//                override fun onResponse(
-//                    call: Call<SignUpResponseBody>,
-//                    response: Response<SignUpResponseBody>
-//                ) {
-//                    if (response.code() == 201) {
-//                        Toast.makeText(
-//                            view.context,
-//                            "Registration success!",
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//
-//                        Log.d("SignUp", "Success")
-//
-//                    } else {
-//                        Toast.makeText(
-//                            view.context,
-//                            "Registration failed!",
-//                            Toast.LENGTH_SHORT
-//                        )
-//                            .show()
-//                        Log.d("SignUp", "Failed")
-//                    }
-//                }
-//            })
+                result.onSuccess {
+                    Log.d("SignUp", "SUCCESS ${it.toString()}")
 
+                }
+
+                result.onFailure {
+                    Log.d("SignUp", "FAILURE ${it.message}")
+                }
+
+            }
         }
     }
 

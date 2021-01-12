@@ -36,34 +36,22 @@ class SignInViewModel : ViewModel() {
 
         if (isUsernameValid(usernameText.value.toString()) && isPasswordValid(passwordText.value.toString())) {
 
-//            val signInResponseBody: SignInResponseBody? = AuthRepository().signInCall(
-//                view,
-//                usernameText.value.toString(),
-//                passwordText.value.toString()
-//            )
-//
-//            if (signInResponseBody == null) {
-//                txtLoginButton.value = "Log In Failed! Try Again"
-//            } else {
-//                txtLoginButton.value = "Log In Successful"
-//                //SAVE IN ROOM
-//            }
-
             viewModelScope.launch {
                 val result = kotlin.runCatching {
                     AuthRepository().callSignIn(
-                        view,
                         usernameText.value.toString(),
                         passwordText.value.toString()
                     )
                 }
 
                 result.onSuccess {
-                    Log.d("SIGNIN", "SUCCESS ${it.toString()}")
+                    Log.d("SignIn", "SUCCESS ${it.toString()}")
+                    txtLoginButton.value = "Log In Successful"
                 }
 
                 result.onFailure {
-                    Log.d("SIGNIN", "FAILURE")
+                    Log.d("SignIn", "FAILURE")
+                    txtLoginButton.value = "Log In Failed! Try Again"
                 }
 
             }
@@ -71,6 +59,7 @@ class SignInViewModel : ViewModel() {
 
         } else {
             txtLoginButton.value = "Log In Failed! Try Again"
+            Log.d("SignIn", "FAILURE: Invalid credentials submitted")
         }
     }
 
