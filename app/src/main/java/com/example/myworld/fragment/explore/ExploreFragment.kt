@@ -139,10 +139,14 @@ class SearchFragment : Fragment()
 
     private fun setMainCategoryRecycler(allCategory: List<AllCategory>)
     {
-        main_recycler.apply {
-            layoutManager = LinearLayoutManager(context)
-            adapter = MainRecycleViewAdapter(context,allCategory)
+        recyclerViewParent.apply {
+            layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
+            adapter=MainRecycleViewAdapter(context,allCategory)
         }
+//        main_recycler.apply {
+//            layoutManager = LinearLayoutManager(context)
+//            adapter = MainRecycleViewAdapter(context,allCategory)
+//        }
     }
 
 

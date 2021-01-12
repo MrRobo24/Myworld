@@ -10,8 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
 import com.example.myworld.model.AllCategory
 import com.example.myworld.model.CategoryItem
+import com.example.myworld.viewmodel.MainViewHolder
 
-class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>) : RecyclerView.Adapter<MainRecycleViewAdapter.MainViewHolder>()
+class MainRecycleViewAdapter(private val context: Context, private val allCategory: List<AllCategory>) : RecyclerView.Adapter<MainViewHolder>()
 {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainViewHolder
@@ -23,7 +24,10 @@ class MainRecycleViewAdapter(private val context: Context, private val allCatego
     override fun onBindViewHolder(holder: MainViewHolder, position: Int)
     {
         holder.categoryTitle.text = allCategory[position].categoryTitle
-        setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem)
+        setCatItemRecycler(holder.itemRecycler, allCategory[position].categoryItem, position)
+
+        if(position==0)
+            holder.categoryTitle.visibility=View.GONE
     }
 
     override fun getItemCount(): Int
@@ -31,19 +35,11 @@ class MainRecycleViewAdapter(private val context: Context, private val allCatego
         return allCategory.size
     }
 
-    class MainViewHolder(itemView: View): RecyclerView.ViewHolder(itemView)
-    {
-        var categoryTitle: TextView = itemView.findViewById(R.id.cat_table)
-        var itemRecycler: RecyclerView = itemView.findViewById(R.id.cat_item_recycler)
-
-    }
-
-
-    private fun setCatItemRecycler(recyclerView: RecyclerView, categoryItem: List<CategoryItem>)
+    private fun setCatItemRecycler(recyclerView: RecyclerView, categoryItem: List<CategoryItem>, position: Int)
     {
         recyclerView.apply {
-            layoutManager = LinearLayoutManager(context , RecyclerView.HORIZONTAL , false)
-            adapter = CategoryItemAdapter(context , categoryItem)
+            layoutManager = LinearLayoutManager(context,LinearLayoutManager.HORIZONTAL,false)
+            adapter = CategoryItemAdapter(context,categoryItem,position)
         }
     }
 
