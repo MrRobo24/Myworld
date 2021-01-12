@@ -7,11 +7,15 @@ import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.example.myworld.activity.authactivities.SignUpActivity
 import com.example.myworld.model.authmodels.SignInBody
 import com.example.myworld.model.authmodels.SignInResponseBody
+import com.example.myworld.repository.AuthRepository
 import com.example.myworld.webservices.ApiInterface
 import com.example.myworld.webservices.RetrofitInstance
+import kotlinx.coroutines.launch
+import okhttp3.internal.wait
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -30,59 +34,37 @@ class SignInViewModel : ViewModel() {
 
     fun signIn(view: View) {
 
-
         if (isUsernameValid(usernameText.value.toString()) && isPasswordValid(passwordText.value.toString())) {
 
-            if (isUsernameValid(usernameText.value.toString()) &&
-                isPasswordValid(passwordText.value.toString())
-            ) {
+//            val signInResponseBody: SignInResponseBody? = AuthRepository().signInCall(
+//                view,
+//                usernameText.value.toString(),
+//                passwordText.value.toString()
+//            )
+//
+//            if (signInResponseBody == null) {
+//                txtLoginButton.value = "Log In Failed! Try Again"
+//            } else {
+//                txtLoginButton.value = "Log In Successful"
+//                //SAVE IN ROOM
+//            }
 
-                val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-                val signInInfo = SignInBody(
-                    usernameText.value.toString(),
-                    passwordText.value.toString()
-                )
+            viewModelScope.launch {
+                val result = kotlin.runCatching {
+                    AuthRepository().callSignIn(
+                        view,
+                        usernameText.value.toString(),
+                        passwordText.value.toString()
+                    )
+                }
 
-                val call: Call<SignInResponseBody> = retIn.signIn(signInInfo)
-                call.enqueue(object : Callback<SignInResponseBody> {
-                    override fun onFailure(call: Call<SignInResponseBody>, t: Throwable) {
-                        Toast.makeText(
-                            view.context,
-                            t.message,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                result.onSuccess {
+                    Log.d("SIGNIN", "SUCCESS ${it.toString()}")
+                }
 
-                        Log.d("SignIn", t.message.toString())
-                    }
-
-                    override fun onResponse(
-                        call: Call<SignInResponseBody>,
-                        response: Response<SignInResponseBody>
-                    ) {
-                        if (response.code() == 200) {
-
-                            txtLoginButton.value = "Log In Successful"
-
-                            Toast.makeText(
-                                view.context,
-                                "Sign In success!",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-
-                            Log.d("SignIn", "Success")
-
-                        } else {
-                            Toast.makeText(
-                                view.context,
-                                "Sign In failed!",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                            Log.d("SignIn", "Failed")
-                        }
-                    }
-                })
+                result.onFailure {
+                    Log.d("SIGNIN", "FAILURE")
+                }
 
             }
 

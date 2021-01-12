@@ -44,43 +44,43 @@ class SignUpViewModel : ViewModel() {
                 regPassText.value.toString()
             )
 
-            val call: Call<SignUpResponseBody> = retIn.signUp(registerInfo)
-            call.enqueue(object : Callback<SignUpResponseBody> {
-                override fun onFailure(call: Call<SignUpResponseBody>, t: Throwable) {
-                    Toast.makeText(
-                        view.context,
-                        t.message,
-                        Toast.LENGTH_SHORT
-                    ).show()
-
-                    Log.d("SignUp", t.message.toString())
-                }
-
-                override fun onResponse(
-                    call: Call<SignUpResponseBody>,
-                    response: Response<SignUpResponseBody>
-                ) {
-                    if (response.code() == 201) {
-                        Toast.makeText(
-                            view.context,
-                            "Registration success!",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-
-                        Log.d("SignUp", "Success")
-
-                    } else {
-                        Toast.makeText(
-                            view.context,
-                            "Registration failed!",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        Log.d("SignUp", "Failed")
-                    }
-                }
-            })
+//            val call: Call<SignUpResponseBody> = retIn.signUp(registerInfo)
+//            call.enqueue(object : Callback<SignUpResponseBody> {
+//                override fun onFailure(call: Call<SignUpResponseBody>, t: Throwable) {
+//                    Toast.makeText(
+//                        view.context,
+//                        t.message,
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+//
+//                    Log.d("SignUp", t.message.toString())
+//                }
+//
+//                override fun onResponse(
+//                    call: Call<SignUpResponseBody>,
+//                    response: Response<SignUpResponseBody>
+//                ) {
+//                    if (response.code() == 201) {
+//                        Toast.makeText(
+//                            view.context,
+//                            "Registration success!",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//
+//                        Log.d("SignUp", "Success")
+//
+//                    } else {
+//                        Toast.makeText(
+//                            view.context,
+//                            "Registration failed!",
+//                            Toast.LENGTH_SHORT
+//                        )
+//                            .show()
+//                        Log.d("SignUp", "Failed")
+//                    }
+//                }
+//            })
 
         }
     }

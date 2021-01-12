@@ -17,12 +17,12 @@ interface ApiInterface {
 
     @Headers("Content-Type:application/json")
     @POST("api-token-auth")
-    fun signIn(@Body info: SignInBody): Call<SignInResponseBody>
+    suspend fun signIn(@Body info: SignInBody): SignInResponseBody
 
 
     @Headers("Content-Type:application/json")
     @POST("register")
-    fun signUp(
+    suspend fun signUp(
         @Body info: SignUpBody
     ): Call<SignUpResponseBody>
 }
