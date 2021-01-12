@@ -4,21 +4,18 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.Toast
+
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myworld.activity.authactivities.SignUpActivity
-import com.example.myworld.model.authmodels.SignInBody
-import com.example.myworld.model.authmodels.SignInResponseBody
+import com.example.myworld.database.AuthEntity
+import com.example.myworld.database.DatabaseBuilder
+import com.example.myworld.database.DatabaseHelperImpl
+
 import com.example.myworld.repository.AuthRepository
-import com.example.myworld.webservices.ApiInterface
-import com.example.myworld.webservices.RetrofitInstance
+
 import kotlinx.coroutines.launch
-import okhttp3.internal.wait
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 
 class SignInViewModel : ViewModel() {
@@ -31,8 +28,11 @@ class SignInViewModel : ViewModel() {
 
     var usernameText = MutableLiveData<String>()
     var passwordText = MutableLiveData<String>()
+    lateinit var dbHelper: DatabaseHelperImpl
 
     fun signIn(view: View) {
+
+        val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(view.context))
 
         if (isUsernameValid(usernameText.value.toString()) && isPasswordValid(passwordText.value.toString())) {
 
@@ -47,6 +47,26 @@ class SignInViewModel : ViewModel() {
                 result.onSuccess {
                     Log.d("SignIn", "SUCCESS ${it.toString()}")
                     txtLoginButton.value = "Log In Successful"
+
+                    //saving to ROOM
+                    val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
+
+                    viewModelScope.launch {
+                        val result = kotlin.runCatching {
+                            AuthRepository().insertAuth(dbHelper, authEntity)
+                        }
+
+                        result.onSuccess { authEntity ->
+                            Log.d("DB", "Auth Inserted in DB ${authEntity.toString()}")
+                        }
+
+                        result.onFailure { error ->
+                            Log.d("DB", "Auth insertion failed ${error.message}")
+                        }
+
+
+                    }
+
                 }
 
                 result.onFailure {

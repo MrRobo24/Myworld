@@ -6,7 +6,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "auth_table")
 data class AuthEntity(
-    @PrimaryKey val userId: String,
+    @PrimaryKey val userId: Int,
     @ColumnInfo(name = "email") val email: String,
-    @ColumnInfo(name = "token") val token: Int
+    @ColumnInfo(name = "token") val token: String
 )

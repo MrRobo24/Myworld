@@ -8,7 +8,7 @@ import androidx.room.Query
 @Dao
 interface AuthDao {
     @Insert
-    fun insertDao(authEntity: AuthEntity?)
+    fun insertDao(authEntity: AuthEntity)
 
     @Delete
     fun deleteDao(authEntity: AuthEntity?)
