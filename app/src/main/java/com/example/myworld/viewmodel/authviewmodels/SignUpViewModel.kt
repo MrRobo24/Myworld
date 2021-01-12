@@ -51,7 +51,6 @@ class SignUpViewModel : ViewModel() {
 
                 result.onSuccess {
                     Log.d("SignUp", "SUCCESS ${it.toString()}")
-
                 }
 
                 result.onFailure {

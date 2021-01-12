@@ -8,14 +8,14 @@ import androidx.room.Query
 @Dao
 interface AuthDao {
     @Insert
-    fun insertDao(authEntity: AuthEntity)
+    suspend fun insertDao(authEntity: AuthEntity)
 
     @Delete
-    fun deleteDao(authEntity: AuthEntity?)
+    suspend fun deleteDao(authEntity: AuthEntity?)
 
     @Query("SELECT * FROM auth_table WHERE userId = :userId")
-    fun getAuthById(userId: Int): AuthEntity?
+    suspend fun getAuthById(userId: Int): AuthEntity?
 
     @Query("SELECT * FROM auth_table")
-    fun getAllAuth(): List<AuthEntity>
+    suspend fun getAllAuth(): List<AuthEntity>
 }

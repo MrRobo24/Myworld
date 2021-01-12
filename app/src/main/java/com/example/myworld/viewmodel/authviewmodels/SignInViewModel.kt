@@ -50,7 +50,7 @@ class SignInViewModel : ViewModel() {
 
                     //saving to ROOM
                     val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
-
+                    
                     viewModelScope.launch {
                         val result = kotlin.runCatching {
                             AuthRepository().insertAuth(dbHelper, authEntity)
