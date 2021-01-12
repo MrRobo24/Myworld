@@ -62,6 +62,7 @@ class ProfileFragment : Fragment()
     {
 
         //Setting up the ViewPager Adapter and The TabLayout
+        viewPagerGroup.isSaveEnabled = false
         viewPagerGroup.adapter= ProfileTabViewAdapter(this.childFragmentManager, lifecycle)
         TabLayoutMediator(tabLayout, viewPagerGroup){ tab, position->
 
@@ -82,8 +83,9 @@ class ProfileFragment : Fragment()
 
         //Sending user to Profile Setting Fragment
         profile_setting_button.setOnClickListener {
-           val profileSettingFragment = ProfileSettingFragment()
-            profileSettingFragment.show(childFragmentManager, "Bottom Sheet Dialog")
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, ProfileSettingFragment(), "EditProfileFragment")
+            ft.commit()
         }
 
         //Sending User to Edit Setting Fragment
@@ -101,6 +103,51 @@ class ProfileFragment : Fragment()
         }
 
         super.onStart()
+    }
+
+    override fun onResume()
+    {
+        //Setting up the ViewPager Adapter and The TabLayout
+        viewPagerGroup.adapter= ProfileTabViewAdapter(this.childFragmentManager, lifecycle)
+        TabLayoutMediator(tabLayout, viewPagerGroup){ tab, position->
+
+            when(position){
+                0 -> {
+                    tab.text = "Story"
+                }
+                1 -> {
+                    tab.text = "Video"
+                }
+                2 -> {
+                    tab.text = "More"
+                }
+
+            }
+        }.attach()
+
+
+        //Sending user to Profile Setting Fragment
+        profile_setting_button.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, ProfileSettingFragment(), "EditProfileFragment")
+            ft.commit()
+        }
+
+        //Sending User to Edit Setting Fragment
+        edit_profile.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, EditUserProfileFragment(), "EditProfileFragment")
+            ft.commit()
+        }
+
+        //Sending User to Add Stories Fragment
+        add_story_profile_fragment.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, AddStoryFragment(), "EditProfileFragment")
+            ft.commit()
+        }
+
+        super.onResume()
     }
 
     companion object {

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/home_feed_item"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tool="http://schemas.android.com/tools"
+    android:id="@+id/home_feed_item"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#262626">
@@ -12,9 +12,9 @@
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/exoPlayer_home_fragment"
         android:layout_width="0dp"
-        android:visibility="visible"
         android:layout_height="0dp"
         android:background="@color/cpDark"
+        android:visibility="visible"
         app:controller_layout_id="@layout/custom_controller_exo_player_home_fragment"
         app:hide_on_touch="false"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -25,16 +25,80 @@
         app:resize_mode="fill"
         app:use_controller="false" />
 
+    <!--    Video Story Recycler View-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/story_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:layout_editor_absoluteX="342dp" />
+
+
+    <!--    Video Story Recycler View-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/home_fragment_story_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="5dp"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:layout_editor_absoluteX="342dp" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/suggestion_home_feed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="15dp"
+        android:padding="5dp"
+        android:src="@drawable/add_circle_outline_24"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/expand_suggestion_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:padding="5dp"
+        android:src="@drawable/expand_more_40"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/story_view" />
+
     <!--    Video Suggestion Recycler View-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/home_fragment_video_suggestion_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20sp"
+        android:maxWidth="250dp"
+        android:maxHeight="100dp"
         android:padding="5dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/user_comment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@id/expand_suggestion_view" />
+
+    <ImageView
+        android:id="@+id/expand_video_suggestion_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="30dp"
+        android:padding="5dp"
+        android:src="@drawable/expand_more_40"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/home_fragment_story_view" />
 
     <!--    Progress Bar -->
     <ProgressBar

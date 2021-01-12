@@ -28,6 +28,7 @@ open class GalleryImageAdapter(private var context: Context, private var image: 
         var image = image[position]
 
         Glide.with(context).load(image).into(holder.itemView.gallery_iamge)
+
         holder.itemView.setOnClickListener {
             photoListener.onPhotoClick(image)
         }

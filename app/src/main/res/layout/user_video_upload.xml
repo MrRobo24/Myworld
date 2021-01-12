@@ -69,7 +69,7 @@
         app:layout_constraintTop_toBottomOf="@+id/user_video_upload_toolbar">
 
         <ImageView
-            android:id="@+id/uservideotham"
+            android:id="@+id/user_video_thumbnail"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:background="@color/cpBackground"

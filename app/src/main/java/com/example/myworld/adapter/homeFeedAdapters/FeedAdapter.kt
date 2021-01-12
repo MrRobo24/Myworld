@@ -1,15 +1,16 @@
 package com.example.myworld.adapter.homeFeedAdapters
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.net.Uri
+import android.os.Build
 import android.util.Log
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.net.toUri
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myworld.R
-import com.example.myworld.fragment.home.HomeFragment
 import com.example.myworld.model.VideoModel
 import com.example.myworld.utilites.Constant
 import com.google.android.exoplayer2.*
@@ -18,24 +19,24 @@ import com.google.android.exoplayer2.extractor.ExtractorsFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.TrackGroupArray
-import com.google.android.exoplayer2.source.dash.DashChunkSource
 import com.google.android.exoplayer2.source.dash.DashMediaSource
 import com.google.android.exoplayer2.source.dash.DefaultDashChunkSource
 import com.google.android.exoplayer2.trackselection.AdaptiveTrackSelection
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.trackselection.TrackSelectionArray
 import com.google.android.exoplayer2.trackselection.TrackSelector
-import com.google.android.exoplayer2.upstream.BandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory
+import kotlinx.android.synthetic.main.circular_video_suggestion_recycler_item.view.*
 import kotlinx.android.synthetic.main.custom_controller_exo_player_home_fragment.view.*
-import kotlinx.android.synthetic.main.fragment_home.view.*
 import kotlinx.android.synthetic.main.home_feed_recycler_item.view.*
-import java.net.URI
 import kotlin.math.abs
 
-class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<FeedAdapter.MyViewHolder>() , View.OnTouchListener , GestureDetector.OnGestureListener
+@RequiresApi(Build.VERSION_CODES.M)
+class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : RecyclerView.Adapter<FeedAdapter.MyViewHolder>() , View.OnTouchListener , GestureDetector.OnGestureListener , View.OnScrollChangeListener
 {
+    private var listOfVideo = arrVideo
+
     private var x1 : Float = 0.0f
     private var x2 : Float = 0.0f
     private var y1 : Float = 0.0f
@@ -106,7 +107,7 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
     }
 
     //Initialize track selector
-    var trackSelector : TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandWidthMeter))
+    private var trackSelector : TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandWidthMeter))
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
@@ -125,9 +126,34 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
                 Toast.makeText(it.context, "Clicked", Toast.LENGTH_LONG).show()
             }
         }
+
+        fun onClick(video: VideoModel, videoList: ArrayList<VideoModel>)
+        {
+            itemView.home_feed_item.setOnClickListener {
+                Toast.makeText(it.context, "EXO PLAYER CLICKED", Toast.LENGTH_LONG).show()
+            }
+
+            //Setting Up Story Recycler View On Expand
+            itemView.expand_suggestion_view.setOnClickListener {
+                itemView.expand_video_suggestion_view.visibility = View.VISIBLE
+                itemView.story_view.visibility = View.GONE
+                itemView.home_fragment_story_view.visibility = View.VISIBLE
+                itemView.expand_suggestion_view.visibility = View.GONE
+                itemView.home_fragment_story_view.apply {
+                    layoutManager = LinearLayoutManager(itemView.context , LinearLayoutManager.VERTICAL , false)
+                    adapter = StoryFeedSuggestionAdapter(videoList)
+                }
+            }
+        }
     }
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+        when (v?.id)
+        {
+            R.id.exoPlayer_home_fragment -> Toast.makeText(v.context, "Clicked", Toast.LENGTH_LONG).show()
+
+            R.id.home_feed_item -> Toast.makeText(v.context, "Clicked", Toast.LENGTH_LONG).show()
+        }
         return true
     }
 
@@ -178,17 +204,31 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
                 return super.onTouchEvent(event)
             }
         }
-
         Log.i("VIDEO_URL" , position.toString())
         val video = arrVideo[position]
+
+        /** Binding the data of the video with the UI. */
         holder.bind(video)
+
+        /** Actions according to the clickListener. */
+        holder.onClick(video , arrVideo)
 
         holder.itemView.user_comment.setOnClickListener {
             Toast.makeText(context , "Clicked" , Toast.LENGTH_LONG).show()
         }
+
+        /** Checking the position of the video.
+         * If the position is [1] then , the nested suggestion recycler view will be visible.
+         * Else , the circular suggestion will be visible
+         */
+        suggestionVisible(holder , position)
+
+
+        //TODO implement video play and pause onClick
         holder.itemView.home_feed_item.setOnClickListener {
             if (Constant.exoPlayerIsPlaying)
             {
+                Constant.exoPlayerIsPlaying = false
                 holder.itemView.exoplayer_play_button_home_fragment.visibility = View.VISIBLE
                 Constant.exoPlayerIsPlaying = false
             }
@@ -275,6 +315,32 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
 
     }
 
+    /** Checking the position of the video.
+     * If the position is [1] then , the nested suggestion recycler view will be visible.
+     * Else , the circular suggestion will be visible
+     */
+    private fun suggestionVisible(holder: MyViewHolder, position: Int)
+    {
+        //If the position is equal to 1st video then the nested suggestion recycler view will be visible.
+        if (position == 0)
+        {
+            holder.itemView.expand_suggestion_view.visibility = View.VISIBLE
+            holder.itemView.story_view.visibility = View.VISIBLE
+            holder.itemView.story_view.apply {
+                layoutManager = LinearLayoutManager(holder.itemView.context , LinearLayoutManager.VERTICAL , false)
+                adapter = StoryFeedAdapter(arrVideo)
+            }
+        }
+        else
+        {
+            holder.itemView.expand_suggestion_view.visibility = View.GONE
+            holder.itemView.home_fragment_video_suggestion_view.visibility = View.GONE
+            holder.itemView.story_view.visibility = View.GONE
+            holder.itemView.suggestion_home_feed.visibility = View.VISIBLE
+        }
+    }
+
+    /** Returns the size of the Video to the recycler view . */
     override fun getItemCount(): Int {
         return arrVideo.size
     }
@@ -305,7 +371,7 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
         simpleExoPlayer.prepare(mediaSource)
 
         //Play media when Player is ready
-        simpleExoPlayer.playWhenReady = true
+        simpleExoPlayer.playWhenReady = false
 
         simpleExoPlayer.addListener(object : Player.EventListener {
             override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int)
@@ -384,6 +450,12 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
     override fun onLongPress(e: MotionEvent?) {}
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {return false}
+
+    override fun onScrollChange(v: View?, scrollX: Int, scrollY: Int, oldScrollX: Int, oldScrollY: Int)
+    {
+        simpleExoPlayer.playWhenReady = true
+        TODO("Not yet implemented")
+    }
 
 
 //        override fun onTouch(v: View?, event: MotionEvent?): Boolean
