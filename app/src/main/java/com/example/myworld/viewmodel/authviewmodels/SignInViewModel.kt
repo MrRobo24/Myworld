@@ -9,6 +9,7 @@ import androidx.lifecycle.AndroidViewModel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.myworld.activity.HomeActivity
 import com.example.myworld.activity.authactivities.SignUpActivity
 import com.example.myworld.database.DatabaseHelperImpl
 import com.example.myworld.model.authmodels.SignInResponseBody
@@ -21,6 +22,12 @@ import kotlinx.coroutines.launch
 class SignInViewModel(application: Application) : AndroidViewModel(application) {
 
     private var authRepository: AuthRepository = AuthRepository(application)
+
+    init {
+        viewModelScope.launch {
+            fetchCurrentUserDB()
+        }
+    }
 
     var txtLoginButton = MutableLiveData<String>()
 
@@ -48,26 +55,6 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
                     txtLoginButton.value = "Log In Successful"
 
                     insertDataInDB(it)
-
-                    //saving to ROOM
-//                    val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
-//
-//                    viewModelScope.launch {
-//                        val result = kotlin.runCatching {
-//                            AuthRepository().insertAuth(dbHelper, authEntity)
-//                        }
-//
-//                        result.onSuccess { authEntity ->
-//                            Log.d("DB", "Auth Inserted in DB ${authEntity.toString()}")
-//                        }
-//
-//                        result.onFailure { error ->
-//                            Log.d("DB", "Auth insertion failed ${error.message}")
-//                        }
-//
-
-                    //}
-
                 }
 
                 result.onFailure {
@@ -92,13 +79,35 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
             result.onSuccess {
                 Log.d("DB", "Auth Inserted in DB ${it.toString()}")
-
+                goToHome()
             }
 
             result.onFailure {
                 Log.d("DB", "Auth Inserted failed ${it.message}")
             }
         }
+    }
+
+    private suspend fun fetchCurrentUserDB() {
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                authRepository.getAllAuth()
+            }
+
+            result.onSuccess {
+                if (it.size == 1) {
+                    goToHome()
+                } else {
+                    // call clear DB
+                }
+            }
+
+            result.onFailure {
+                // call clear DB
+            }
+
+        }
+
     }
 
     fun isUsernameValid(username: String?): Boolean {
@@ -128,7 +137,7 @@ class SignInViewModel(application: Application) : AndroidViewModel(application) 
 
     fun goToHome() {
         val context: Context = getApplication()
-        val intent = Intent(context, SignUpActivity::class.java)
+        val intent = Intent(context, HomeActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         context.startActivity(intent)
     }

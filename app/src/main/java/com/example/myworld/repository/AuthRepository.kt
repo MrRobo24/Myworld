@@ -44,9 +44,20 @@ class AuthRepository(application: Application) {
         return retIn.signUp(signUpInfo)
     }
 
-    suspend fun getAuthById(dbHelper: DatabaseHelperImpl, user_id: Int) {
+    suspend fun getAuthById(user_id: Int) {
         val authEntity: AuthEntity? = dbHelper.getAuthById(user_id) //need to return this later
         Log.d("DB", "Entity fetched from DB is: ${authEntity.toString()}")
+    }
+
+    suspend fun getAllAuth(): List<AuthEntity> {
+        val authList: List<AuthEntity> = dbHelper.getAllAuth() //need to return this later
+
+        Log.d("DB", "Entity fetched from DB is: ${authList.toString()}")
+        if (authList.size > 1) {
+            Log.d("DB", "Multiple entities exist in DB")
+        }
+
+        return authList
     }
 
     suspend fun insertAuth(
