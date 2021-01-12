@@ -1,6 +1,5 @@
 package com.example.myworld.repository
 
-import android.view.View
 import com.example.myworld.database.AuthEntity
 import com.example.myworld.database.DatabaseHelperImpl
 import com.example.myworld.model.authmodels.SignInBody
@@ -38,12 +37,26 @@ class AuthRepository {
         return retIn.signUp(signUpInfo)
     }
 
-    suspend fun insertAuth(dbHelper: DatabaseHelperImpl, authEntity: AuthEntity): AuthEntity {
+    suspend fun insertAuth(
+        dbHelper: DatabaseHelperImpl,
+        signUpResponseBody: SignUpResponseBody
+    ): AuthEntity {
+
+        val authEntity = AuthEntity(
+            userId = signUpResponseBody.user.userId,
+            email = signUpResponseBody.user.email,
+            username = signUpResponseBody.user.username,
+            profileImageUrl = signUpResponseBody.user.profileImgUrl,
+            info = signUpResponseBody.user.info,
+            gender = signUpResponseBody.user.gender,
+            token = signUpResponseBody.token
+        )
+
         dbHelper.insertAuth(authEntity)
         return authEntity
     }
 
-    suspend fun getAuth() {
+    suspend fun getAuthById() {
 
     }
 

@@ -4,23 +4,23 @@ import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.text.isDigitsOnly
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.myworld.activity.authactivities.SignInActivity
-import com.example.myworld.model.authmodels.SignUpBody
+import com.example.myworld.database.AuthEntity
+import com.example.myworld.database.DatabaseBuilder
+import com.example.myworld.database.DatabaseHelperImpl
 import com.example.myworld.model.authmodels.SignUpResponseBody
 import com.example.myworld.repository.AuthRepository
-import com.example.myworld.webservices.ApiInterface
-import com.example.myworld.webservices.RetrofitInstance
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.math.sign
 
 class SignUpViewModel : ViewModel() {
     var txtSignUpButton = MutableLiveData<String>()
@@ -51,12 +51,34 @@ class SignUpViewModel : ViewModel() {
 
                 result.onSuccess {
                     Log.d("SignUp", "SUCCESS ${it.toString()}")
+                    insertDataInDB(view, it)
                 }
 
                 result.onFailure {
                     Log.d("SignUp", "FAILURE ${it.message}")
                 }
 
+            }
+        }
+    }
+
+    private fun insertDataInDB(view: View, signUpResponseBody: SignUpResponseBody?) {
+        val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(view.context))
+
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+
+                AuthRepository().insertAuth(
+                    dbHelper, signUpResponseBody!!
+                )
+            }
+
+            result.onSuccess {
+                Log.d("DB", "Auth Inserted in DB ${it.toString()}")
+            }
+
+            result.onFailure {
+                Log.d("DB", "Auth insertion failed ${it.message}")
             }
         }
     }

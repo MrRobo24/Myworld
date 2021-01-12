@@ -1,7 +1,10 @@
 package com.example.myworld.model.authmodels
 
 data class User(
-    val email: String,
-    val id: Int,
-    val username: String
+    var userId: Int,
+    var email: String,
+    var username: String,
+    var profileImgUrl: String = "",
+    var info: String = "",
+    var gender: String = ""
 )

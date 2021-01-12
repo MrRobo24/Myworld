@@ -49,23 +49,23 @@ class SignInViewModel : ViewModel() {
                     txtLoginButton.value = "Log In Successful"
 
                     //saving to ROOM
-                    val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
-                    
-                    viewModelScope.launch {
-                        val result = kotlin.runCatching {
-                            AuthRepository().insertAuth(dbHelper, authEntity)
-                        }
+//                    val authEntity = AuthEntity(it?.userId!!, it?.email!!, it?.token!!)
+//
+//                    viewModelScope.launch {
+//                        val result = kotlin.runCatching {
+//                            AuthRepository().insertAuth(dbHelper, authEntity)
+//                        }
+//
+//                        result.onSuccess { authEntity ->
+//                            Log.d("DB", "Auth Inserted in DB ${authEntity.toString()}")
+//                        }
+//
+//                        result.onFailure { error ->
+//                            Log.d("DB", "Auth insertion failed ${error.message}")
+//                        }
+//
 
-                        result.onSuccess { authEntity ->
-                            Log.d("DB", "Auth Inserted in DB ${authEntity.toString()}")
-                        }
-
-                        result.onFailure { error ->
-                            Log.d("DB", "Auth insertion failed ${error.message}")
-                        }
-
-
-                    }
+                    //}
 
                 }
 
