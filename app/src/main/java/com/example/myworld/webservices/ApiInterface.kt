@@ -21,7 +21,7 @@ interface ApiInterface {
         @Body info: SignUpBody
     ): SignUpResponseBody
 
-    @GET("profile/userdetails")
-    suspend fun fetchProfile(@Url id: String): ProfileResponse
+    @GET
+    suspend fun fetchProfile(@Url url: String): ProfileResponse
 
 }

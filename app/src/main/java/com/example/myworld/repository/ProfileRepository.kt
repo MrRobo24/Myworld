@@ -60,7 +60,7 @@ class ProfileRepository(application: Application) {
 
     suspend fun callFetchProfile(): String {
         val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-        val profileResponse = retIn.fetchProfile(user_id.toString())
+        val profileResponse = retIn.fetchProfile(url + user_id.toString())
         Log.d("FetchProfile", "Profile Fetched: $profileResponse")
         return profileResponse.username
     }
