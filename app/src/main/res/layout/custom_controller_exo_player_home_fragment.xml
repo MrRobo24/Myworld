@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/exoplayer_play_button_home_fragment"
+        android:id="@+id/exoplayer_play_button"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"
@@ -15,7 +15,7 @@
         android:visibility="invisible"/>
 
     <ImageView
-        android:id="@+id/exoplayer_pause_button_home_fragment"
+        android:id="@+id/exoplayer_pause_button"
         android:layout_width="300dp"
         android:layout_height="300dp"
         android:layout_gravity="center"

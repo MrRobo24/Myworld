@@ -189,18 +189,8 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
 
         //TODO implement video play and pause onClick
-        holder.itemView.home_feed_item.setOnClickListener {
-            if (Constant.exoPlayerIsPlaying) {
-                Constant.exoPlayerIsPlaying = false
-                holder.itemView.exoplayer_play_button_home_fragment.visibility = View.VISIBLE
-                Constant.exoPlayerIsPlaying = false
-            } else if (!Constant.exoPlayerIsPlaying) {
-                holder.itemView.exoplayer_play_button_home_fragment.visibility = View.GONE
-                Constant.exoPlayerIsPlaying = true
-                simpleExoPlayer.playWhenReady = true
-            }
+
             //Toast.makeText(it.context , "Clicked" , Toast.LENGTH_LONG).show()
-        }
 
 
         //initializeExoPlayer(video.videoUrl , holder)
@@ -343,7 +333,16 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     }
 
 
-    override fun onDown(e: MotionEvent?): Boolean {
+    override fun onDown(e: MotionEvent?): Boolean
+    {
+
+//        holder.itemView.home_feed_item.setOnClickListener {
+//
+//        }
+//        holder.itemView.exoplayer_play_button_home_fragment.setOnClickListener {
+//
+//        }
+//        Toast.makeText(holder.itemView.context , "Clicked" , Toast.LENGTH_SHORT).show()
         return false
     }
 
@@ -353,6 +352,16 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
         //Toast.makeText(context, "onSingleTapUP", Toast.LENGTH_SHORT).show()
+//        if (holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
+//        {
+//            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false
+//            return false
+//        }
+//        else if (!holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
+//        {
+//            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = true
+//            return false
+//        }
         return false
     }
 
@@ -402,6 +411,7 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
     override fun onTouch(v: View?, event: MotionEvent?): Boolean {
         gestureDetector.onTouchEvent(event)
+
         if (event != null)
         {
                 when (event.action)

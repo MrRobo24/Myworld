@@ -14,7 +14,7 @@
                android:alpha="0" />
        </KeyFrameSet>
         <OnSwipe
-            motion:touchAnchorId="@+id/home_feed_item"
+            motion:touchAnchorId="@+id/viewpager"
             motion:touchAnchorSide="bottom" />
     </Transition>
 
