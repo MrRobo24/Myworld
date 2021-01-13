@@ -1,15 +1,18 @@
 package com.example.myworld.fragment.camera
 
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.example.myworld.R
 import com.example.myworld.model.VideoModel
-import com.example.myworld.utilites.Constant
 import kotlinx.android.synthetic.main.user_video_upload.*
+import java.io.File
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -28,6 +31,7 @@ class VideoUploadFragment() : Fragment()
     private var param1: String? = null
     private var param2: String? = null
     private var videoURI : String? = null
+    lateinit var user_video_thumbnail: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -41,7 +45,11 @@ class VideoUploadFragment() : Fragment()
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.user_video_upload, container, false)
+        val view=inflater.inflate(R.layout.user_video_upload, container, false)
+        user_video_thumbnail=view.findViewById(R.id.user_video_thumbnail)
+
+
+        return view
     }
 
     override fun onStart()
@@ -51,13 +59,28 @@ class VideoUploadFragment() : Fragment()
 //            user_video_thumbnail.setImageBitmap(video.videoThumbnail)
 //        }
 
+        val filePath=arguments?.getString("FilePath")
+
+        if(filePath=="")
+            Log.i("FilePath",filePath)
+        else
+            Log.i("FilePath","filePath!!")
+
+        //Creates the video thumbnail
+        Glide.with(this)
+                .asBitmap()
+                //.load(Uri.fromFile(File(filePath)))
+                .load(R.drawable.mypage)    //will be removed after the data passing issue is fixed
+                .error(R.drawable.mypage)
+                .into(user_video_thumbnail)
+
         /** Action performed when user clicks on upload Button.
          * Uploading the file to the server and then sending back the user to the camera fragment. */
         videoUploadButton.setOnClickListener {
             //TODO UPLOAD THE SAVED VIDEO FILE TO THE SERVER.
 
             //Sending back to camera fragment after successful upload of the saved video .
-            Log.i("Saved Video Uri " , videoURI.toString())
+            Log.i("Saved Video Uri ", videoURI.toString())
         }
 
         back_upload_icon.setOnClickListener {

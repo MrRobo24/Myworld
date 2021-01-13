@@ -2,6 +2,7 @@ package com.example.myworld.fragment.camera
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -70,6 +71,9 @@ class CameraFragment : Fragment()
     private var songName : String = ""
 
     private var mediaRecorder = MediaRecorder()
+
+    var sm: SendMessage?=null
+    var path=""
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -85,8 +89,8 @@ class CameraFragment : Fragment()
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?,
+            savedInstanceState: Bundle?
     ): View?
     {
         // Inflate the layout for this fragment
@@ -97,21 +101,21 @@ class CameraFragment : Fragment()
     {
         /** Permissions checks */
         if ((context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.CAMERA
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.CAMERA
+                ) } != PackageManager.PERMISSION_GRANTED)
                 && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) } != PackageManager.PERMISSION_GRANTED)
                 && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) } != PackageManager.PERMISSION_GRANTED)
                 && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.RECORD_AUDIO
-            ) } != PackageManager.PERMISSION_GRANTED))
+                        it,
+                        android.Manifest.permission.RECORD_AUDIO
+                ) } != PackageManager.PERMISSION_GRANTED))
         {
             camera_capture.isEnabled = false
             camera_capture_button_start.isEnabled = false
@@ -206,28 +210,28 @@ class CameraFragment : Fragment()
         //Creating a Listener . This let us know that weather our application has been binded with the camera.
         val cameraProvider = context?.let { ProcessCameraProvider.getInstance(it) }
         cameraProvider?.addListener(
-            Runnable
-            {
-                val cameraProvider = cameraProvider.get()
-                Constant.preview = Preview.Builder().build()
-                Constant.preview!!.setSurfaceProvider(cameraView.surfaceProvider)
+                Runnable
+                {
+                    val cameraProvider = cameraProvider.get()
+                    Constant.preview = Preview.Builder().build()
+                    Constant.preview!!.setSurfaceProvider(cameraView.surfaceProvider)
 
-                Constant.recordVideo = VideoCapture.Builder().build()
-                //Camera Selector . By Default it will open back camera
-                val cameraSelector =
-                    CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK)
-                        .build()
-                //Unbinding the CameraProvider
-                cameraProvider.unbindAll()
-                //Binding the camera
-                Constant.camera = cameraProvider.bindToLifecycle(
-                    this,
-                    cameraSelector,
-                    Constant.preview,
-                    Constant.recordVideo
-                )
+                    Constant.recordVideo = VideoCapture.Builder().build()
+                    //Camera Selector . By Default it will open back camera
+                    val cameraSelector =
+                            CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_BACK)
+                                    .build()
+                    //Unbinding the CameraProvider
+                    cameraProvider.unbindAll()
+                    //Binding the camera
+                    Constant.camera = cameraProvider.bindToLifecycle(
+                            this,
+                            cameraSelector,
+                            Constant.preview,
+                            Constant.recordVideo
+                    )
 
-            }, ContextCompat.getMainExecutor(context)
+                }, ContextCompat.getMainExecutor(context)
         )
     }
 
@@ -252,16 +256,16 @@ class CameraFragment : Fragment()
                 Constant.recordVideo = VideoCapture.Builder().build()
                 //Camera Selector . By Default it will open back camera
                 val cameraSelector =
-                    CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT)
-                        .build()
+                        CameraSelector.Builder().requireLensFacing(CameraSelector.LENS_FACING_FRONT)
+                                .build()
                 //Unbinding the CameraProvider
                 cameraProvider.unbindAll()
                 //Binding the camera
                 Constant.camera = cameraProvider.bindToLifecycle(
-                    this,
-                    cameraSelector,
-                    Constant.preview,
-                    Constant.recordVideo
+                        this,
+                        cameraSelector,
+                        Constant.preview,
+                        Constant.recordVideo
                 )
 
             }, ContextCompat.getMainExecutor(context))
@@ -278,36 +282,40 @@ class CameraFragment : Fragment()
         //playMusic(url)
         Log.i("URL", url)
         var file = File(
-            this.context?.externalMediaDirs?.first(),
-            "${System.currentTimeMillis()}.mp4"
+                this.context?.externalMediaDirs?.first(),
+                "${System.currentTimeMillis()}.mp4"
         )
         Constant.recordVideo?.startRecording(VideoCapture.OutputFileOptions.Builder(file).build(),
-            ContextCompat.getMainExecutor(context),
-            object : VideoCapture.OnVideoSavedCallback {
-                override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
-                    Log.i("SAVED", "Video File : $file")
-                    //Generating the thumbnail for the video
-                    bitmap = setUpThumbnail(file)
-                    video = if (bitmap != null) {
-                        VideoModel(bitmap!!, "", "", file.absolutePath)
-                    } else {
-                        bitmap?.let { VideoModel(it, "", "", file.absolutePath) }
-                    }
-                    // Sending the recorded video URI to the VideoUploadFragment .
-                    // Fetching the recorded video from the storage using the URI and then uploading the Video to the server .
-                    if (video != null) {
-                        VideoUploadFragment().apply {
-                            this.arguments = Bundle().apply {
-                                putString(Constant.savedVideoURI, file.toString())
+                ContextCompat.getMainExecutor(context),
+                object : VideoCapture.OnVideoSavedCallback {
+                    override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
+                        Log.i("SAVED", "Video File : $file")
+                        //Generating the thumbnail for the video
+                        bitmap = setUpThumbnail(file)
+                        video = if (bitmap != null) {
+                            VideoModel(bitmap!!, "", "", file.absolutePath)
+                        } else {
+                            bitmap?.let { VideoModel(it, "", "", file.absolutePath) }
+                        }
+
+                        path=file.absolutePath
+                        //sm?.sendData(path)
+                        // Sending the recorded video URI to the VideoUploadFragment .
+                        // Fetching the recorded video from the storage using the URI and then uploading the Video to the server .
+                        if (video != null) {
+                            VideoUploadFragment().apply {
+                                this.arguments = Bundle().apply {
+                                    putString(Constant.savedVideoURI, file.toString())
+                                    putString("FilePath",path)
+                                }
                             }
                         }
                     }
-                }
 
-                override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
-                    Log.i("tag", "Video Error: $message")
-                }
-            })
+                    override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
+                        Log.i("tag", "Video Error: $message")
+                    }
+                })
 
     }
 
@@ -315,8 +323,6 @@ class CameraFragment : Fragment()
     @SuppressLint("RestrictedApi")
     private fun stopRecording()
     {
-        //stopMusic()
-
         //Chronometer Reset after stopping.
         recording_timer.stop()
         recording_timer.visibility = View.GONE
@@ -344,11 +350,26 @@ class CameraFragment : Fragment()
         fragmentManager?.beginTransaction()?.replace(R.id.container, VideoUploadFragment())?.commit()
     }
 
+    //To initialise SendMessage interface
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        try {
+            sm=activity as SendMessage?
+        } catch (e: ClassCastException) {
+            throw ClassCastException("Error in retrieving data. Please try again")
+        }
+    }
+
+    //Interface to connect CameraFragment and VideoUploadFragment
+    interface SendMessage {
+        fun sendData(message: String?)
+    }
+
     /** Setup the Thumbnail of the recorded Video. */
     private fun setUpThumbnail(file: File) : Bitmap?
     {
         return  ThumbnailUtils.createVideoThumbnail(file.toUri().toString(),
-            MediaStore.Images.Thumbnails.MINI_KIND);
+                MediaStore.Images.Thumbnails.MINI_KIND);
     }
 
     /**Set CountDown Timer For the Recording.
@@ -411,21 +432,21 @@ class CameraFragment : Fragment()
     private fun askPermission()
     {
         ActivityCompat.requestPermissions(
-            context as Activity, arrayOf(
+                context as Activity, arrayOf(
                 android.Manifest.permission.CAMERA,
                 android.Manifest.permission.RECORD_AUDIO,
                 android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
                 android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ),
-            Constant.PERMISSION_REQUEST_CODE
+        ),
+                Constant.PERMISSION_REQUEST_CODE
         )
     }
 
     /**     Check Permissions required for the Camera   */
     override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
+            requestCode: Int,
+            permissions: Array<out String>,
+            grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
         if (requestCode == Constant.PERMISSION_REQUEST_CODE)
@@ -460,8 +481,8 @@ class CameraFragment : Fragment()
         else
         {
             Toast.makeText(
-                context, "Permissions are required to run the application!\nKindly allow.",
-                Toast.LENGTH_SHORT
+                    context, "Permissions are required to run the application!\nKindly allow.",
+                    Toast.LENGTH_SHORT
             ).show()
             askPermission()
         }
@@ -471,21 +492,21 @@ class CameraFragment : Fragment()
     {
         /** Permissions checks */
         if ((context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.CAMERA
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.CAMERA
+                ) } != PackageManager.PERMISSION_GRANTED)
             && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ) } != PackageManager.PERMISSION_GRANTED)
             && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
+                        it,
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                ) } != PackageManager.PERMISSION_GRANTED)
             && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.RECORD_AUDIO
-            ) } != PackageManager.PERMISSION_GRANTED))
+                        it,
+                        android.Manifest.permission.RECORD_AUDIO
+                ) } != PackageManager.PERMISSION_GRANTED))
         {
             camera_capture.isEnabled = false
             camera_capture_button_start.isEnabled = false
