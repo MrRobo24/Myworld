@@ -116,71 +116,6 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
         //initializeExoPlayer(video.videoUrl , holder)
         Log.i("VIDEO_URL" , video.videoUrl)
 
-//        simpleExoPlayer.addListener(object : Player.EventListener {
-//            override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int)
-//            {
-//
-//            }
-//
-//            override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?)
-//            {
-////                simpleExoPlayer.playWhenReady = false
-//            }
-//
-//            override fun onLoadingChanged(isLoading: Boolean)
-//            {
-//
-//            }
-//
-//            override fun onPlayerStateChanged(playWhenReady: Boolean, playbackState: Int)
-//            {
-//                //Check Condition
-//                if (playbackState == Player.STATE_BUFFERING)
-//                {
-//                    //When Buffering
-//                    //Show Progress Bar
-//                    holder.itemView.video_progressBar.visibility = View.VISIBLE
-//                }
-//                else if (playbackState == Player.STATE_READY)
-//                {
-//                    //When Ready
-//                    //Hide Progress bar
-//                    holder.itemView.video_progressBar.visibility =View.GONE
-//                }
-//            }
-//
-//            override fun onRepeatModeChanged(repeatMode: Int)
-//            {
-//
-//            }
-//
-//            override fun onShuffleModeEnabledChanged(shuffleModeEnabled: Boolean)
-//            {
-//
-//            }
-//
-//            override fun onPlayerError(error: ExoPlaybackException?)
-//            {
-//
-//            }
-//
-//            override fun onPositionDiscontinuity(reason: Int)
-//            {
-//
-//            }
-//
-//            override fun onPlaybackParametersChanged(playbackParameters: PlaybackParameters?)
-//            {
-//
-//            }
-//
-//            override fun onSeekProcessed()
-//            {
-//
-//            }
-//
-//        })
-
         initializePlayer(context , video , holder)
     }
 
@@ -210,7 +145,7 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
         simpleExoPlayer.prepare(mediaSource)
 
         //Play media when Player is ready
-        simpleExoPlayer.playWhenReady = true
+        simpleExoPlayer.playWhenReady = false
 
         simpleExoPlayer.addListener(object : Player.EventListener {
             override fun onTimelineChanged(timeline: Timeline?, manifest: Any?, reason: Int)
@@ -276,6 +211,14 @@ class FeedAdapter(var context: Context, var arrVideo : ArrayList<VideoModel>) : 
             }
 
         })
+    }
+
+    override fun onViewAttachedToWindow (holder: MyViewHolder){
+        holder.itemView.exoPlayer_home_fragment.player.playWhenReady = true;
+    }
+
+    override fun onViewDetachedFromWindow (holder: MyViewHolder){
+        holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false;
     }
 
     inner class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
