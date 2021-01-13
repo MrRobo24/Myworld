@@ -43,10 +43,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     private var y1: Float = 0.0f
     private var y2: Float = 0.0f
 
-    private var tap : Int = 2
-
-    private var event : Int = MotionEvent.ACTION_DOWN
-
     private var position = 0
     private lateinit var holder : MyViewHolder
 
@@ -253,7 +249,8 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         return arrVideo.size
     }
 
-    private fun initializePlayer(context: Context, video: VideoModel, holder: MyViewHolder) {
+    private fun initializePlayer(context: Context, video: VideoModel, holder: MyViewHolder)
+    {
         //Initial Simple ExoPlayer
         simpleExoPlayer = ExoPlayerFactory.newSimpleInstance(holder.itemView.exoPlayer_home_fragment.context, trackSelector, loadControl)
 
@@ -333,7 +330,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         })
     }
 
-
     override fun onDown(e: MotionEvent?): Boolean
     {
 
@@ -352,8 +348,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     }
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
-
-        //Toast.makeText(context, "onSingleTapUP", Toast.LENGTH_SHORT).show()
         return false
     }
 
@@ -398,10 +392,7 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         return true
     }
 
-    override fun onLongPress(e: MotionEvent?)
-    {
-        //Toast.makeText(context, "onLongPress", Toast.LENGTH_SHORT).show()
-    }
+    override fun onLongPress(e: MotionEvent?) {}
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
         //Toast.makeText(context, "onFling", Toast.LENGTH_SHORT).show()

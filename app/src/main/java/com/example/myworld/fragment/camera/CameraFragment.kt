@@ -285,7 +285,8 @@ class CameraFragment : Fragment()
         Constant.recordVideo?.startRecording(VideoCapture.OutputFileOptions.Builder(file).build(),
             ContextCompat.getMainExecutor(context),
             object : VideoCapture.OnVideoSavedCallback {
-                override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
+                override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults)
+                {
                     Log.i("SAVED", "Video File : $file")
 
                     //Sending User to the VideoUploadFragment So that they can upload their recorded video.
