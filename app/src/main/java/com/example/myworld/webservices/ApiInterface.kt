@@ -1,12 +1,12 @@
 package com.example.myworld.webservices
 
+import com.example.myworld.model.ProfileResponse
 import com.example.myworld.model.authmodels.SignInBody
 import com.example.myworld.model.authmodels.SignInResponseBody
 import com.example.myworld.model.authmodels.SignUpBody
 import com.example.myworld.model.authmodels.SignUpResponseBody
-import retrofit2.http.Body
-import retrofit2.http.Headers
-import retrofit2.http.POST
+import retrofit2.Call
+import retrofit2.http.*
 
 interface ApiInterface {
 
@@ -20,4 +20,8 @@ interface ApiInterface {
     suspend fun signUp(
         @Body info: SignUpBody
     ): SignUpResponseBody
+
+    @GET
+    fun getUsername(@Url id: String): Call<ProfileResponse>
+
 }

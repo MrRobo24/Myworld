@@ -4,11 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import androidx.lifecycle.ViewModelProviders
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myworld.R
 import com.example.myworld.adapter.profileAdapters.ProfileTabViewAdapter
+import com.example.myworld.databinding.FragmentProfileBinding
+import com.example.myworld.viewmodel.ProfileViewModel
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.fragment_profile.*
@@ -24,19 +28,23 @@ private const val ARG_PARAM2 = "param2"
  * Use the [ProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class ProfileFragment : Fragment()
-{
+class ProfileFragment : Fragment() {
 
-    private lateinit var viewPagerGroup : ViewPager2
+    private lateinit var viewPagerGroup: ViewPager2
     private lateinit var tabLayout: TabLayout
+    private lateinit var profileViewModel: ProfileViewModel
 
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        profileViewModel = activity?.run {
+            ViewModelProviders.of(this)[ProfileViewModel::class.java]
+        } ?: throw Exception("Invalid Activity")
+
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
@@ -44,28 +52,44 @@ class ProfileFragment : Fragment()
     }
 
     override fun onCreateView(
-            inflater: LayoutInflater, container: ViewGroup?,
-            savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val root =  inflater.inflate(R.layout.fragment_profile, container, false)
+
+        val binding: FragmentProfileBinding = DataBindingUtil.inflate(
+            inflater,
+            R.layout.fragment_profile, container, false
+        )
+        binding.profileViewModel = profileViewModel//attach your viewModel to xml
+        binding.lifecycleOwner = this
+
+        profileViewModel.getUsername()
 
         //setting up the viewPager and the TabLayout
-        viewPagerGroup = root.findViewById(R.id.view_pager_2)
-        tabLayout = root.findViewById(R.id.profileTab)
+        viewPagerGroup = binding.root.findViewById(R.id.view_pager_2)
+        tabLayout = binding.root.findViewById(R.id.profileTab)
 
-        return root
+        return binding.root
     }
 
 
-    override fun onStart()
-    {
+    override fun onStart() {
 
+        profileDetails()
+        super.onStart()
+    }
+
+    override fun onResume() {
+        profileDetails()
+        super.onResume()
+    }
+
+    private fun profileDetails() {
         //Setting up the ViewPager Adapter and The TabLayout
-        viewPagerGroup.adapter= ProfileTabViewAdapter(this.childFragmentManager, lifecycle)
-        TabLayoutMediator(tabLayout, viewPagerGroup){ tab, position->
+        viewPagerGroup.adapter = ProfileTabViewAdapter(this.childFragmentManager, lifecycle)
+        TabLayoutMediator(tabLayout, viewPagerGroup) { tab, position ->
 
-            when(position){
+            when (position) {
                 0 -> {
                     tab.text = "Story"
                 }
@@ -82,7 +106,7 @@ class ProfileFragment : Fragment()
 
         //Sending user to Profile Setting Fragment
         profile_setting_button.setOnClickListener {
-           val profileSettingFragment = ProfileSettingFragment()
+            val profileSettingFragment = ProfileSettingFragment()
             profileSettingFragment.show(childFragmentManager, "Bottom Sheet Dialog")
         }
 
@@ -99,8 +123,6 @@ class ProfileFragment : Fragment()
             ft.replace(R.id.container, AddStoryFragment(), "EditProfileFragment")
             ft.commit()
         }
-
-        super.onStart()
     }
 
     companion object {

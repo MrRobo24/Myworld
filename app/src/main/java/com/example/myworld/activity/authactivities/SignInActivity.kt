@@ -1,8 +1,8 @@
 package com.example.myworld.activity.authactivities
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -38,7 +38,7 @@ class SignInActivity : AppCompatActivity() {
 
         signInViewModel.passwordText.observe(this, Observer {
             if (signInViewModel.isPasswordValid(it?.toString())) {
-                Log.d("PasswordText", "Password Valid")
+                Log.d("PasswordText", it.toString())
                 signInViewModel.passError.value = null
             } else {
                 signInViewModel.passError.value = "This password is not valid"
