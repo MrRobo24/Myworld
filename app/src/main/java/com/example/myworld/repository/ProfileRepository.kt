@@ -74,4 +74,12 @@ class ProfileRepository(application: Application) {
 
         return dbHelper.getAllAuth()[0]
     }
+
+    suspend fun updateEmailById(email: String, user_id: Int) {
+        dbHelper.updateEmailById(email, user_id)
+    }
+
+    suspend fun updateProfilePictureById(profile_picture: String, user_id: Int) {
+        dbHelper.updateProfilePictureById(profile_picture, user_id)
+    }
 }

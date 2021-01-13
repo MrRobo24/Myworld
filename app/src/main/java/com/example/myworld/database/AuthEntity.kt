@@ -8,9 +8,9 @@ import androidx.room.PrimaryKey
 data class AuthEntity(
 
     @PrimaryKey val user_id: Int,
-    @ColumnInfo(name = "email") val email: String,
+    @ColumnInfo(name = "email") var email: String,
     @ColumnInfo(name = "username") val username: String = "",
-    @ColumnInfo(name = "profile_picture") val profile_picture: String = "",
+    @ColumnInfo(name = "profile_picture") var profile_picture: String = "",
     @ColumnInfo(name = "info") val info: String = "",
     @ColumnInfo(name = "gender") val gender: String = "",
     @ColumnInfo(name = "birth_date") val birth_date: String = "",
