@@ -1,12 +1,11 @@
 package com.example.myworld.webservices
 
-import com.example.myworld.model.ProfileRUDResponse
+import com.example.myworld.model.EditUserProfileResponse
 import com.example.myworld.model.ProfileResponse
 import com.example.myworld.model.authmodels.SignInBody
 import com.example.myworld.model.authmodels.SignInResponseBody
 import com.example.myworld.model.authmodels.SignUpBody
 import com.example.myworld.model.authmodels.SignUpResponseBody
-import retrofit2.Call
 import retrofit2.http.*
 
 interface ApiInterface {
@@ -25,7 +24,12 @@ interface ApiInterface {
     @GET
     suspend fun fetchProfile(@Url url: String): ProfileResponse
 
-    @GET
-    suspend fun fetchProfileRUD(@Url url: String): ProfileRUDResponse
+    @FormUrlEncoded
+    @PUT
+    suspend fun saveUserProfile(
+        @Url url: String,
+        @Field("gender") gender: String,
+        @Field("birth_date") birth_date: String
+    ): EditUserProfileResponse
 
 }

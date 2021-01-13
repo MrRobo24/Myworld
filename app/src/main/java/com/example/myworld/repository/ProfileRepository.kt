@@ -50,11 +50,6 @@ class ProfileRepository(application: Application) {
         return authEntity
     }
 
-    suspend fun getAuthById(user_id: Int) {
-        val authEntity: AuthEntity? = dbHelper.getAuthById(user_id) //need to return this later
-        Log.d("DB", "Entity fetched from DB is: ${authEntity!!.copy(user_id = user_id)}")
-    }
-
     suspend fun updateDB(authEntity: AuthEntity): AuthEntity {
 
         if (authEntity.email.isNotEmpty()) {
