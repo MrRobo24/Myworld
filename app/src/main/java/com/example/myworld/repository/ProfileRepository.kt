@@ -20,53 +20,41 @@ class ProfileRepository(application: Application) {
     val dbHelper: DatabaseHelperImpl =
         DatabaseHelperImpl(DatabaseBuilder.getInstance(application))
 
-    suspend fun getUsername(): String {
-//        val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
-//        val call = retIn.getUsername(url + 12)
-//        call.enqueue(object : Callback<ProfileResponse> {
-//            override fun onResponse(
-//                call: Call<ProfileResponse>,
-//                response: Response<ProfileResponse>
-//            ) {
-//                if (response.isSuccessful)
-//                    Log.d("Profile Response:", "" + response.body()!!.username)
-//                username = response.body()!!.username
-//            }
-//
-//            override fun onFailure(call: Call<ProfileResponse>, t: Throwable) {
-//                Log.d("Profile Response:", "" + t.message)
-//            }
-//
-//        })
-
+    suspend fun getUser(): AuthEntity? {
         val authList: List<AuthEntity> = dbHelper.getAllAuth() //need to return this later
 
-        Log.d("DB", "Entity fetched from DB is: ${authList.toString()}")
+        Log.d("DB", "Entity fetched from DB is: $authList")
         if (authList.isEmpty() || authList.size > 1) {
             Log.d("DB", "Multiple entities exist in DB")
-            return "NA"
+            return null
         }
 
         username = authList[0].username
         user_id = authList[0].user_id
-        if (username.isEmpty()) {
-            Log.d("DB", "Username in DB is empty: need to call API")
-            return "NA"
-        }
 
-        Log.d("DB", "Returning Username $username to ProfileViewModel")
-        return username
+        Log.d("DB", "Returning User ${authList[0]} to ProfileViewModel")
+        return authList[0]
     }
 
-    suspend fun callFetchProfile(): String {
+    suspend fun callFetchProfile(): AuthEntity {
         val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
         val profileResponse = retIn.fetchProfile(url + user_id.toString())
         Log.d("FetchProfile", "Profile Fetched: $profileResponse")
-        return profileResponse.username
+        val authEntity = AuthEntity(
+            user_id = profileResponse.id,
+            email = profileResponse.email,
+            username = profileResponse.username
+        )
+
+        return authEntity
     }
 
     suspend fun getAuthById(user_id: Int) {
         val authEntity: AuthEntity? = dbHelper.getAuthById(user_id) //need to return this later
         Log.d("DB", "Entity fetched from DB is: ${authEntity!!.copy(user_id = user_id)}")
+    }
+
+    suspend fun updateDB(authEntity: AuthEntity) {
+
     }
 }

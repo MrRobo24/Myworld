@@ -10,8 +10,9 @@ data class AuthEntity(
     @PrimaryKey val user_id: Int,
     @ColumnInfo(name = "email") val email: String,
     @ColumnInfo(name = "username") val username: String = "",
-    @ColumnInfo(name = "profile_image_url") val profileImageUrl: String = "",
+    @ColumnInfo(name = "profile_picture") val profile_picture: String = "",
     @ColumnInfo(name = "info") val info: String = "",
     @ColumnInfo(name = "gender") val gender: String = "",
-    @ColumnInfo(name = "token") val token: String
+    @ColumnInfo(name = "birth_date") val birth_date: String = "",
+    @ColumnInfo(name = "token") val token: String = ""
 )

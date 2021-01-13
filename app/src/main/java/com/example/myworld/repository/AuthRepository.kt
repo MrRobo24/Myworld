@@ -68,7 +68,7 @@ class AuthRepository(application: Application) {
             user_id = signUpResponseBody.user.id,
             email = signUpResponseBody.user.email,
             username = signUpResponseBody.user.username,
-            profileImageUrl = signUpResponseBody.user.profileImgUrl,
+            profile_picture = signUpResponseBody.user.profile_picture,
             info = signUpResponseBody.user.info,
             gender = signUpResponseBody.user.gender,
             token = signUpResponseBody.token
