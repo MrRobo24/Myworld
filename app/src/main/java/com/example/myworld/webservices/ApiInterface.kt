@@ -1,6 +1,7 @@
 package com.example.myworld.webservices
 
 import com.example.myworld.model.EditUserProfileResponse
+import com.example.myworld.model.ProfileRUDResponse
 import com.example.myworld.model.ProfileResponse
 import com.example.myworld.model.authmodels.SignInBody
 import com.example.myworld.model.authmodels.SignInResponseBody
@@ -31,5 +32,8 @@ interface ApiInterface {
         @Field("gender") gender: String,
         @Field("birth_date") birth_date: String
     ): EditUserProfileResponse
+
+    @GET
+    suspend fun fetchProfileRUD(@Url url: String): ProfileRUDResponse
 
 }
