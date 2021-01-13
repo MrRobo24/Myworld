@@ -12,7 +12,7 @@ data class AuthEntity(
     @ColumnInfo(name = "username") val username: String = "",
     @ColumnInfo(name = "profile_picture") var profile_picture: String = "",
     @ColumnInfo(name = "info") val info: String = "",
-    @ColumnInfo(name = "gender") val gender: String = "",
-    @ColumnInfo(name = "birth_date") val birth_date: String = "",
+    @ColumnInfo(name = "gender") var gender: String = "",
+    @ColumnInfo(name = "birth_date") var birth_date: String = "",
     @ColumnInfo(name = "token") val token: String = ""
 )

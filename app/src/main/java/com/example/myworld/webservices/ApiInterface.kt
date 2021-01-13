@@ -34,6 +34,11 @@ interface ApiInterface {
     ): EditUserProfileResponse
 
     @GET
+    suspend fun getProfileGenderDOB(@Url url: String): EditUserProfileResponse
+
+    @GET
     suspend fun fetchProfileRUD(@Url url: String): ProfileRUDResponse
+
+
 
 }
