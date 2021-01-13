@@ -1,5 +1,7 @@
 package com.example.myworld.fragment.camera
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -24,7 +26,7 @@ private const val ARG_PARAM2 = "param2"
  * Use the [VideoUploadFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class VideoUploadFragment() : Fragment()
+class VideoUploadFragment : Fragment()
 {
     private val video : VideoModel? = null
     // TODO: Rename and change types of parameters
@@ -48,6 +50,23 @@ class VideoUploadFragment() : Fragment()
         val view=inflater.inflate(R.layout.user_video_upload, container, false)
         user_video_thumbnail=view.findViewById(R.id.user_video_thumbnail)
 
+        val sharedPreferences:SharedPreferences?=context?.getSharedPreferences("SharePref", Context.MODE_PRIVATE)
+        val filePath:String?=sharedPreferences?.getString("FilePath","")
+
+//        val filePath=arguments?.getString("FilePath")
+
+        if(filePath!="")
+            Log.i("FilePath",filePath!!)
+        else
+            Log.i("FilePath","filePath!!")
+
+        //Creates the video thumbnail
+        Glide.with(this)
+                .asBitmap()
+                //.load(Uri.fromFile(File(filePath)))
+                .load(R.drawable.mypage)    //will be removed after the data passing issue is fixed
+                .error(R.drawable.mypage)
+                .into(user_video_thumbnail)
 
         return view
     }
@@ -59,20 +78,6 @@ class VideoUploadFragment() : Fragment()
 //            user_video_thumbnail.setImageBitmap(video.videoThumbnail)
 //        }
 
-        val filePath=arguments?.getString("FilePath")
-
-        if(filePath=="")
-            Log.i("FilePath",filePath)
-        else
-            Log.i("FilePath","filePath!!")
-
-        //Creates the video thumbnail
-        Glide.with(this)
-                .asBitmap()
-                //.load(Uri.fromFile(File(filePath)))
-                .load(R.drawable.mypage)    //will be removed after the data passing issue is fixed
-                .error(R.drawable.mypage)
-                .into(user_video_thumbnail)
 
         /** Action performed when user clicks on upload Button.
          * Uploading the file to the server and then sending back the user to the camera fragment. */

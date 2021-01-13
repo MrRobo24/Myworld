@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.media.MediaPlayer
@@ -310,6 +311,12 @@ class CameraFragment : Fragment()
                                 }
                             }
                         }
+                        val sharedPreferences: SharedPreferences?=context?.getSharedPreferences("SharePref", Context.MODE_PRIVATE)
+                        val sp:SharedPreferences.Editor?=sharedPreferences?.edit()
+                        sp?.putString("FilePath",path)
+                        sp?.apply()
+                        sp?.commit()
+
                     }
 
                     override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
