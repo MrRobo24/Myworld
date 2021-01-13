@@ -1,12 +1,19 @@
 package com.example.myworld.fragment.profile
 
+import android.app.Activity
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
+import android.provider.SyncStateContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import com.example.myworld.R
+import com.example.myworld.utilites.Constant
 import kotlinx.android.synthetic.main.edit_profile_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -19,7 +26,13 @@ private const val ARG_PARAM2 = "param2"
  * Use the [EditUserProfileFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class EditUserProfileFragment : Fragment() {
+class EditUserProfileFragment : Fragment()
+{
+
+    private var mSelectedImageFileUri : Uri? = null
+    private var mProfileImageURL : String = ""
+
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -40,6 +53,12 @@ class EditUserProfileFragment : Fragment() {
 
     override fun onStart()
     {
+
+        //Setup User Profile Image
+        user_profile_image.setOnClickListener {
+            setUpProfileImage()
+        }
+
         //Sending User Back to Profile Fragment
         back_navigation_button_edit_profile.setOnClickListener {
             val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
@@ -47,6 +66,21 @@ class EditUserProfileFragment : Fragment() {
             ft.commit()
         }
         super.onStart()
+    }
+
+    /** Setup User Profile Image in Edit Profile Section.
+     * Can Choose Image from Gallery or can click from camera and update the profile image.
+     */
+    private fun setUpProfileImage()
+    {
+//        if (context?.let { ContextCompat.checkSelfPermission(it, android.Manifest.permission.READ_EXTERNAL_STORAGE ) } == PackageManager.PERMISSION_GRANTED)
+//        {
+//            Constant(this)
+//        }
+//        else
+//        {
+//            ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE) , SyncStateContract.Constants.READ_STORAGE_PERMISSION_CODE)
+//        }
     }
 
     companion object {
