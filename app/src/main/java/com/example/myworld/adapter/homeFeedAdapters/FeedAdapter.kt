@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.*
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.graphics.createBitmap
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -42,8 +43,11 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     private var y1: Float = 0.0f
     private var y2: Float = 0.0f
 
+    private var tap : Int = 2
+
+    private var event : Int = MotionEvent.ACTION_DOWN
+
     private var position = 0
-    private var videoUrl : String = arrVideo[position].videoUrl
     private lateinit var holder : MyViewHolder
 
     companion object {
@@ -103,20 +107,13 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     private fun releaseExoPlayer() {
         playbackPosition = simpleExoPlayer.currentPosition
         simpleExoPlayer.release()
-
     }
 
     //Initialize track selector
     private var trackSelector: TrackSelector = DefaultTrackSelector(AdaptiveTrackSelection.Factory(bandWidthMeter))
 
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        private var x1: Float = 0.0f
-        private var x2: Float = 0.0f
-        private var y1: Float = 0.0f
-        private var y2: Float = 0.0f
 
-
-        private lateinit var gestureDetector: GestureDetector
         fun bind(arrVideoModel: VideoModel) {
             itemView.user_feed_name.text = arrVideoModel.videoTitle
             itemView.user_feed_discription.text = arrVideoModel.videoDesc
@@ -127,9 +124,12 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         }
 
         fun onClick(video: VideoModel, videoList: ArrayList<VideoModel>) {
+
+            /** To Play and Pause the Current Video playing in ExoPlayer. */
             itemView.home_feed_item.setOnClickListener {
-                Toast.makeText(it.context, "EXO PLAYER CLICKED", Toast.LENGTH_LONG).show()
+                itemView.exoPlayer_home_fragment.player.playWhenReady = !itemView.exoPlayer_home_fragment.player.playWhenReady
             }
+
 
             //Setting Up Default Story View
             itemView.default_expand_story_view.setOnClickListener {
@@ -164,17 +164,17 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         return MyViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: MyViewHolder, position: Int)
+    {
         Log.i("Position_bind" , position.toString())
         Log.i("VIDEO_URL", position.toString())
-
-        this.position = position
 
         this.holder = holder
 
         val video = arrVideo[position]
 
         holder.itemView.home_feed_item.setOnTouchListener(this)
+
         /** Binding the data of the video with the UI. */
         holder.bind(video)
 
@@ -187,6 +187,8 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
          */
         suggestionVisible(holder, position)
 
+        initializePlayer(context,video , holder)
+
 
         //TODO implement video play and pause onClick
 
@@ -196,7 +198,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         //initializeExoPlayer(video.videoUrl , holder)
         Log.i("VIDEO_URL", video.videoUrl)
 
-        initializePlayer(context,video , holder)
     }
 
     /** Checking the position of the video.
@@ -351,23 +352,13 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     }
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
+
         //Toast.makeText(context, "onSingleTapUP", Toast.LENGTH_SHORT).show()
-        if (holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
-        {
-            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false
-            return true
-        }
-        else if (!holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
-        {
-            holder.itemView.exoPlayer_home_fragment.player.playWhenReady
-            return true
-        }
         return false
     }
 
     override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean
     {
-
         Log.i("Position" , position.toString())
         //Reset The Suggestions
         resetSuggestionVisible(holder , position)
@@ -386,11 +377,18 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
             //Detect Scroll from Down to Up
             if (y2 > y1)
             {
+                if (this.position > 0)
+                {
+                    this.position--
+                }
                 Log.i("Swipe", "Up to down")
             }
             //Detect Scroll from Up to Down
             else
             {
+                if (this.position < arrVideo.size -1) {
+                    this.position++
+                }
                 Log.i("Swipe", "Down to Up Swipe")
                 //Toast.makeText(context , "Down to up" , Toast.LENGTH_SHORT).show()
             }
@@ -400,7 +398,8 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         return true
     }
 
-    override fun onLongPress(e: MotionEvent?) {
+    override fun onLongPress(e: MotionEvent?)
+    {
         //Toast.makeText(context, "onLongPress", Toast.LENGTH_SHORT).show()
     }
 
@@ -409,9 +408,9 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         return false
     }
 
-    override fun onTouch(v: View?, event: MotionEvent?): Boolean {
+    override fun onTouch(v: View?, event: MotionEvent?): Boolean
+    {
         gestureDetector.onTouchEvent(event)
-
         if (event != null)
         {
                 when (event.action)
@@ -467,12 +466,15 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
     override fun onViewAttachedToWindow (holder: MyViewHolder)
     {
         holder.itemView.exoPlayer_home_fragment.player.playWhenReady = true;
-    }
 
+        /** For Play and Pause of the ExoPlayer On Click .*/
+        holder.itemView.setOnTouchListener { v, event ->
+            false }
+    }
 
     /** Pause the Video On View Changed and scrolled. */
     override fun onViewDetachedFromWindow (holder: MyViewHolder){
-        holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false;
+        holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false
     }
 
 }

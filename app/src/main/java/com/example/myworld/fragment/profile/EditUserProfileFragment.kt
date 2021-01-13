@@ -11,9 +11,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.view.isInvisible
 import androidx.fragment.app.FragmentTransaction
 import com.example.myworld.R
 import com.example.myworld.utilites.Constant
+import kotlinx.android.synthetic.main.activity_home.*
+import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.edit_profile_fragment.*
 
 // TODO: Rename parameter arguments, choose names that match
@@ -53,7 +56,6 @@ class EditUserProfileFragment : Fragment()
 
     override fun onStart()
     {
-
         //Setup User Profile Image
         user_profile_image.setOnClickListener {
             setUpProfileImage()
@@ -81,6 +83,11 @@ class EditUserProfileFragment : Fragment()
 //        {
 //            ActivityCompat.requestPermissions(context as Activity, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE) , SyncStateContract.Constants.READ_STORAGE_PERMISSION_CODE)
 //        }
+    }
+
+    override fun onStop()
+    {
+        super.onStop()
     }
 
     companion object {
