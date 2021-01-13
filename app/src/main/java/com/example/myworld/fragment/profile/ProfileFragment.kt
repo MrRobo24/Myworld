@@ -61,6 +61,7 @@ class ProfileFragment : Fragment() {
         )
         binding.profileViewModel = profileViewModel//attach your viewModel to xml
         binding.lifecycleOwner = this
+        binding.context = this
 
         //setting up the viewPager and the TabLayout
         viewPagerGroup = binding.root.findViewById(R.id.view_pager_2)

@@ -106,6 +106,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
                     profileEntity = it
                     updateUIData()
                 }
+
+                if (it?.profile_picture?.isEmpty()!!) {
+                    //making RUD api call for profile_picture for now. Will change the API later)
+                    fetchProfilePictureAPI()
+                }
             }
 
             result.onFailure {
@@ -130,6 +135,28 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
 
             result.onFailure {
                 Log.d(TAG, "FAILURE ${it.message}")
+            }
+        }
+    }
+
+    private fun fetchProfilePictureAPI() {
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                profileRepository.callFetchProfileRUD()
+            }
+
+            result.onSuccess {
+                Log.d(TAG, "Profile Image fetched: $it")
+                //updating data member
+                profileEntity?.profile_picture = it
+                //updating in UI
+                updateUIData()
+                //updating in DB
+                profileRepository.updateProfilePictureById(it, profileEntity?.user_id!!)
+            }
+
+            result.onFailure {
+                Log.d(TAG, "Profile Image fetch from RUD API failed: ${it.message}")
             }
         }
     }

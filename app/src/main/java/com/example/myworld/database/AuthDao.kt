@@ -25,7 +25,7 @@ interface AuthDao {
     @Query("UPDATE auth_table SET username = :username WHERE user_id = :user_id")
     suspend fun updateUsernameById(username: String, user_id: Int)
 
-    @Query("UPDATE auth_table SET username = :profile_picture WHERE user_id = :user_id")
+    @Query("UPDATE auth_table SET profile_picture = :profile_picture WHERE user_id = :user_id")
     suspend fun updateProfilePictureById(profile_picture: String, user_id: Int)
 
     @Query("UPDATE auth_table SET gender = :gender WHERE user_id = :user_id")

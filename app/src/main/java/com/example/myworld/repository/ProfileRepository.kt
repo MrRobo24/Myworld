@@ -32,6 +32,11 @@ class ProfileRepository(application: Application) {
         return authList[0]
     }
 
+    suspend fun callFetchProfileRUD(): String {
+        val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
+        return retIn.fetchProfileRUD("profile/profilerud/$user_id").profile_picture
+    }
+
     suspend fun callFetchProfile(): AuthEntity {
         val retIn = RetrofitInstance.getRetrofitInstance().create(ApiInterface::class.java)
         val profileResponse = retIn.fetchProfile(url + user_id.toString())

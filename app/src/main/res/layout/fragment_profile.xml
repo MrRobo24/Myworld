@@ -8,6 +8,10 @@
         <variable
             name="ProfileViewModel"
             type="com.example.myworld.viewmodel.ProfileViewModel" />
+
+        <variable
+            name="context"
+            type="com.example.myworld.fragment.profile.ProfileFragment" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -76,6 +80,8 @@
 
             <ImageView
                 android:id="@+id/usertham"
+                context="@{context}"
+                imageUrl="@{ProfileViewModel.profilePicture}"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#dbdbdb"

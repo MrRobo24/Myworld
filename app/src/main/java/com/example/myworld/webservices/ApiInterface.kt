@@ -1,5 +1,6 @@
 package com.example.myworld.webservices
 
+import com.example.myworld.model.ProfileRUDResponse
 import com.example.myworld.model.ProfileResponse
 import com.example.myworld.model.authmodels.SignInBody
 import com.example.myworld.model.authmodels.SignInResponseBody
@@ -23,5 +24,8 @@ interface ApiInterface {
 
     @GET
     suspend fun fetchProfile(@Url url: String): ProfileResponse
+
+    @GET
+    suspend fun fetchProfileRUD(@Url url: String): ProfileRUDResponse
 
 }
