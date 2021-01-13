@@ -20,14 +20,34 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("SignUp", "SUCCESS: " + it)
+                Log.d("GetUsername", "Received: $it")
+                if (it == "NA") {
+                    fetchUsernameAPI()
+                }
                 //insertDataInDB(it)
             }
 
             result.onFailure {
-                Log.d("SignUp", "FAILURE ${it.message}")
+                Log.d("GetUsername", "FAILURE ${it.message}")
             }
 
+        }
+    }
+
+    private fun fetchUsernameAPI() {
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                profileRepository.callFetchProfile()
+            }
+
+            result.onSuccess {
+                Log.d("profileViewModel", "Username updated to $it")
+                username.value = it
+            }
+
+            result.onFailure {
+                Log.d("profileViewModel", "FAILURE ${it.message}")
+            }
         }
     }
 

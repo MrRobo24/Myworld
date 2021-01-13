@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.viewpager2.widget.ViewPager2
 import com.example.myworld.R
 import com.example.myworld.adapter.profileAdapters.ProfileTabViewAdapter
@@ -42,7 +42,7 @@ class ProfileFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         profileViewModel = activity?.run {
-            ViewModelProviders.of(this)[ProfileViewModel::class.java]
+            ViewModelProvider(this)[ProfileViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
 
         arguments?.let {
