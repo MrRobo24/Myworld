@@ -184,16 +184,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
         suggestionVisible(holder, position)
 
         initializePlayer(context,video , holder)
-
-
-        //TODO implement video play and pause onClick
-
-            //Toast.makeText(it.context , "Clicked" , Toast.LENGTH_LONG).show()
-
-
-        //initializeExoPlayer(video.videoUrl , holder)
-        Log.i("VIDEO_URL", video.videoUrl)
-
     }
 
     /** Checking the position of the video.
@@ -283,7 +273,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
             }
 
             override fun onTracksChanged(trackGroups: TrackGroupArray?, trackSelections: TrackSelectionArray?) {
-//                simpleExoPlayer.playWhenReady = false
             }
 
             override fun onLoadingChanged(isLoading: Boolean) {
@@ -332,20 +321,10 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
     override fun onDown(e: MotionEvent?): Boolean
     {
-
-//        holder.itemView.home_feed_item.setOnClickListener {
-//
-//        }
-//        holder.itemView.exoplayer_play_button_home_fragment.setOnClickListener {
-//
-//        }
-//        Toast.makeText(holder.itemView.context , "Clicked" , Toast.LENGTH_SHORT).show()
         return false
     }
 
-    override fun onShowPress(e: MotionEvent?) {
-        //Toast.makeText(context, "onShowPress", Toast.LENGTH_SHORT).show()
-    }
+    override fun onShowPress(e: MotionEvent?) {}
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
         return false
@@ -353,7 +332,6 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
     override fun onScroll(e1: MotionEvent?, e2: MotionEvent?, distanceX: Float, distanceY: Float): Boolean
     {
-        Log.i("Position" , position.toString())
         //Reset The Suggestions
         resetSuggestionVisible(holder , position)
 
@@ -387,15 +365,12 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
                 //Toast.makeText(context , "Down to up" , Toast.LENGTH_SHORT).show()
             }
         }
-
-        //Toast.makeText(context, "onScroll", Toast.LENGTH_SHORT).show()
         return true
     }
 
     override fun onLongPress(e: MotionEvent?) {}
 
     override fun onFling(e1: MotionEvent?, e2: MotionEvent?, velocityX: Float, velocityY: Float): Boolean {
-        //Toast.makeText(context, "onFling", Toast.LENGTH_SHORT).show()
         return false
     }
 
