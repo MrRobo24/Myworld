@@ -13,14 +13,15 @@ import com.example.myworld.fragment.home.HomeFragment
 import com.example.myworld.fragment.profile.ProfileFragment
 import kotlinx.android.synthetic.main.activity_home.*
 
-class HomeActivity : AppCompatActivity()
-{
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+class HomeActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setTheme(R.style.Theme_Myworld)
         setContentView(R.layout.activity_home)
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN)
+        window.setFlags(
+            WindowManager.LayoutParams.FLAG_FULLSCREEN,
+            WindowManager.LayoutParams.FLAG_FULLSCREEN
+        )
 
         val homeFragment = HomeFragment()
         val exploreFragment = SearchFragment()
@@ -30,25 +31,20 @@ class HomeActivity : AppCompatActivity()
         makeCurrentFragment(homeFragment)
 
         bottom_navigation.setOnNavigationItemSelectedListener {
-            when(it.itemId)
-            {
-                R.id.user_home ->
-                {
+            when (it.itemId) {
+                R.id.user_home -> {
                     bottom_navigation.visibility = View.VISIBLE
                     makeCurrentFragment(homeFragment)
                 }
-                R.id.user_explore ->
-                {
+                R.id.user_explore -> {
                     bottom_navigation.visibility = View.VISIBLE
                     makeCurrentFragment(exploreFragment)
                 }
-                R.id.user_profile ->
-                {
+                R.id.user_profile -> {
                     bottom_navigation.visibility = View.VISIBLE
                     makeCurrentFragment(profileFragment)
                 }
-                R.id.user_camera ->
-                {
+                R.id.user_camera -> {
                     bottom_navigation.visibility = View.GONE
                     makeCurrentFragment(cameraFragment)
                 }
@@ -58,27 +54,25 @@ class HomeActivity : AppCompatActivity()
 
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         bottom_navigation.visibility = View.VISIBLE
         bottom_navigation.isEnabled = true
         super.onResume()
     }
 
-    override fun onBackPressed()
-    {
+    override fun onBackPressed() {
         finish()
         super.onBackPressed()
     }
 
-    override fun onRestart()
-    {
+    override fun onRestart() {
         bottom_navigation.visibility = View.VISIBLE
         bottom_navigation.isEnabled = true
         super.onRestart()
     }
 
-    private fun makeCurrentFragment(fragment: Fragment) = supportFragmentManager.beginTransaction().apply {
-        replace(R.id.container , fragment).commit()
-    }
+    private fun makeCurrentFragment(fragment: Fragment) =
+        supportFragmentManager.beginTransaction().apply {
+            replace(R.id.container, fragment).commit()
+        }
 }

@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 
 class EditUserProfileViewModel(application: Application) : AndroidViewModel(application) {
 
+    private val TAG = "EditProfileVM"
     private var editUserProfileRepository: EditUserProfileRepository =
         EditUserProfileRepository(application)
 
@@ -28,11 +29,11 @@ class EditUserProfileViewModel(application: Application) : AndroidViewModel(appl
             }
 
             result.onSuccess {
-                Log.d("Profile ", "SUCCESS $it")
+                Log.d(TAG, "SUCCESS $it")
             }
 
             result.onFailure {
-                Log.d("Profile", "FAILURE ${it.message}")
+                Log.d(TAG, "FAILURE ${it.message}")
             }
         }
     }
