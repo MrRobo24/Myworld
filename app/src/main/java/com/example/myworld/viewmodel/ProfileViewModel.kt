@@ -12,7 +12,9 @@ import kotlinx.coroutines.launch
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     var username = MutableLiveData<String>()
-    var profileEntity: AuthEntity? = null
+    var email = MutableLiveData<String>()
+    var profilePicture = MutableLiveData<String>()
+    private var profileEntity: AuthEntity? = null
     private var profileRepository: ProfileRepository = ProfileRepository(application)
 
     init {
@@ -23,6 +25,45 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
     private fun updateUIData() {
         // function to update data members of this class and update the UI
         username.value = profileEntity?.username
+        email.value = profileEntity?.email
+        profilePicture.value = profileEntity?.profile_picture
+    }
+
+    fun updateEmail() {
+        profileEntity?.email = email.value.toString()
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                profileRepository.updateEmailById(profileEntity?.email!!, profileEntity?.user_id!!)
+            }
+
+            result.onSuccess {
+                Log.d("ProfileViewModel", "Email updated in DB")
+            }
+
+            result.onFailure {
+                Log.d("ProfileViewModel", "Email update in DB FAILED")
+            }
+        }
+    }
+
+    fun updateProfilePicture() {
+        profileEntity?.profile_picture = profilePicture.value.toString()
+        viewModelScope.launch {
+            val result = kotlin.runCatching {
+                profileRepository.updateProfilePictureById(
+                    profileEntity?.profile_picture!!,
+                    profileEntity?.user_id!!
+                )
+            }
+
+            result.onSuccess {
+                Log.d("ProfileViewModel", "ProfilePicture updated in DB")
+            }
+
+            result.onFailure {
+                Log.d("ProfileViewModel", "ProfilePicture update in DB FAILED")
+            }
+        }
     }
 
     private fun updateDB() {
@@ -50,9 +91,9 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             result.onSuccess {
                 Log.d("GetUser", "Received: $it")
                 if (it == null ||
-                    it.username == ""
+                    it.username.isEmpty()
                 ) {
-                    Log.d("ProfileViewModel", "Received from DB: $it")
+                    Log.d("ProfileViewModel", "Some fields are empty in DB, calling API")
                     fetchUserAPI()
                 } else {
                     profileEntity = it
