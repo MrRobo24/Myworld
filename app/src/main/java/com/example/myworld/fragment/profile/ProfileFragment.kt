@@ -40,7 +40,6 @@ class ProfileFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         profileViewModel = activity?.run {
             ViewModelProvider(this)[ProfileViewModel::class.java]
         } ?: throw Exception("Invalid Activity")
@@ -65,6 +64,7 @@ class ProfileFragment : Fragment() {
 
         //setting up the viewPager and the TabLayout
         viewPagerGroup = binding.root.findViewById(R.id.view_pager_2)
+        viewPagerGroup.isSaveEnabled = false
         tabLayout = binding.root.findViewById(R.id.profileTab)
 
         return binding.root

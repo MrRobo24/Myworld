@@ -5,19 +5,15 @@ import android.util.Log
 import com.example.myworld.database.AuthEntity
 import com.example.myworld.database.DatabaseBuilder
 import com.example.myworld.database.DatabaseHelperImpl
-import com.example.myworld.model.ProfileResponse
 import com.example.myworld.webservices.ApiInterface
 import com.example.myworld.webservices.RetrofitInstance
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 class ProfileRepository(application: Application) {
 
     private val url: String = "/profile/userdetails/"
     lateinit var username: String
     var user_id: Int = 0
-    val dbHelper: DatabaseHelperImpl =
+    private val dbHelper: DatabaseHelperImpl =
         DatabaseHelperImpl(DatabaseBuilder.getInstance(application))
 
     suspend fun getUser(): AuthEntity? {
@@ -54,7 +50,28 @@ class ProfileRepository(application: Application) {
         Log.d("DB", "Entity fetched from DB is: ${authEntity!!.copy(user_id = user_id)}")
     }
 
-    suspend fun updateDB(authEntity: AuthEntity) {
+    suspend fun updateDB(authEntity: AuthEntity): AuthEntity {
 
+        if (authEntity.email.isNotEmpty()) {
+            dbHelper.updateUsernameById(authEntity.username, authEntity.user_id)
+        }
+
+        if (authEntity.username.isNotEmpty()) {
+            dbHelper.updateUsernameById(authEntity.username, authEntity.user_id)
+        }
+
+        if (authEntity.profile_picture.isNotEmpty()) {
+            dbHelper.updateProfilePictureById(authEntity.profile_picture, authEntity.user_id)
+        }
+
+        if (authEntity.gender.isNotEmpty()) {
+            dbHelper.updateGenderById(authEntity.gender, authEntity.user_id)
+        }
+
+        if (authEntity.birth_date.isNotEmpty()) {
+            dbHelper.updateBirthDateById(authEntity.birth_date, authEntity.user_id)
+        }
+
+        return dbHelper.getAllAuth()[0]
     }
 }

@@ -32,11 +32,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-
+                Log.d("ProfileViewModel", "DB is updated: $it")
             }
 
             result.onFailure {
-
+                Log.d("ProfileViewModel", "DB update FAILURE ${it.message}")
             }
         }
     }
@@ -50,12 +50,13 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             result.onSuccess {
                 Log.d("GetUser", "Received: $it")
                 if (it == null ||
-                    it.username == "" ||
-                    it.profile_picture == ""
+                    it.username == ""
                 ) {
+                    Log.d("ProfileViewModel", "Received from DB: $it")
                     fetchUserAPI()
                 } else {
                     profileEntity = it
+                    updateUIData()
                 }
             }
 
