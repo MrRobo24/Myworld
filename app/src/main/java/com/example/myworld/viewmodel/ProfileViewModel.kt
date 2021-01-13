@@ -11,11 +11,18 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(application: Application) : AndroidViewModel(application) {
 
+
+    companion object {
+        private const val TAG = "ProfileViewModel"
+    }
+
+    private var profileRepository: ProfileRepository = ProfileRepository(application)
     var username = MutableLiveData<String>()
     var email = MutableLiveData<String>()
     var profilePicture = MutableLiveData<String>()
+
     private var profileEntity: AuthEntity? = null
-    private var profileRepository: ProfileRepository = ProfileRepository(application)
+
 
     init {
         getUser()
@@ -37,11 +44,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("ProfileViewModel", "Email updated in DB")
+                Log.d(TAG, "Email updated in DB")
             }
 
             result.onFailure {
-                Log.d("ProfileViewModel", "Email update in DB FAILED")
+                Log.d(TAG, "Email update in DB FAILED")
             }
         }
     }
@@ -57,11 +64,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("ProfileViewModel", "ProfilePicture updated in DB")
+                Log.d(TAG, "ProfilePicture updated in DB")
             }
 
             result.onFailure {
-                Log.d("ProfileViewModel", "ProfilePicture update in DB FAILED")
+                Log.d(TAG, "ProfilePicture update in DB FAILED")
             }
         }
     }
@@ -73,11 +80,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("ProfileViewModel", "DB is updated: $it")
+                Log.d(TAG, "DB is updated: $it")
             }
 
             result.onFailure {
-                Log.d("ProfileViewModel", "DB update FAILURE ${it.message}")
+                Log.d(TAG, "DB update FAILURE ${it.message}")
             }
         }
     }
@@ -89,11 +96,11 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("GetUser", "Received: $it")
+                Log.d(TAG, "Received from DB: $it")
                 if (it == null ||
                     it.username.isEmpty()
                 ) {
-                    Log.d("ProfileViewModel", "Some fields are empty in DB, calling API")
+                    Log.d(TAG, "Some fields are empty in DB, calling API")
                     fetchUserAPI()
                 } else {
                     profileEntity = it
@@ -102,7 +109,7 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onFailure {
-                Log.d("GetUsername", "FAILURE ${it.message}")
+                Log.d(TAG, "Get user FAILURE ${it.message}")
             }
 
         }
@@ -115,14 +122,14 @@ class ProfileViewModel(application: Application) : AndroidViewModel(application)
             }
 
             result.onSuccess {
-                Log.d("profileViewModel", "Username updated to $it")
+                Log.d(TAG, "Username updated to $it")
                 profileEntity = it
                 updateUIData()
                 updateDB()
             }
 
             result.onFailure {
-                Log.d("profileViewModel", "FAILURE ${it.message}")
+                Log.d(TAG, "FAILURE ${it.message}")
             }
         }
     }

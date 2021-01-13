@@ -91,7 +91,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
-            android:text="@={ProfileViewModel.getUsername}"
+            android:text="@={ProfileViewModel.username}"
             android:textColor="@color/cpDark"
             android:textSize="@dimen/font_size_24"
             android:textStyle="bold"
