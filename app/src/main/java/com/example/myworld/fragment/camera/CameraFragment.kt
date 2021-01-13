@@ -4,12 +4,16 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.media.MediaPlayer
 import android.media.MediaRecorder
+import android.media.ThumbnailUtils
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.os.SystemClock
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,13 +26,16 @@ import androidx.camera.core.VideoCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import com.example.myworld.R
 import com.example.myworld.activity.HomeActivity
+import com.example.myworld.model.VideoModel
 import com.example.myworld.service.AudioService
 import com.example.myworld.utilites.Constant
 import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.fragment_camera.*
+import kotlinx.android.synthetic.main.user_video_upload.*
 import java.io.File
 
 
@@ -44,6 +51,14 @@ private const val ARG_PARAM2 = "param2"
  */
 class CameraFragment : Fragment()
 {
+    //Video Model
+    var video : VideoModel? = null
+    //BitMap for the Video Thumbnail
+    private var bitmap: Bitmap? = null
+
+    //Uri For the Recorded Video
+    private var videoUri : Uri? = null
+
     //CountDown Timer For Start Recording
     private var countDownTimer : CountDownTimer? = null
     private var restProgress = 0
@@ -271,12 +286,20 @@ class CameraFragment : Fragment()
             object : VideoCapture.OnVideoSavedCallback {
                 override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
                     Log.i("SAVED", "Video File : $file")
-
+                    //Generating the thumbnail for the video
+                    bitmap = setUpThumbnail(file)
+                    video = if (bitmap != null) {
+                        VideoModel(bitmap!!, "", "", file.absolutePath)
+                    } else {
+                        bitmap?.let { VideoModel(it, "", "", file.absolutePath) }
+                    }
                     // Sending the recorded video URI to the VideoUploadFragment .
                     // Fetching the recorded video from the storage using the URI and then uploading the Video to the server .
+                    if (video != null) {
                         VideoUploadFragment().apply {
-                        this.arguments = Bundle().apply {
-                            putString(Constant.savedVideoURI , file.toString())
+                            this.arguments = Bundle().apply {
+                                putString(Constant.savedVideoURI, file.toString())
+                            }
                         }
                     }
                 }
@@ -314,8 +337,18 @@ class CameraFragment : Fragment()
         restProgress = 0
         restTimerDuration = 5
 
+        //TODO send video thumbnail to videoUploadFragment
+        Log.i("Bitmap", bitmap.toString())
+        //user_video_thumbnail.setImageBitmap(bitmap)
         //Sending User to the VideoUploadFragment So that they can upload their recorded video.
-        fragmentManager?.beginTransaction()?.replace(R.id.container , VideoUploadFragment())?.commit()
+        fragmentManager?.beginTransaction()?.replace(R.id.container, VideoUploadFragment())?.commit()
+    }
+
+    /** Setup the Thumbnail of the recorded Video. */
+    private fun setUpThumbnail(file: File) : Bitmap?
+    {
+        return  ThumbnailUtils.createVideoThumbnail(file.toUri().toString(),
+            MediaStore.Images.Thumbnails.MINI_KIND);
     }
 
     /**Set CountDown Timer For the Recording.

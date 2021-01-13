@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentTransaction
 import com.example.myworld.R
 import com.example.myworld.databinding.BottomsheetFragmentBinding
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
@@ -43,6 +44,12 @@ class ProfileSettingFragment : BottomSheetDialogFragment() {
 
     override fun onStart()
     {
+        //Sending User Back to Profile Fragment From Setting Fragment
+        back_navigation_button_settings_profile.setOnClickListener {
+            val ft: FragmentTransaction = requireFragmentManager().beginTransaction()
+            ft.replace(R.id.container, ProfileFragment(), "EditProfileFragment")
+            ft.commit()
+        }
         super.onStart()
     }
 

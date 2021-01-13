@@ -1,93 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.user_profile_story">
 
-    <RelativeLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/story_profile_fragment_recycler_view"
+        android:layout_margin="5dp"
+        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="15dp"
-        >
-        <GridLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:rowCount="5"
-            android:columnCount="3"
-            android:verticalSpacing="10dp"
-            android:horizontalSpacing="10dp"
-            android:stretchMode="columnWidth"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/Storyteam"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam1"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam2"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam3"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam4"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam5"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam6"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam7"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-            <ImageView
-                android:id="@+id/Storyteam8"
-                android:layout_width="127dp"
-                android:layout_height="175dp"
-                android:src="@drawable/mypage"
-                android:background="@color/cpBackground"
-                android:scaleType="centerCrop"/>
-
-        </GridLayout>
-
-
-
-
-    </RelativeLayout>
+        android:layout_height="match_parent"/>
 
 </FrameLayout>
