@@ -41,5 +41,5 @@
     <string name="edit_profile_add_intro">Add</string>
     <string name="edit_profile_channel_name">Add</string>
     <string name="edit_profile_user_name">Add</string>
-    <string name="edit_profile_UserName">Name</string>
+    <string name="edit_profile_UserName">Username</string>
 </resources>
