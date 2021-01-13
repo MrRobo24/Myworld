@@ -352,16 +352,16 @@ class FeedAdapter(var context: Context,var playbackState: Int,  var arrVideo : A
 
     override fun onSingleTapUp(e: MotionEvent?): Boolean {
         //Toast.makeText(context, "onSingleTapUP", Toast.LENGTH_SHORT).show()
-//        if (holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
-//        {
-//            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false
-//            return false
-//        }
-//        else if (!holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
-//        {
-//            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = true
-//            return false
-//        }
+        if (holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
+        {
+            holder.itemView.exoPlayer_home_fragment.player.playWhenReady = false
+            return true
+        }
+        else if (!holder.itemView.exoPlayer_home_fragment.player.playWhenReady)
+        {
+            holder.itemView.exoPlayer_home_fragment.player.playWhenReady
+            return true
+        }
         return false
     }
 

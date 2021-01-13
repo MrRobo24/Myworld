@@ -149,6 +149,7 @@ class CameraFragment : Fragment()
 
         /**Stop Recording*/
         camera_capture_button_stop.setOnClickListener {
+            countDownTimer?.cancel()
             Constant.isRecording = false
             stopRecording()
             camera_capture_button_start.visibility = View.VISIBLE
@@ -286,6 +287,10 @@ class CameraFragment : Fragment()
             object : VideoCapture.OnVideoSavedCallback {
                 override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
                     Log.i("SAVED", "Video File : $file")
+
+                    //Sending User to the VideoUploadFragment So that they can upload their recorded video.
+                    fragmentManager?.beginTransaction()?.replace(R.id.container, VideoUploadFragment())?.commit()
+
                     //Generating the thumbnail for the video
                     bitmap = setUpThumbnail(file)
                     video = if (bitmap != null) {
@@ -318,6 +323,14 @@ class CameraFragment : Fragment()
         //stopMusic()
 
         //Chronometer Reset after stopping.
+
+        countDownTimer?.cancel()
+        timer.visibility = View.GONE
+        //Resetting the timer
+        restProgress = 0
+        restTimerDuration = 5
+
+
         recording_timer.stop()
         recording_timer.visibility = View.GONE
         recording_timer_dot.visibility = View.GONE
@@ -333,15 +346,11 @@ class CameraFragment : Fragment()
         camera_front_back.isEnabled = true
         Log.i("STOP", "Video File stopped")
 
-        //Resetting the timer
-        restProgress = 0
-        restTimerDuration = 5
-
         //TODO send video thumbnail to videoUploadFragment
         Log.i("Bitmap", bitmap.toString())
         //user_video_thumbnail.setImageBitmap(bitmap)
-        //Sending User to the VideoUploadFragment So that they can upload their recorded video.
-        fragmentManager?.beginTransaction()?.replace(R.id.container, VideoUploadFragment())?.commit()
+
+
     }
 
     /** Setup the Thumbnail of the recorded Video. */
