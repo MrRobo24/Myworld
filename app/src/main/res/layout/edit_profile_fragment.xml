@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/cpWhite"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    android:background="@color/cpWhite">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/search_appBar_Layout"
@@ -16,8 +14,7 @@
         app:elevation="0dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-       >
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/search_toolbar"
@@ -35,8 +32,8 @@
         android:layout_width="110dp"
         android:layout_height="110dp"
         android:layout_gravity="center"
-        app:cardCornerRadius="55dp"
         android:layout_marginTop="30dp"
+        app:cardCornerRadius="55dp"
         app:cardElevation="0dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -68,14 +65,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editprofile_card_view" />
 
-    <EditText
-        android:id="@+id/uep_edit_name"
+    <TextView
+        android:id="@+id/uep_username"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:text="Sk Sariful Islam"
+        android:background="@color/cpIndicator"
         android:hint="@string/edit_profile_user_name"
+        android:text="Sk Sariful Islam"
         android:textColor="@color/cpDark"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -91,34 +89,34 @@
         android:background="@color/cpIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_edit_name" />
+        app:layout_constraintTop_toBottomOf="@+id/uep_username" />
 
     <TextView
-        android:id="@+id/uep_chanelname"
+        android:id="@+id/uep_email"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Channel Name"
+        android:text="Email"
         android:textColor="@color/cphelptext"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uep_line" />
 
-    <EditText
+    <TextView
         android:id="@+id/uep_edit_chanelname"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:textColor="@color/cpDark"
-        android:backgroundTint="#00000000"
-        android:text="Myworld Inc"
+        android:background="@color/cpIndicator"
         android:hint="@string/edit_profile_channel_name"
+        android:text="pranshusaurav0402@gmail.com"
+        android:textColor="@color/cpDark"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_chanelname" />
+        app:layout_constraintTop_toBottomOf="@+id/uep_email" />
 
     <View
         android:id="@+id/uep_1line"
@@ -132,31 +130,31 @@
         app:layout_constraintTop_toBottomOf="@+id/uep_edit_chanelname" />
 
     <TextView
-        android:id="@+id/uep_intro"
+        android:id="@+id/uep_gender"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
-        android:text="Intro"
+        android:text="Gender"
         android:textColor="@color/cphelptext"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uep_1line" />
 
     <EditText
-        android:id="@+id/uep_edit_intro"
+        android:id="@+id/uep_edit_gender"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
-        android:textColor="@color/cpDark"
         android:backgroundTint="#00000000"
-        android:text="arifulsasad dxasdasds dsadasd"
         android:hint="@string/edit_profile_add_intro"
+        android:text="Male"
+        android:textColor="@color/cpDark"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_intro" />
+        app:layout_constraintTop_toBottomOf="@+id/uep_gender" />
 
     <View
         android:id="@+id/uep_3line"
@@ -167,34 +165,34 @@
         android:background="@color/cpIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_edit_intro" />
+        app:layout_constraintTop_toBottomOf="@+id/uep_edit_gender" />
 
     <TextView
-        android:id="@+id/uep_email"
+        android:id="@+id/uep_dob"
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
-        android:text="Email or Phone"
+        android:text="DateOfBirth"
         android:textColor="@color/cphelptext"
         android:textSize="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/uep_3line" />
 
     <EditText
-        android:id="@+id/uep_edit_email"
+        android:id="@+id/uep_edit_dob"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:backgroundTint="#00000000"
-        android:text="8874324535"
-        android:textColor="@color/cpDark"
         android:hint="@string/addContactDetails"
+        android:text="10-02-1995"
+        android:textColor="@color/cpDark"
         android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_email" />
+        app:layout_constraintTop_toBottomOf="@+id/uep_dob" />
 
     <View
         android:id="@+id/uep_4line"
@@ -205,16 +203,16 @@
         android:background="@color/cpIndicator"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/uep_edit_email"/>
+        app:layout_constraintTop_toBottomOf="@+id/uep_edit_dob" />
 
     <Button
         android:id="@+id/save_button_edit_profile_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/save_edit_profile"
-        android:background="@color/cpWhite"
         android:layout_marginEnd="30dp"
-        android:textColor="@color/cpDark"
+        android:backgroundTint="@color/cpRed"
+        android:text="@string/save_edit_profile"
+        android:textColor="@color/cpWhite"
         app:layout_constraintBottom_toBottomOf="@+id/search_appBar_Layout"
         app:layout_constraintEnd_toEndOf="@+id/search_appBar_Layout"
         app:layout_constraintTop_toTopOf="@+id/search_appBar_Layout" />
