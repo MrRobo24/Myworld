@@ -9,7 +9,7 @@ import com.example.myworld.R
 import com.example.myworld.model.VideoModel
 import kotlinx.android.synthetic.main.circular_video_suggestion_recycler_item.view.*
 
-class StoryFeedSuggestionAdapter(private var video : ArrayList<VideoModel>) : RecyclerView.Adapter<StoryFeedSuggestionAdapter.MyViewHolder>()
+class StorySuggestionAdapter(private var video : ArrayList<VideoModel>) : RecyclerView.Adapter<StorySuggestionAdapter.MyViewHolder>()
 {
     class MyViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {

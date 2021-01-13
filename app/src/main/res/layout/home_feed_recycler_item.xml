@@ -25,35 +25,36 @@
         app:resize_mode="fill"
         app:use_controller="false" />
 
-    <!--    Video Story Recycler View-->
+    <!--    Default Story Recycler View-->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/default_story_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="20sp"
+        android:padding="5dp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tool:layout_editor_absoluteX="342dp" />
+
+
+    <!--    Story Recycler View-->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/story_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
         android:padding="5dp"
         android:visibility="gone"
-        app:layout_constraintTop_toTopOf="parent"
-        tool:layout_editor_absoluteX="342dp" />
-
-
-    <!--    Video Story Recycler View-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/home_fragment_story_view"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:layout_marginEnd="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:padding="5dp"
-        android:visibility="visible"
         app:layout_constraintTop_toTopOf="parent"
         tool:layout_editor_absoluteX="342dp" />
 
+    <!--    Story Suggestion Button-->
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/suggestion_home_feed"
+        android:id="@+id/story_suggestion_view_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -64,8 +65,9 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!--    Default expand View Button-->
     <ImageView
-        android:id="@+id/expand_suggestion_view"
+        android:id="@+id/default_expand_story_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -73,7 +75,7 @@
         android:src="@drawable/expand_more_40"
         android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/story_view" />
+        app:layout_constraintTop_toBottomOf="@id/default_story_view" />
 
     <!--    Video Suggestion Recycler View-->
     <androidx.recyclerview.widget.RecyclerView
@@ -81,16 +83,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="20sp"
+        android:layout_marginBottom="5dp"
         android:maxWidth="250dp"
         android:maxHeight="100dp"
         android:padding="5dp"
         android:visibility="gone"
         app:layout_constraintBottom_toTopOf="@id/user_comment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/expand_suggestion_view" />
+        app:layout_constraintTop_toBottomOf="@id/default_expand_story_view" />
 
+    <!--    Expand story View Button-->
     <ImageView
-        android:id="@+id/expand_video_suggestion_view"
+        android:id="@+id/expand_story_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="30dp"
@@ -98,7 +102,7 @@
         android:src="@drawable/expand_more_40"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/home_fragment_story_view" />
+        app:layout_constraintTop_toBottomOf="@id/story_view" />
 
     <!--    Progress Bar -->
     <ProgressBar
