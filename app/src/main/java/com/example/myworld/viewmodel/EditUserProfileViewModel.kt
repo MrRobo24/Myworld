@@ -19,7 +19,6 @@ import kotlinx.coroutines.launch
 class EditUserProfileViewModel(application: Application) : AndroidViewModel(application) {
 
     private val TAG = "EditProfileVM"
-    private val GALLERY_REQUEST_CODE = 123
     private var editUserProfileRepository: EditUserProfileRepository =
         EditUserProfileRepository(application)
 

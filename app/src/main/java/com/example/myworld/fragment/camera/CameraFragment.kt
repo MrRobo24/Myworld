@@ -2,6 +2,7 @@ package com.example.myworld.fragment.camera
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -26,8 +27,8 @@ import androidx.camera.core.VideoCapture
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import com.example.myworld.R
 import com.example.myworld.activity.HomeActivity
 import com.example.myworld.model.VideoModel
@@ -49,33 +50,34 @@ private const val ARG_PARAM2 = "param2"
  * Use the [NotificationFragment.newInstance] factory method to
  * create an instance of this fragment.
  */
-class CameraFragment : Fragment()
-{
+class CameraFragment : Fragment() {
     //Video Model
-    var video : VideoModel? = null
+    var activity: Activity? = getActivity()
+    var video: VideoModel? = null
+
     //BitMap for the Video Thumbnail
     private var bitmap: Bitmap? = null
 
     //Uri For the Recorded Video
-    private var videoUri : Uri? = null
+    private var videoUri: Uri? = null
 
     //CountDown Timer For Start Recording
-    private var countDownTimer : CountDownTimer? = null
+    private var countDownTimer: CountDownTimer? = null
     private var restProgress = 0
-    private var restTimerDuration : Long = 5
+    private var restTimerDuration: Long = 5
 
     //MediaPlayer
-    private var mp : MediaPlayer? = null
-    private var url : String = ""
-    private var songName : String = ""
+    private var mp: MediaPlayer? = null
+    private var url: String = ""
+    private var songName: String = ""
 
     private var mediaRecorder = MediaRecorder()
+
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?)
-    {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             param1 = it.getString(ARG_PARAM1)
@@ -87,32 +89,37 @@ class CameraFragment : Fragment()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View?
-    {
+    ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_camera, container, false)
     }
 
-    override fun onStart()
-    {
+    override fun onStart() {
         /** Permissions checks */
-        if ((context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.CAMERA
-            ) } != PackageManager.PERMISSION_GRANTED)
-                && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
-                && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
-                && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.RECORD_AUDIO
-            ) } != PackageManager.PERMISSION_GRANTED))
-        {
+        if ((context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.CAMERA
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.RECORD_AUDIO
+                )
+            } != PackageManager.PERMISSION_GRANTED)) {
             camera_capture.isEnabled = false
             camera_capture_button_start.isEnabled = false
             camera_music.isEnabled = false
@@ -124,9 +131,7 @@ class CameraFragment : Fragment()
             camera_buttan_takepermission.setOnClickListener {
                 askPermission()
             }
-        }
-        else
-        {
+        } else {
             camera_capture_button_start.isEnabled = true
             camera_music.isEnabled = true
             gallery_selector.isEnabled = true
@@ -163,13 +168,10 @@ class CameraFragment : Fragment()
 
         /** Flash On and Off */
         camera_flash.setOnClickListener {
-            if (!Constant.isFlash)
-            {
+            if (!Constant.isFlash) {
                 flashON()
                 Constant.isFlash = true
-            }
-            else
-            {
+            } else {
                 flashOFF()
                 Constant.isFlash = false
             }
@@ -201,8 +203,7 @@ class CameraFragment : Fragment()
     }
 
     /**Binding the Camera with Application's LifeCycle using Camera Provider.*/
-    private fun startCamera()
-    {
+    private fun startCamera() {
         //Creating a Listener . This let us know that weather our application has been binded with the camera.
         val cameraProvider = context?.let { ProcessCameraProvider.getInstance(it) }
         cameraProvider?.addListener(
@@ -232,15 +233,11 @@ class CameraFragment : Fragment()
     }
 
     /**Switch Front And Back Camera*/
-    private fun switchCamera()
-    {
+    private fun switchCamera() {
         flashOFF()
-        if(Constant.count % 2 == 0)
-        {
+        if (Constant.count % 2 == 0) {
             startCamera()
-        }
-        else
-        {
+        } else {
             //Creating a Listener . This let us know that weather our application has been binded with the camera.
             val cameraProvider = context?.let { ProcessCameraProvider.getInstance(it) }
             cameraProvider?.addListener(Runnable {
@@ -271,8 +268,7 @@ class CameraFragment : Fragment()
     /**Start Recording*/
     @RequiresApi(Build.VERSION_CODES.O)
     @SuppressLint("RestrictedApi")
-    private fun startRecording()
-    {
+    private fun startRecording() {
         camera_front_back.isEnabled = false
         gallery_selector.visibility = View.GONE
         //playMusic(url)
@@ -281,30 +277,47 @@ class CameraFragment : Fragment()
             this.context?.externalMediaDirs?.first(),
             "${System.currentTimeMillis()}.mp4"
         )
-        Constant.recordVideo?.startRecording(VideoCapture.OutputFileOptions.Builder(file).build(),
+        Constant.recordVideo?.startRecording(
+            VideoCapture.OutputFileOptions.Builder(file).build(),
             ContextCompat.getMainExecutor(context),
             object : VideoCapture.OnVideoSavedCallback {
                 override fun onVideoSaved(outputFileResults: VideoCapture.OutputFileResults) {
                     Log.i("SAVED", "Video File : $file")
+
                     //Generating the thumbnail for the video
                     bitmap = setUpThumbnail(file)
-                    video = if (bitmap != null) {
-                        VideoModel(bitmap!!, "", "", file.absolutePath)
+                    Log.d("CameraFrag", "Thumbnail bitmap created: $bitmap")
+                    if (bitmap != null) {
+                        video = VideoModel(bitmap!!, "", "", file.absolutePath)
                     } else {
-                        bitmap?.let { VideoModel(it, "", "", file.absolutePath) }
+                        video = bitmap?.let { VideoModel(it, "", "", file.absolutePath) }
                     }
+
+
+                    Log.d("CameraFrag", "VideoModel created: $video")
                     // Sending the recorded video URI to the VideoUploadFragment .
                     // Fetching the recorded video from the storage using the URI and then uploading the Video to the server .
                     if (video != null) {
-                        VideoUploadFragment().apply {
-                            this.arguments = Bundle().apply {
-                                putString(Constant.savedVideoURI, file.toString())
-                            }
-                        }
+
+                        val ldf = VideoUploadFragment()
+                        val args = Bundle()
+                        args.putSerializable("VIDEO", video)
+                        ldf.arguments = args
+                        // this transaction is supposed to be done after stop recording function is finished
+                        /* In my opinion the error was: this transaction was inside the function, the new fragment was being initiated before the vide
+                        could be saved in this function.*/
+                        fragmentManager!!.beginTransaction().add(R.id.container, ldf).commit()
+
                     }
+
+
                 }
 
-                override fun onError(videoCaptureError: Int, message: String, cause: Throwable?) {
+                override fun onError(
+                    videoCaptureError: Int,
+                    message: String,
+                    cause: Throwable?
+                ) {
                     Log.i("tag", "Video Error: $message")
                 }
             })
@@ -313,8 +326,7 @@ class CameraFragment : Fragment()
 
     /**Stop Recording*/
     @SuppressLint("RestrictedApi")
-    private fun stopRecording()
-    {
+    private fun stopRecording() {
         //stopMusic()
 
         //Chronometer Reset after stopping.
@@ -341,26 +353,31 @@ class CameraFragment : Fragment()
         Log.i("Bitmap", bitmap.toString())
         //user_video_thumbnail.setImageBitmap(bitmap)
         //Sending User to the VideoUploadFragment So that they can upload their recorded video.
-        fragmentManager?.beginTransaction()?.replace(R.id.container, VideoUploadFragment())?.commit()
+//        fragmentManager?.beginTransaction()
+//            ?.replace(R.id.container, VideoUploadFragment())
+//            ?.commit()
     }
 
     /** Setup the Thumbnail of the recorded Video. */
-    private fun setUpThumbnail(file: File) : Bitmap?
-    {
-        return  ThumbnailUtils.createVideoThumbnail(file.toUri().toString(),
-            MediaStore.Images.Thumbnails.MINI_KIND);
+    private fun setUpThumbnail(file: File): Bitmap? {
+//        return ThumbnailUtils.createVideoThumbnail(
+//            file.toUri().toString(),
+//            MediaStore.Images.Thumbnails.MINI_KIND
+//        );
+//
+        return ThumbnailUtils.createVideoThumbnail(
+            file.path,
+            MediaStore.Images.Thumbnails.MINI_KIND
+        )
     }
 
     /**Set CountDown Timer For the Recording.
      *Here we have started a timer of 3 seconds so the 3000 is milliseconds is 3 seconds and the countdown interval is 1 second so it 1000.*/
-    private fun setTimer()
-    {
+    private fun setTimer() {
         timer.visibility = View.VISIBLE
         Log.i("Finised", "SetTimer")
-        countDownTimer = object : CountDownTimer(restTimerDuration * 1000, 1000)
-        {
-            override fun onTick(millisUntilFinished: Long)
-            {
+        countDownTimer = object : CountDownTimer(restTimerDuration * 1000, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
                 // It is increased to ascending order
                 restProgress++
                 // Current progress is set to text view in terms of seconds.
@@ -369,8 +386,7 @@ class CameraFragment : Fragment()
             }
 
             @RequiresApi(Build.VERSION_CODES.O)
-            override fun onFinish()
-            {
+            override fun onFinish() {
                 timer.visibility = View.INVISIBLE
                 recording_timer.base = SystemClock.elapsedRealtime()
                 recording_timer.visibility = View.VISIBLE
@@ -388,28 +404,23 @@ class CameraFragment : Fragment()
     }
 
     /** Switch On the Flash */
-    private fun flashON()
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+    private fun flashON() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Constant.camera?.cameraControl?.enableTorch(true)
             Constant.isFlash = true
         }
     }
 
     /** Switch OFF the Flash    */
-    private fun flashOFF()
-    {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-        {
+    private fun flashOFF() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             Constant.camera?.cameraControl?.enableTorch(false)
             Constant.isFlash = false
         }
     }
 
     /**     Ask For Permissions */
-    private fun askPermission()
-    {
+    private fun askPermission() {
         ActivityCompat.requestPermissions(
             context as Activity, arrayOf(
                 android.Manifest.permission.CAMERA,
@@ -428,20 +439,15 @@ class CameraFragment : Fragment()
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        if (requestCode == Constant.PERMISSION_REQUEST_CODE)
-        {
+        if (requestCode == Constant.PERMISSION_REQUEST_CODE) {
             Log.i("Reach", "Reached + {${Constant.isPermission}}")
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED)
-            {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 Log.i("Reach", "Reached + {${Constant.isPermission}}")
-                if (grantResults[1] == PackageManager.PERMISSION_GRANTED)
-                {
+                if (grantResults[1] == PackageManager.PERMISSION_GRANTED) {
                     Log.i("Reach", "Reached + {${Constant.isPermission}}")
-                    if (grantResults[2] == PackageManager.PERMISSION_GRANTED)
-                    {
+                    if (grantResults[2] == PackageManager.PERMISSION_GRANTED) {
                         Log.i("Reach", "Reached + {${Constant.isPermission}}")
-                        if (grantResults[3] == PackageManager.PERMISSION_GRANTED)
-                        {
+                        if (grantResults[3] == PackageManager.PERMISSION_GRANTED) {
                             Log.i("Reach", "Reached + {${Constant.isPermission}}")
                             Constant.isPermission = true
                             camera_capture_button_stop.isEnabled = true
@@ -456,37 +462,42 @@ class CameraFragment : Fragment()
                     }
                 }
             }
-        }
-        else
-        {
+        } else {
             Toast.makeText(
-                context, "Permissions are required to run the application!\nKindly allow.",
+                context,
+                "Permissions are required to run the application!\nKindly allow.",
                 Toast.LENGTH_SHORT
             ).show()
             askPermission()
         }
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         /** Permissions checks */
-        if ((context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.CAMERA
-            ) } != PackageManager.PERMISSION_GRANTED)
-            && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
-            && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) } != PackageManager.PERMISSION_GRANTED)
-            && (context?.let { ContextCompat.checkSelfPermission(
-                it,
-                android.Manifest.permission.RECORD_AUDIO
-            ) } != PackageManager.PERMISSION_GRANTED))
-        {
+        if ((context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.CAMERA
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            } != PackageManager.PERMISSION_GRANTED)
+            && (context?.let {
+                ContextCompat.checkSelfPermission(
+                    it,
+                    android.Manifest.permission.RECORD_AUDIO
+                )
+            } != PackageManager.PERMISSION_GRANTED)) {
             camera_capture.isEnabled = false
             camera_capture_button_start.isEnabled = false
             camera_music.isEnabled = false
@@ -498,9 +509,7 @@ class CameraFragment : Fragment()
             camera_buttan_takepermission.setOnClickListener {
                 askPermission()
             }
-        }
-        else
-        {
+        } else {
             camera_capture_button_start.isEnabled = true
             camera_music.isEnabled = true
             gallery_selector.isEnabled = true
@@ -537,13 +546,10 @@ class CameraFragment : Fragment()
 
         /** Flash On and Off */
         camera_flash.setOnClickListener {
-            if (!Constant.isFlash)
-            {
+            if (!Constant.isFlash) {
                 flashON()
                 Constant.isFlash = true
-            }
-            else
-            {
+            } else {
                 flashOFF()
                 Constant.isFlash = false
             }
@@ -570,8 +576,7 @@ class CameraFragment : Fragment()
         restProgress = 0
         restTimerDuration = 5
         camera_capture_button_start.isEnabled = true
-        if(Constant.isPermission)
-        {
+        if (Constant.isPermission) {
             camera_capture_button_stop.isEnabled = true
             camera_welcometext.visibility = View.INVISIBLE
             camera_expresstext.visibility = View.INVISIBLE
@@ -582,8 +587,7 @@ class CameraFragment : Fragment()
             gallery_selector.isEnabled = true
         }
         startCamera()
-        if (Constant.isRecording)
-        {
+        if (Constant.isRecording) {
             Constant.isRecording = false
             stopRecording()
         }
@@ -613,14 +617,11 @@ class CameraFragment : Fragment()
         super.onResume()
     }
 
-    override fun onDestroy()
-    {
-        if (countDownTimer != null)
-        {
+    override fun onDestroy() {
+        if (countDownTimer != null) {
             countDownTimer!!.cancel()
         }
-        if(Constant.isRecording)
-        {
+        if (Constant.isRecording) {
             recording_timer.stop()
             recording_timer_dot.visibility = View.GONE
             stopRecording()
@@ -628,10 +629,8 @@ class CameraFragment : Fragment()
         super.onDestroy()
     }
 
-    override fun onPause()
-    {
-        if (Constant.isRecording)
-        {
+    override fun onPause() {
+        if (Constant.isRecording) {
             stopRecording()
         }
         restProgress = 0
@@ -639,15 +638,17 @@ class CameraFragment : Fragment()
         super.onPause()
     }
 
-    override fun onStop()
-    {
-        if (Constant.isRecording)
-        {
+    override fun onStop() {
+        if (Constant.isRecording) {
             stopRecording()
         }
         restProgress = 0
         restTimerDuration = 5
         super.onStop()
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
     }
 
     companion object {
