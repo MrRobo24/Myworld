@@ -93,6 +93,8 @@ class SongCategoryAdapter(
 
                 }
 
+                categoryList[position] = currItem
+
             }
 
 
