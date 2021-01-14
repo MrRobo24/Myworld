@@ -14,6 +14,7 @@ import androidx.core.net.toUri
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myworld.R
 import com.example.myworld.adapter.cameraAdapters.SongAdapter
+import com.example.myworld.adapter.cameraAdapters.SongCategoryAdapter
 import com.example.myworld.model.SongInfo
 import com.example.myworld.service.AudioService
 import com.example.myworld.utilites.Constant
@@ -22,22 +23,23 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import kotlinx.android.synthetic.main.bottomsheet_fragment.*
 
-class MusicBottomSheetFragment : BottomSheetDialogFragment()
-{
-    var listSongs = ArrayList<SongInfo>()
+class MusicBottomSheetFragment : BottomSheetDialogFragment() {
+    var listSongs = ArrayList<Pair<Int, ArrayList<SongInfo>>>()
 
-    private var mediaPlayer : MediaPlayer = MediaPlayer()
+    private var mediaPlayer: MediaPlayer = MediaPlayer()
 
-    private var isPlayingMusic : Boolean = false
+    private var isPlayingMusic: Boolean = false
 
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View?
-    {
-        return inflater.inflate(R.layout.bottomsheet_fragment,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(R.layout.bottomsheet_fragment, container, false)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setStyle(STYLE_NORMAL, R.style.AppBottomSheetDialogTheme);
         val offsetFromTop = 40
@@ -48,15 +50,13 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
         }
     }
 
-    override fun onStart()
-    {
+    override fun onStart() {
         loadSong()
         super.onStart()
     }
 
     /** lOAD SONGS FROM THE External and Internal STORAGE */
-    private fun loadSong()
-    {
+    private fun loadSong() {
 
         /** Fecting the Uri's of the Storage. */
         val externalUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI
@@ -65,42 +65,73 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
         val selectFile = MediaStore.Audio.Media.IS_MUSIC + "!=0"
 
         /**Reading the data from storage. */
-        val externalContentResolver = requireContext().contentResolver!!.query(externalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
-        val internalContentResolver = requireContext().contentResolver!!.query(internalUri,null , selectFile,null , MediaStore.Audio.Media.TITLE)
+        val externalContentResolver = requireContext().contentResolver!!.query(
+            externalUri,
+            null,
+            selectFile,
+            null,
+            MediaStore.Audio.Media.TITLE
+        )
+        val internalContentResolver = requireContext().contentResolver!!.query(
+            internalUri,
+            null,
+            selectFile,
+            null,
+            MediaStore.Audio.Media.TITLE
+        )
 
         /** Adding all the music from the external storage. */
-        if (externalContentResolver!=null)
-        {
-            while (externalContentResolver.moveToNext())
-            {
-                val url = externalContentResolver.getString(externalContentResolver.getColumnIndex(
-                    MediaStore.Audio.Media.DATA))
-                val title = externalContentResolver.getString(externalContentResolver.getColumnIndex(
-                    MediaStore.Audio.Media.TITLE))
+        var songCount = 0
+        var groupCount = -1
+        if (externalContentResolver != null) {
+            while (externalContentResolver.moveToNext()) {
+                val url = externalContentResolver.getString(
+                    externalContentResolver.getColumnIndex(
+                        MediaStore.Audio.Media.DATA
+                    )
+                )
+                val title = externalContentResolver.getString(
+                    externalContentResolver.getColumnIndex(
+                        MediaStore.Audio.Media.TITLE
+                    )
+                )
 //                val author = externalContentResolver.getString(externalContentResolver.getColumnIndex(MediaStore.Audio.Media.DISPLAY_NAME))
 
-
-
-                listSongs.add(SongInfo(title,url.toString()))
-                Log.i("URL",externalUri.toString())
+                if (songCount % 10 == 0) {
+                    listSongs.add(Pair(5, arrayListOf<SongInfo>()))
+                    groupCount++
+                }
+                listSongs[groupCount].second.add(SongInfo(title, url.toString()))
+                Log.i("URL", externalUri.toString())
+                songCount++
             }
         }
 
         /** Adding all the music from the internal storage. */
-        if (internalContentResolver!=null)
-        {
-            while (internalContentResolver.moveToNext())
-            {
-                val url = internalContentResolver.getString(internalContentResolver.getColumnIndex(
-                    MediaStore.Audio.Media.DATA))
-                val title = internalContentResolver.getString(internalContentResolver.getColumnIndex(
-                    MediaStore.Audio.Media.TITLE))
+        if (internalContentResolver != null) {
+            while (internalContentResolver.moveToNext()) {
+                val url = internalContentResolver.getString(
+                    internalContentResolver.getColumnIndex(
+                        MediaStore.Audio.Media.DATA
+                    )
+                )
+                val title = internalContentResolver.getString(
+                    internalContentResolver.getColumnIndex(
+                        MediaStore.Audio.Media.TITLE
+                    )
+                )
 
                 //val artist = externalContentResolver?.getString(externalContentResolver.getColumnIndex(MediaStore.Audio.Media.ARTIST))
 
-                listSongs.add(SongInfo(title,url.toString()))
-                Log.i("URL",internalUri.toString())
-                Log.i("Song Name" , title)
+                if (songCount % 10 == 0) {
+                    listSongs.add(Pair(5, arrayListOf<SongInfo>()))
+                    groupCount++
+                }
+
+                listSongs[groupCount].second.add(SongInfo(title, url.toString()))
+                Log.i("URL", internalUri.toString())
+                Log.i("Song Name", title)
+                songCount++
             }
         }
 
@@ -110,11 +141,10 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
             layoutManager = LinearLayoutManager(context)
 
             /** Setting up the adapter of the recycler view. */
-            adapter = SongAdapter(listSongs , context , object : SongAdapter.MusicListener{
-                override fun onClick(song: SongInfo): String
-                {
-                    if (Constant.isPlaying)
-                    {
+//            adapter = SongAdapter(listSongs, context, object : SongAdapter.MusicListener {
+            adapter = SongCategoryAdapter(listSongs, context, object : SongAdapter.MusicListener {
+                override fun onClick(song: SongInfo): String {
+                    if (Constant.isPlaying) {
                         mediaPlayer.reset()
                     }
                     //Log.i("SongUrl" , song.songURL.toString())
@@ -126,8 +156,7 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
                                 .setUsage(AudioAttributes.USAGE_MEDIA)
                                 .build()
                         )
-                        if (myUri != null)
-                        {
+                        if (myUri != null) {
                             setDataSource(context, myUri)
                             prepare()
                             Constant.isPlaying = true
@@ -137,35 +166,32 @@ class MusicBottomSheetFragment : BottomSheetDialogFragment()
                     return super.onClick(song)
                 }
 
-                override fun onSelect(song: SongInfo): String
-                {
-                    val intent = Intent(context , AudioService(context,song.songURL.toString())::class.java)
+                override fun onSelect(song: SongInfo): String {
+                    val intent =
+                        Intent(context, AudioService(context, song.songURL.toString())::class.java)
                     context?.startService(intent)
-                    Bundle().putString(Constant.songURL , song.songURL.toString())
-                    Log.i("Song - On Select Call" , song.toString())
-                    return  super.onSelect(song)
+                    Bundle().putString(Constant.songURL, song.songURL.toString())
+                    Log.i("Song - On Select Call", song.toString())
+                    return super.onSelect(song)
                 }
             })
         }
     }
 
-    override fun onResume()
-    {
+    override fun onResume() {
         /** Resetting the MediaPlayer */
         mediaPlayer.reset()
         super.onResume()
     }
 
-    override fun onPause()
-    {
-            Constant.isPlaying = false
-            mediaPlayer.reset()
-            super.onPause()
+    override fun onPause() {
+        Constant.isPlaying = false
+        mediaPlayer.reset()
+        super.onPause()
     }
 
-    override fun onDestroyView()
-    {
-        Constant.isPlaying =false
+    override fun onDestroyView() {
+        Constant.isPlaying = false
         mediaPlayer.reset()
         super.onDestroyView()
     }

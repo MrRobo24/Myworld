@@ -1,7 +1,6 @@
 package com.example.myworld.model
 
 import android.graphics.Bitmap
-import kotlinx.android.parcel.Parcelize
 import java.io.Serializable
 
 data class VideoModel(
