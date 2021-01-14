@@ -1,6 +1,7 @@
 package com.example.myworld.fragment.explore
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -44,7 +45,9 @@ class SearchFragment : Fragment()
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        val view=inflater.inflate(R.layout.fragment_search, container, false)
+
+        return view
     }
 
     override fun onStart()
@@ -134,6 +137,14 @@ class SearchFragment : Fragment()
         allCategory.add(AllCategory("Category10", categoryItemList10))
 
         setMainCategoryRecycler(allCategory)
+
+        editTextSearch.setOnClickListener {
+            Log.i("On Click Search","Clicked")
+            this.fragmentManager?.beginTransaction()?.apply {
+                replace(R.id.container, ExploreSearchFragment()).commit()
+            }
+        }
+
         super.onStart()
     }
 
@@ -143,10 +154,6 @@ class SearchFragment : Fragment()
             layoutManager=LinearLayoutManager(context,LinearLayoutManager.VERTICAL,false)
             adapter=MainRecycleViewAdapter(context,allCategory)
         }
-//        main_recycler.apply {
-//            layoutManager = LinearLayoutManager(context)
-//            adapter = MainRecycleViewAdapter(context,allCategory)
-//        }
     }
 
 

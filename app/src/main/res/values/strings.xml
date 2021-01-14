@@ -42,4 +42,5 @@
     <string name="edit_profile_channel_name">Add</string>
     <string name="edit_profile_user_name">Add</string>
     <string name="edit_profile_UserName">Name</string>
+    <string name="search_here">Search Here</string>
 </resources>
